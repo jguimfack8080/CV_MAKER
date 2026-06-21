@@ -61,7 +61,7 @@ cv-core.js   - Daten- und Geschaeftslogikschicht (KEIN DOM, KEINE fest codierten
                (anlegen, duplizieren, umbenennen, loeschen, wechseln,
                 aktiven CV lesen/speichern, importieren, Altdaten migrieren)
 
-cv-studio.html - Praesentationsschicht (UI)
+index.html   - Praesentationsschicht (UI, Einstiegsdatei)
   - HTML-Struktur (obere Leiste mit CV-Verwaltung, Editor links, Vorschau rechts)
   - CSS (Editor-UI, 10 CV-Vorlagen)
   - JavaScript (nur UI-Logik, nutzt cv-core.js)
@@ -141,20 +141,29 @@ cd CV_MAKER
 
 # Datei im Browser oeffnen
 # Windows
-start cv-studio.html
+start index.html
 
 # macOS
-open cv-studio.html
+open index.html
 
 # Linux
-xdg-open cv-studio.html
+xdg-open index.html
 ```
 
-Alternativ die Datei `cv-studio.html` direkt per Doppelklick im Datei-Explorer oeffnen.
+Alternativ die Datei `index.html` direkt per Doppelklick im Datei-Explorer oeffnen.
 
-Wichtig: Die Datei `cv-core.js` muss im selben Ordner wie `cv-studio.html` liegen, da die Anwendung ihre Daten- und Geschaeftslogik daraus laedt.
+Wichtig: Die Datei `cv-core.js` muss im selben Ordner wie `index.html` liegen, da die Anwendung ihre Daten- und Geschaeftslogik daraus laedt.
 
 Fuer den PDF-Export und das Laden von Google Fonts ist eine Internetverbindung erforderlich. Alle anderen Funktionen arbeiten vollstaendig offline.
+
+### Hosting (z. B. Cloudflare Pages, GitHub Pages, Netlify)
+
+Die Anwendung ist eine statische Seite ohne Build-Schritt. Die Einstiegsdatei heisst `index.html` und wird daher unter der Wurzel-URL `/` automatisch ausgeliefert. Empfohlene Einstellungen:
+
+- Build-Befehl: keiner (leer lassen)
+- Ausgabe-/Root-Verzeichnis: Projektwurzel (`/`)
+
+`index.html` und `cv-core.js` muessen im selben Verzeichnis liegen.
 
 ---
 
