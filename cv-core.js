@@ -274,6 +274,8 @@
 
       // Migriert einen evtl. vorhandenen alten Einzel-CV in die Bibliothek.
       // Wird nur ausgefuehrt, wenn die Bibliothek leer ist und Altdaten existieren.
+      // Die Altdaten werden NICHT geloescht (Sicherheitskopie gegen Datenverlust);
+      // da die Migration nur bei leerer Bibliothek laeuft, entsteht kein Duplikat.
       migrateLegacy() {
         const idx = readIndex();
         if (idx.items.length > 0) return null;
@@ -283,17 +285,22 @@
         const name = (old.personal && old.personal.name)
           ? (old.personal.name + ' - Lebenslauf')
           : 'Mein Lebenslauf';
-        const id = Library.create(name, old);
-        store.remove(LEGACY_KEY); // Altdaten nach erfolgreicher Migration entfernen
-        return id;
+        return Library.create(name, old);
       },
 
       // Stellt sicher, dass mindestens ein Lebenslauf existiert.
-      // Reihenfolge: vorhandene Bibliothek -> Migration -> neuer leerer CV.
-      ensureAtLeastOne(defaultName) {
+      // Reihenfolge: vorhandene Bibliothek -> Migration von Altdaten ->
+      // optionaler Demo-/Seed-Lebenslauf -> leerer Lebenslauf.
+      // seed darf das Format { name, cv } oder rohe CV-Daten haben.
+      ensureAtLeastOne(defaultName, seed) {
         if (Library.count() > 0) return Library.getActiveId() || Library.list()[0].id;
         const migrated = Library.migrateLegacy();
         if (migrated) return migrated;
+        if (seed) {
+          const data = (seed.cv && typeof seed.cv === 'object') ? seed.cv : seed;
+          const name = seed.name || defaultName || 'Beispiel-Lebenslauf';
+          return Library.create(name, data);
+        }
         return Library.create(defaultName || 'Mein Lebenslauf');
       }
     };

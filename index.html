@@ -10,6 +10,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="cv-core.js"></script>
+<script src="default-cv.js"></script>
 <style>
 /* ====== RESET ====== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -482,7 +483,10 @@ let saveTimer = null;
 // Laedt die Bibliothek beim Start: vorhandene CVs, sonst Migration des alten
 // Einzel-CV, sonst ein neuer leerer Lebenslauf. Setzt cvData/currentCvId.
 function initLibrary() {
-  currentCvId = library.ensureAtLeastOne('Mein Lebenslauf');
+  // Bei komplett leerem Speicher wird der neutrale Demo-Lebenslauf geladen
+  // (window.CV_DEMO aus default-cv.js). Vorhandene Daten bleiben unberuehrt.
+  const seed = (typeof window !== 'undefined' && window.CV_DEMO) ? window.CV_DEMO : null;
+  currentCvId = library.ensureAtLeastOne('Mein Lebenslauf', seed);
   const active = library.loadActive();
   currentCvId = active.id;
   cvData = active.data;

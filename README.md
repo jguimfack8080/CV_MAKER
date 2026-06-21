@@ -18,7 +18,8 @@ Dieses Projekt entstand aus einer konkreten Erfahrung: Jedes Mal, wenn ich meine
 
 - **Mehrere Lebenslaeufe**: beliebig viele eigenstaendige Lebenslaeufe anlegen, bearbeiten, umbenennen, duplizieren und loeschen - mit schnellem Wechsel ueber die obere Leiste
 - **Unabhaengige Datenablage**: jeder Lebenslauf besitzt eine eindeutige ID, eigene Inhalte, ein eigenes Foto, eine eigene Vorlage und eigene Layout-Einstellungen
-- **Generische Anwendung**: keine fest codierten Beispieldaten - jeder neue Lebenslauf startet leer
+- **Generische Anwendung**: keine fest codierten Daten in der Logik - jeder selbst angelegte Lebenslauf startet leer
+- **Demo beim ersten Start**: ist der Speicher komplett leer, laedt die App einen neutralen Beispiel-Lebenslauf (fiktive Daten), damit sie nie leer wirkt und sofort ausprobierbar ist
 - **Live-Vorschau**: Aenderungen erscheinen sofort in der A4-Vorschau rechts, mit sichtbaren A4-Seitengrenzen
 - **10 Vorlagen**: Minimal, Sidebar-Akzent, Klassisch DACH, Kreativ Header, Kompakt Zeitachse, Executive, Zweispaltig, Seitenlinie, Profilkarte, Schlicht ATS
 - **11 Schriftarten**: Inter, Roboto, Open Sans, Montserrat, Lato, Arial, Helvetica Neue, Calibri, Georgia, Times New Roman, EB Garamond
@@ -60,6 +61,9 @@ cv-core.js   - Daten- und Geschaeftslogikschicht (KEIN DOM, KEINE fest codierten
   - Library  : Geschaeftslogik fuer mehrere Lebenslaeufe
                (anlegen, duplizieren, umbenennen, loeschen, wechseln,
                 aktiven CV lesen/speichern, importieren, Altdaten migrieren)
+
+default-cv.js - Neutraler Demo-Lebenslauf (fiktive Beispieldaten, getrennte Datendatei)
+                wird nur beim allerersten Start in leeren Speicher geladen
 
 index.html   - Praesentationsschicht (UI, Einstiegsdatei)
   - HTML-Struktur (obere Leiste mit CV-Verwaltung, Editor links, Vorschau rechts)
@@ -152,7 +156,7 @@ xdg-open index.html
 
 Alternativ die Datei `index.html` direkt per Doppelklick im Datei-Explorer oeffnen.
 
-Wichtig: Die Datei `cv-core.js` muss im selben Ordner wie `index.html` liegen, da die Anwendung ihre Daten- und Geschaeftslogik daraus laedt.
+Wichtig: Die Dateien `cv-core.js` und `default-cv.js` muessen im selben Ordner wie `index.html` liegen, da die Anwendung ihre Logik und den Demo-Lebenslauf daraus laedt.
 
 Fuer den PDF-Export und das Laden von Google Fonts ist eine Internetverbindung erforderlich. Alle anderen Funktionen arbeiten vollstaendig offline.
 
@@ -163,7 +167,7 @@ Die Anwendung ist eine statische Seite ohne Build-Schritt. Die Einstiegsdatei he
 - Build-Befehl: keiner (leer lassen)
 - Ausgabe-/Root-Verzeichnis: Projektwurzel (`/`)
 
-`index.html` und `cv-core.js` muessen im selben Verzeichnis liegen.
+`index.html`, `cv-core.js` und `default-cv.js` muessen im selben Verzeichnis liegen.
 
 ---
 
