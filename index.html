@@ -1730,11 +1730,18 @@ const ZEILEN_SELEKTOR = [
 ].join(', ');
 
 // Gilt fuer ALLE Vorlagen (auch mehrspaltige): jede Spalte ist ein eigener Fluss,
-// das Verschieben einer Zeile per oberem Abstand betrifft nur ihre eigene Spalte.
-// So wird in keiner Spalte eine Textzeile an einer Seitengrenze abgeschnitten.
+// das Verschieben einer Zeile betrifft nur ihre eigene Spalte. So wird in keiner
+// Spalte eine Textzeile an einer Seitengrenze abgeschnitten.
+//
+// Wichtig: Es wird padding-top statt margin-top verwendet. Margin-top wuerde mit
+// der margin-bottom des vorherigen Geschwisterelements kollabieren (z. B. 15 px)
+// und die Zeile dadurch zu wenig verschieben -> der Text wuerde trotzdem
+// abgeschnitten. Padding kollabiert nie und verschiebt exakt um den noetigen Wert.
+// Die Funktion ist idempotent (setzt zuvor gesetzte Abstaende zuerst zurueck).
 function vermeideSeitenumbrueche(el) {
   const PAGE = A4_PAGE_PX;
   const zeilen = Array.from(el.querySelectorAll(ZEILEN_SELEKTOR));
+  zeilen.forEach(z => { z.style.paddingTop = ''; });
   zeilen.forEach(zeile => {
     const basis = el.getBoundingClientRect();
     const r = zeile.getBoundingClientRect();
@@ -1747,8 +1754,7 @@ function vermeideSeitenumbrueche(el) {
     if (seiteOben !== seiteUnten) {
       const naechsteGrenze = (seiteOben + 1) * PAGE;
       const schub = naechsteGrenze - top + 2; // minimaler Puffer
-      const aktuell = parseFloat(getComputedStyle(zeile).marginTop) || 0;
-      zeile.style.marginTop = (aktuell + schub) + 'px';
+      zeile.style.paddingTop = schub + 'px';
     }
   });
 }
@@ -1974,6 +1980,13 @@ window.addEventListener('DOMContentLoaded', () => {
   renderEditor();
   renderPreview();
   applyFont();
+  // Layout nach vollstaendigem Laden der Schriftarten neu berechnen: vorher
+  // koennen abweichende Schriftmasse die Seitenumbruch-Berechnung verfaelschen.
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => { applyPageLayout(); });
+  }
+  // Zusaetzliche Sicherheits-Neuberechnung, falls Bilder/Reflows spaeter eintreffen
+  setTimeout(() => { applyPageLayout(); }, 400);
 });
 </script>
 </body>
