@@ -30,6 +30,8 @@ Dieses Projekt entstand aus einer konkreten Erfahrung: Jedes Mal, wenn ich meine
 - **PDF-Export**: Vollstaendiger A4-Export mit korrekter Seitentrennung und hoher Bildqualitaet (PNG lossless)
 - **Klickbare Links im PDF**: E-Mail, LinkedIn, GitHub und Portfolio-Links bleiben im exportierten PDF anklickbar
 - **Portfolio-Hervorhebung**: ist ein Portfolio/Website hinterlegt, wird es als gut sichtbare Pille dargestellt (faellt sofort auf, statt als lange URL unterzugehen) - in allen Vorlagen
+- **Kompakte Social-Icons**: LinkedIn und GitHub werden als platzsparendes Icon statt als lange URL angezeigt (im PDF weiterhin anklickbar)
+- **Projekt-Links**: optionaler Link pro Projekt; wird als dezenter Button "Ansehen" neben dem Projekt angezeigt und ist im PDF anklickbar
 - **Automatische Migration**: ein evtl. vorhandener alter Einzel-Lebenslauf wird beim ersten Start in die Bibliothek uebernommen
 
 ---
@@ -104,7 +106,7 @@ Das entspricht der Idee getrennter Dateien `cv_1.json`, `cv_2.json`, ... - hier 
   "skills":     [{ "id": "", "category": "", "items": [] }],
   "experience": [{ "id": "", "title": "", "company": "", "location": "", "from": "", "to": "", "bullets": [] }],
   "education":  [{ "id": "", "degree": "", "institution": "", "location": "", "from": "", "to": "", "notes": "" }],
-  "projects":   [{ "id": "", "title": "", "type": "", "from": "", "to": "", "stack": [], "bullets": [] }],
+  "projects":   [{ "id": "", "title": "", "type": "", "link": "", "from": "", "to": "", "stack": [], "bullets": [] }],
   "languages":  [{ "id": "", "name": "", "level": "" }],
   "interests":  [{ "id": "", "text": "" }]
 }

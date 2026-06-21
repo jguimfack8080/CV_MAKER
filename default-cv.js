@@ -66,7 +66,7 @@ window.CV_DEMO = {
     ],
     projects: [
       {
-        id: 'd-pr1', title: 'Echtzeit-Analyseplattform', type: 'Berufliches Projekt', from: '2023', to: 'heute',
+        id: 'd-pr1', title: 'Echtzeit-Analyseplattform', type: 'Berufliches Projekt', link: 'github.com/maria-mustermann', from: '2023', to: 'heute',
         stack: ['Python', 'Apache Kafka', 'Apache Spark', 'AWS', 'Docker'],
         bullets: [
           'Aufbau einer Streaming-Plattform zur Echtzeitauswertung von Ereignisdaten',
