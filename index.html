@@ -1506,32 +1506,61 @@ function renderPreview() {
 
 const A4_PAGE_PX = 1123; // A4-Seitenhoehe bei 96 DPI (794 x 1123)
 
-// Sorgt dafuer, dass die Vorschau-Seite immer eine ganze Zahl voller A4-Seiten
-// hoch ist. Dadurch ist JEDE Seite vollstaendig weiss (kein grauer Hintergrund
-// am unteren Rand der letzten Seite) - exakt wie das exportierte PDF.
+// Aktuelle Seitenzahl und exakte Gesamthoehe der Vorschau (vom Layout berechnet).
+// Der PDF-Export verwendet genau diese Werte, damit Vorschau und PDF identisch
+// sind und keine zusaetzliche leere Seite entsteht.
+let cvSeitenAnzahl = 1;
+let cvGesamthoehePx = A4_PAGE_PX;
+
 // Einspaltige Vorlagen, bei denen Seitenumbruch-Vermeidung sicher moeglich ist
 // (mehrspaltige Layouts wuerden durch Margin-Verschiebung entkoppelt -> ausgeschlossen).
 const EINSPALTIGE_VORLAGEN = ['minimal', 'dach', 'compact', 'exec', 'lineleft', 'card', 'plain'];
 
+// Ermittelt die unterste Kante des TATSAECHLICHEN Inhalts (ohne abschliessendes
+// Padding des Templates). So fuehrt ein reiner Padding-Rest nicht faelschlich zu
+// einer zusaetzlichen, komplett leeren Seite.
+function inhaltsUnterkante(el) {
+  const basis = el.getBoundingClientRect();
+  let unten = 0;
+  el.querySelectorAll('*').forEach(node => {
+    // Nur Blattelemente (echtes Inhalts-Ende) zaehlen - Container mit Padding
+    // wuerden ihr Padding mitzaehlen und faelschlich eine leere Seite erzeugen.
+    if (node.children.length > 0) return;
+    if (node.classList && node.classList.contains('pbc')) return;
+    const r = node.getBoundingClientRect();
+    if (r.height === 0 && r.width === 0) return; // unsichtbare Elemente ignorieren
+    const b = r.bottom - basis.top;
+    if (b > unten) unten = b;
+  });
+  return unten;
+}
+
+// Sorgt dafuer, dass die Vorschau-Seite immer eine ganze Zahl voller A4-Seiten
+// hoch ist. Dadurch ist JEDE Seite vollstaendig weiss - exakt wie das PDF.
 function applyPageLayout() {
   const el = document.getElementById('cv-preview');
   const child = el.firstElementChild;
-  // Fruehere Markierungen, erzwungene Hoehen und Umbruch-Abstaende entfernen,
+  // Fruehere Markierungen, erzwungene Hoehen, Begrenzung und Abstaende entfernen,
   // um die echte Inhaltshoehe sauber messen zu koennen
   el.querySelectorAll('.pbc').forEach(x => x.remove());
   el.style.minHeight = '';
+  el.style.height = '';
+  el.style.overflow = '';
   if (child) child.style.minHeight = '';
-  // Seitenumbrueche vermeiden: Bloecke, die eine A4-Grenze kreuzen, auf die
-  // naechste Seite schieben - so wird kein Eintrag mittendrin abgeschnitten
+  // Seitenumbrueche vermeiden: einzelne Zeilen, die eine A4-Grenze kreuzen, auf
+  // die naechste Seite schieben - kein abgeschnittener Text
   vermeideSeitenumbrueche(el);
-  // Tatsaechliche Inhaltshoehe messen (Reflow erzwungen durch scrollHeight)
-  const inhaltshoehe = el.scrollHeight;
-  const seitenzahl = Math.max(1, Math.ceil(inhaltshoehe / A4_PAGE_PX));
-  const vollehoehe = seitenzahl * A4_PAGE_PX;
-  // Weisse Seite und inneres Template auf volle Seitenanzahl strecken
-  el.style.minHeight = vollehoehe + 'px';
-  if (child) child.style.minHeight = vollehoehe + 'px';
-  addSeitentrennlinien(seitenzahl);
+  // Seitenzahl aus der tatsaechlichen Inhalts-Unterkante (ohne Padding) berechnen.
+  // Toleranz von 0,01 Seite verhindert eine leere Seite durch winzige Ueberhaenge.
+  const unten = inhaltsUnterkante(el);
+  cvSeitenAnzahl = Math.max(1, Math.ceil(unten / A4_PAGE_PX - 0.01));
+  cvGesamthoehePx = cvSeitenAnzahl * A4_PAGE_PX;
+  // Vorschau exakt auf volle Seitenanzahl fixieren; der Padding-Rest unterhalb
+  // wird abgeschnitten (es ist nur Leerraum, kein Inhalt) -> keine leere Seite.
+  el.style.height = cvGesamthoehePx + 'px';
+  el.style.overflow = 'hidden';
+  if (child) child.style.minHeight = cvGesamthoehePx + 'px';
+  addSeitentrennlinien(cvSeitenAnzahl);
 }
 
 // Verschiebt nur die EINZELNE Zeile (Stichpunkt, Titelzeile, Abschnittstitel),
@@ -1704,6 +1733,9 @@ async function exportPDF() {
 
     // Breite immer exakt 794px (A4 bei 96 DPI), nie el.scrollWidth verwenden
     // windowWidth auf normalen Viewport setzen - verhindert Verzerrungen durch flex/grid
+    // Exakt die vom Layout berechnete Gesamthoehe verwenden (volle Seiten),
+    // nie el.scrollHeight - so entsteht keine zusaetzliche leere Seite.
+    const captureHoehe = cvGesamthoehePx;
     const canvas = await html2canvas(el, {
       scale: 2,
       useCORS: true,
@@ -1711,9 +1743,9 @@ async function exportPDF() {
       logging: false,
       backgroundColor: '#ffffff',
       width: 794,
-      height: el.scrollHeight,
+      height: captureHoehe,
       windowWidth: 1200,
-      windowHeight: Math.max(el.scrollHeight, 900),
+      windowHeight: Math.max(captureHoehe, 900),
       x: 0, y: 0, scrollX: 0, scrollY: 0
     });
 
