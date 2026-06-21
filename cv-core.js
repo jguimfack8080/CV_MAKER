@@ -89,6 +89,7 @@
         },
         fontKey: 'inter',
         template: 'minimal',
+        textColor: '#1a1a1a',
         skills: [], experience: [], education: [], projects: [], languages: [], interests: []
       };
     },
@@ -111,8 +112,9 @@
           if (item && !item.id) item.id = uid();
         });
       });
-      if (!cv.fontKey)  cv.fontKey = 'inter';
-      if (!cv.template) cv.template = 'minimal';
+      if (!cv.fontKey)   cv.fontKey = 'inter';
+      if (!cv.template)  cv.template = 'minimal';
+      if (!cv.textColor) cv.textColor = '#1a1a1a';
       return cv;
     }
   };

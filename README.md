@@ -21,6 +21,9 @@ Dieses Projekt entstand aus einer konkreten Erfahrung: Jedes Mal, wenn ich meine
 - **Generische Anwendung**: keine fest codierten Daten in der Logik - jeder selbst angelegte Lebenslauf startet leer
 - **Demo beim ersten Start**: ist der Speicher komplett leer, laedt die App einen neutralen Beispiel-Lebenslauf (fiktive Daten), damit sie nie leer wirkt und sofort ausprobierbar ist
 - **Live-Vorschau**: Aenderungen erscheinen sofort in der A4-Vorschau rechts, mit sichtbaren A4-Seitengrenzen
+- **Schwarze Schrift (gut lesbar) als Standard**: frei waehlbare Textfarbe ueber die obere Leiste, jederzeit auf Schwarz zuruecksetzbar; Akzentfarben der Ueberschriften bleiben erhalten
+- **Saubere Seitenumbrueche**: einzelne Zeilen, die auf einer A4-Grenze liegen wuerden, werden auf die naechste Seite geschoben - kein abgeschnittener Text, minimaler Leerraum (einspaltige Vorlagen)
+- **Integrierte Anleitung**: ausfuehrliche deutsche Hilfeseite (`wiki.html`), erreichbar ueber "Hilfe & Anleitung" in der oberen Leiste
 - **10 Vorlagen**: Minimal, Sidebar-Akzent, Klassisch DACH, Kreativ Header, Kompakt Zeitachse, Executive, Zweispaltig, Seitenlinie, Profilkarte, Schlicht ATS
 - **11 Schriftarten**: Inter, Roboto, Open Sans, Montserrat, Lato, Arial, Helvetica Neue, Calibri, Georgia, Times New Roman, EB Garamond
 - **Auto-Speicherung**: Alle Daten werden automatisch im LocalStorage des Browsers gesichert (je Lebenslauf ein eigener Schluessel)
@@ -69,6 +72,7 @@ default-cv.js - Neutraler Demo-Lebenslauf (fiktive Beispieldaten, getrennte Date
                 wird nur beim allerersten Start in leeren Speicher geladen
 
 index.html   - Praesentationsschicht (UI, Einstiegsdatei)
+wiki.html    - Ausfuehrliche deutsche Anleitung (Hilfeseite, A bis Z)
   - HTML-Struktur (obere Leiste mit CV-Verwaltung, Editor links, Vorschau rechts)
   - CSS (Editor-UI, 10 CV-Vorlagen)
   - JavaScript (nur UI-Logik, nutzt cv-core.js)

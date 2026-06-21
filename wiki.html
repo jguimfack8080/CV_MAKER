@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CV-Studio - Hilfe und vollstaendige Anleitung</title>
+<style>
+  :root {
+    --accent: #2563eb; --accent-dark: #1d4ed8; --ink: #1a1a1a; --soft: #475569;
+    --bg: #f7f8fa; --surface: #ffffff; --border: #e4e7ec; --code-bg: #f1f5f9;
+    --warn-bg: #fff7ed; --warn-border: #fdba74; --tip-bg: #ecfdf5; --tip-border: #6ee7b7;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; color: var(--ink); background: var(--bg); line-height: 1.65; font-size: 16px; }
+  a { color: var(--accent); }
+  header.top { background: var(--surface); border-bottom: 1px solid var(--border); padding: 18px 24px; position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  header.top .logo { font-weight: 800; font-size: 20px; color: var(--accent); letter-spacing: -.5px; }
+  header.top .back { margin-left: auto; background: var(--accent); color: #fff; text-decoration: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; font-size: 14px; }
+  header.top .back:hover { background: var(--accent-dark); }
+  .layout { display: flex; max-width: 1180px; margin: 0 auto; gap: 32px; padding: 24px; align-items: flex-start; }
+  nav.toc { position: sticky; top: 84px; flex: 0 0 270px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; max-height: calc(100vh - 110px); overflow-y: auto; font-size: 14px; }
+  nav.toc h2 { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--soft); margin: 0 0 10px; }
+  nav.toc ol { list-style: none; margin: 0; padding: 0; counter-reset: toc; }
+  nav.toc li { margin: 0 0 2px; }
+  nav.toc a { display: block; padding: 5px 8px; border-radius: 6px; text-decoration: none; color: var(--ink); }
+  nav.toc a:hover { background: var(--code-bg); }
+  main { flex: 1; min-width: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 8px 36px 48px; }
+  main h1 { font-size: 30px; letter-spacing: -.5px; margin: 28px 0 6px; }
+  .lead { color: var(--soft); font-size: 17px; margin-bottom: 8px; }
+  section { padding-top: 28px; margin-top: 8px; border-top: 1px solid var(--border); }
+  section:first-of-type { border-top: none; }
+  h2.sec { font-size: 23px; letter-spacing: -.3px; margin: 6px 0 12px; }
+  h3 { font-size: 18px; margin: 22px 0 8px; }
+  p { margin: 10px 0; }
+  ol.steps { margin: 12px 0; padding-left: 0; counter-reset: step; list-style: none; }
+  ol.steps > li { position: relative; padding: 4px 0 12px 42px; margin: 0; }
+  ol.steps > li::before { counter-increment: step; content: counter(step); position: absolute; left: 0; top: 2px; width: 28px; height: 28px; background: var(--accent); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; }
+  ul.bullets { margin: 10px 0; padding-left: 22px; }
+  ul.bullets li { margin: 5px 0; }
+  code { background: var(--code-bg); padding: 1px 6px; border-radius: 4px; font-family: 'SF Mono', Consolas, monospace; font-size: 14px; }
+  .box { border-radius: 10px; padding: 14px 16px; margin: 16px 0; font-size: 15px; border: 1px solid; }
+  .box .label { font-weight: 700; display: block; margin-bottom: 3px; }
+  .tip { background: var(--tip-bg); border-color: var(--tip-border); }
+  .warn { background: var(--warn-bg); border-color: var(--warn-border); }
+  .kbd { background: #fff; border: 1px solid var(--border); border-bottom-width: 2px; border-radius: 5px; padding: 1px 7px; font-size: 13px; font-family: monospace; }
+  table { border-collapse: collapse; width: 100%; margin: 14px 0; font-size: 15px; }
+  th, td { border: 1px solid var(--border); padding: 8px 11px; text-align: left; vertical-align: top; }
+  th { background: var(--code-bg); }
+  .faq { margin: 14px 0; }
+  .faq summary { cursor: pointer; font-weight: 600; padding: 10px 12px; background: var(--code-bg); border-radius: 8px; }
+  .faq[open] summary { border-radius: 8px 8px 0 0; }
+  .faq .answer { padding: 10px 14px; border: 1px solid var(--border); border-top: none; border-radius: 0 0 8px 8px; }
+  footer { text-align: center; color: var(--soft); font-size: 14px; padding: 30px; }
+  @media (max-width: 860px) { nav.toc { display: none; } .layout { padding: 12px; } main { padding: 8px 18px 36px; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <span class="logo">CV-Studio</span>
+  <span style="color:var(--soft);font-size:14px;">Hilfe und vollstaendige Anleitung</span>
+  <a class="back" href="index.html">Zurueck zur App</a>
+</header>
+
+<div class="layout">
+  <nav class="toc" aria-label="Inhaltsverzeichnis">
+    <h2>Inhalt</h2>
+    <ol>
+      <li><a href="#ueberblick">1. Was ist CV-Studio?</a></li>
+      <li><a href="#start">2. Erste Schritte</a></li>
+      <li><a href="#oberflaeche">3. Die Oberflaeche im Ueberblick</a></li>
+      <li><a href="#mehrere">4. Mehrere Lebenslaeufe verwalten</a></li>
+      <li><a href="#bearbeiten">5. Inhalte bearbeiten (alle Bereiche)</a></li>
+      <li><a href="#foto">6. Foto hochladen</a></li>
+      <li><a href="#vorlagen">7. Vorlagen (Designs)</a></li>
+      <li><a href="#schrift">8. Schriftart waehlen</a></li>
+      <li><a href="#textfarbe">9. Textfarbe aendern</a></li>
+      <li><a href="#links">10. Portfolio, LinkedIn, GitHub, Projekt-Links</a></li>
+      <li><a href="#reihenfolge">11. Reihenfolge per Drag and Drop</a></li>
+      <li><a href="#seiten">12. A4-Seiten und Seitenumbrueche</a></li>
+      <li><a href="#pdf">13. Als PDF exportieren</a></li>
+      <li><a href="#jsonbackup">14. Sichern: JSON-Export und -Import</a></li>
+      <li><a href="#speicherung">15. Wo werden meine Daten gespeichert?</a></li>
+      <li><a href="#tipps">16. Tipps fuer einen ueberzeugenden Lebenslauf</a></li>
+      <li><a href="#faq">17. Haeufige Fragen und Problemloesung</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <h1>Vollstaendige Anleitung</h1>
+    <p class="lead">Diese Anleitung erklaert CV-Studio Schritt fuer Schritt - von ganz vorne. Sie ist fuer absolute Einsteiger geschrieben: jeder Knopf, jede Funktion und jeder Handgriff wird erklaert. Damit Sie sich nie verloren fuehlen.</p>
+
+    <section id="ueberblick">
+      <h2 class="sec">1. Was ist CV-Studio?</h2>
+      <p>CV-Studio ist eine kostenlose Anwendung, mit der Sie professionelle Lebenslaeufe direkt im Browser erstellen, bearbeiten und als PDF exportieren koennen. Sie brauchen kein Konto, keine Installation und keine Internetverbindung (ausser fuer den PDF-Export und das Laden der Schriftarten).</p>
+      <ul class="bullets">
+        <li><strong>Mehrere Lebenslaeufe</strong>: Legen Sie beliebig viele eigenstaendige Lebenslaeufe an (zum Beispiel je einen pro Bewerbungsziel).</li>
+        <li><strong>Live-Vorschau</strong>: Jede Aenderung erscheint sofort rechts in der A4-Vorschau.</li>
+        <li><strong>10 Vorlagen und 11 Schriftarten</strong>: Gestalten Sie das Aussehen mit wenigen Klicks.</li>
+        <li><strong>PDF-Export</strong>: Erzeugen Sie ein druckfertiges PDF mit anklickbaren Links.</li>
+        <li><strong>Ihre Daten bleiben bei Ihnen</strong>: Alles wird lokal in Ihrem Browser gespeichert (siehe Abschnitt 15).</li>
+      </ul>
+      <div class="box tip"><span class="label">Gut zu wissen</span>Sie koennen nichts kaputt machen. Probieren Sie ruhig alles aus - mit JSON-Export (Abschnitt 14) sichern Sie Ihren Stand jederzeit.</div>
+    </section>
+
+    <section id="start">
+      <h2 class="sec">2. Erste Schritte</h2>
+      <ol class="steps">
+        <li>Oeffnen Sie die Anwendung: entweder die Datei <code>index.html</code> per Doppelklick oder die im Web veroeffentlichte Adresse.</li>
+        <li>Beim allerersten Start sehen Sie einen <strong>Beispiel-Lebenslauf</strong> (Demo). So erkennen Sie sofort, wie ein fertiger Lebenslauf aussieht.</li>
+        <li>Legen Sie Ihren eigenen Lebenslauf an: oben links auf <strong>+ Neu</strong> klicken (siehe Abschnitt 4). Oder bearbeiten Sie die Demo einfach mit Ihren Daten.</li>
+        <li>Fuellen Sie die Bereiche links aus. Die Vorschau rechts aktualisiert sich automatisch.</li>
+        <li>Waehlen Sie eine Vorlage und eine Schrift, die Ihnen gefallen (Abschnitte 7 und 8).</li>
+        <li>Exportieren Sie das Ergebnis als PDF (Abschnitt 13).</li>
+      </ol>
+    </section>
+
+    <section id="oberflaeche">
+      <h2 class="sec">3. Die Oberflaeche im Ueberblick</h2>
+      <p>Die Anwendung besteht aus drei Bereichen:</p>
+      <ul class="bullets">
+        <li><strong>Obere Leiste</strong>: Hier verwalten Sie Lebenslaeufe (Auswahl, Neu, Duplizieren, Umbenennen, Loeschen), waehlen Vorlage, Schrift und Textfarbe und finden die Knoepfe fuer JSON-Import, JSON-Export und PDF-Export. Ganz rechts steht ein Speicher-Hinweis (zum Beispiel "Gespeichert").</li>
+        <li><strong>Editor (links)</strong>: Hier geben Sie Ihre Inhalte ein. Oben befinden sich Reiter (Tabs): Persoenlich, Skills, Erfahrung, Bildung, Projekte, Sprachen, Sonstiges.</li>
+        <li><strong>Vorschau (rechts)</strong>: Zeigt Ihren Lebenslauf in Echtzeit als A4-Seite. Gestrichelte Linien zeigen, wo eine Seite endet und die naechste beginnt.</li>
+      </ul>
+      <div class="box tip"><span class="label">Automatisches Speichern</span>Sie muessen nichts manuell speichern. Sobald oben rechts "Gespeichert" steht, ist Ihr aktueller Stand im Browser gesichert.</div>
+    </section>
+
+    <section id="mehrere">
+      <h2 class="sec">4. Mehrere Lebenslaeufe verwalten</h2>
+      <p>In der oberen Leiste finden Sie ganz links den Bereich <strong>Lebenslauf</strong> mit einem Auswahlfeld und vier Knoepfen.</p>
+      <h3>Einen neuen Lebenslauf anlegen</h3>
+      <ol class="steps">
+        <li>Klicken Sie auf <strong>+ Neu</strong>.</li>
+        <li>Geben Sie einen Namen ein (zum Beispiel "Bewerbung Data Engineer") und bestaetigen Sie.</li>
+        <li>Es wird ein leerer Lebenslauf angelegt und sofort aktiv. Fuellen Sie ihn nun aus.</li>
+      </ol>
+      <h3>Zwischen Lebenslaeufen wechseln</h3>
+      <p>Oeffnen Sie das <strong>Auswahlfeld</strong> und waehlen Sie den gewuenschten Lebenslauf. Die Anwendung laedt sofort dessen Inhalte.</p>
+      <h3>Duplizieren, Umbenennen, Loeschen</h3>
+      <ul class="bullets">
+        <li><strong>Duplizieren</strong>: erstellt eine unabhaengige Kopie des aktuellen Lebenslaufs (zum Beispiel um eine Variante auszuprobieren).</li>
+        <li><strong>Umbenennen</strong>: aendert den Namen des aktuellen Lebenslaufs.</li>
+        <li><strong>Loeschen</strong>: entfernt den aktuellen Lebenslauf endgueltig. Es erscheint eine Sicherheitsabfrage. Der Knopf ist gesperrt, wenn nur noch ein Lebenslauf vorhanden ist.</li>
+      </ul>
+      <div class="box warn"><span class="label">Achtung beim Loeschen</span>Loeschen kann nicht rueckgaengig gemacht werden. Wenn Sie unsicher sind, exportieren Sie den Lebenslauf vorher als JSON (Abschnitt 14).</div>
+    </section>
+
+    <section id="bearbeiten">
+      <h2 class="sec">5. Inhalte bearbeiten (alle Bereiche)</h2>
+      <p>Im Editor links waehlen Sie oben einen Reiter. Jede Aenderung erscheint sofort in der Vorschau.</p>
+
+      <h3>Persoenlich</h3>
+      <p>Hier stehen Ihre Stammdaten: Name, Berufsbezeichnung, Adresse, E-Mail, Telefon, LinkedIn, GitHub, Portfolio/Website, Geburtsdatum, Geburtsort, Staatsbuergerschaft und Familienstand. Tragen Sie ein, was Sie zeigen moechten. Leere Felder werden in der Vorschau einfach weggelassen.</p>
+
+      <h3>Skills (Kenntnisse)</h3>
+      <ol class="steps">
+        <li>Klicken Sie auf <strong>+ Kategorie hinzufuegen</strong> (zum Beispiel "Programmierung").</li>
+        <li>Klicken Sie bei der Kategorie auf <strong>Bearbeiten</strong>.</li>
+        <li>Aendern Sie bei Bedarf den Kategorienamen.</li>
+        <li>Geben Sie unten im Feld einen Skill ein (zum Beispiel "Python") und druecken Sie <span class="kbd">Enter</span> oder das <strong>+</strong>. Wiederholen Sie das fuer weitere Skills.</li>
+        <li>Ein Skill laesst sich ueber das kleine <strong>x</strong> neben dem Eintrag wieder entfernen.</li>
+      </ol>
+
+      <h3>Erfahrung (Berufserfahrung)</h3>
+      <ol class="steps">
+        <li>Klicken Sie auf <strong>+ Eintrag hinzufuegen</strong>.</li>
+        <li>Klicken Sie auf <strong>Bearbeiten</strong> und fuellen Sie Position, Unternehmen, Ort, Von und Bis aus.</li>
+        <li>Fuegen Sie unter "Aufgaben" mit <strong>+ Punkt</strong> einzelne Stichpunkte hinzu. Halten Sie diese kurz (siehe Abschnitt 16).</li>
+      </ol>
+
+      <h3>Bildung (Ausbildung)</h3>
+      <p>Wie bei der Erfahrung: Abschluss, Institution, Ort, Von, Bis und optionale Anmerkungen.</p>
+
+      <h3>Projekte</h3>
+      <ol class="steps">
+        <li>Klicken Sie auf <strong>+ Eintrag hinzufuegen</strong> und dann <strong>Bearbeiten</strong>.</li>
+        <li>Tragen Sie Projekttitel und Art/Kontext ein.</li>
+        <li>Optional: tragen Sie unter <strong>Projekt-Link</strong> die Adresse des Projekts ein (zum Beispiel Ihr GitHub-Repository). Dann erscheint im Lebenslauf ein dezenter Knopf "Ansehen", der im PDF anklickbar ist.</li>
+        <li>Fuegen Sie unter "Tech-Stack" die verwendeten Technologien hinzu (Eingabe und <span class="kbd">Enter</span>).</li>
+        <li>Fuegen Sie unter "Ergebnisse" kurze Stichpunkte hinzu.</li>
+      </ol>
+
+      <h3>Sprachen</h3>
+      <p>Fuegen Sie Sprache und Niveau hinzu (zum Beispiel "Deutsch" / "C1").</p>
+
+      <h3>Sonstiges (Interessen)</h3>
+      <p>Kurze Eintraege wie Interessen, Fuehrerschein oder Ehrenamt.</p>
+
+      <div class="box tip"><span class="label">Eintraege schliessen</span>Mit erneutem Klick auf <strong>Bearbeiten</strong> klappen Sie eine Karte wieder zu. Das schafft Uebersicht.</div>
+    </section>
+
+    <section id="foto">
+      <h2 class="sec">6. Foto hochladen</h2>
+      <ol class="steps">
+        <li>Gehen Sie in den Reiter <strong>Persoenlich</strong>.</li>
+        <li>Klicken Sie auf <strong>Foto waehlen</strong> und waehlen Sie eine Bilddatei von Ihrem Geraet.</li>
+        <li>Unter <strong>Foto-Darstellung</strong> waehlen Sie zwischen <em>Rund</em> und <em>Eckig</em>.</li>
+        <li>Mit <strong>Entfernen</strong> loeschen Sie das Foto wieder.</li>
+      </ol>
+      <div class="box tip"><span class="label">Tipp zum Bild</span>Verwenden Sie ein moeglichst quadratisches, gut belichtetes Portraitfoto. Das Bild wird direkt im Browser gespeichert und nirgendwohin hochgeladen.</div>
+    </section>
+
+    <section id="vorlagen">
+      <h2 class="sec">7. Vorlagen (Designs)</h2>
+      <p>Oben in der Leiste waehlen Sie unter <strong>Vorlage</strong> aus 10 Designs. Der Inhalt bleibt gleich, nur das Aussehen aendert sich.</p>
+      <table>
+        <tr><th>Vorlage</th><th>Beschreibung</th></tr>
+        <tr><td>Minimal</td><td>Klar und modern, blaue Akzentfarbe. Gute Allzweck-Wahl.</td></tr>
+        <tr><td>Sidebar-Akzent</td><td>Dunkle Seitenleiste links, Inhalt rechts.</td></tr>
+        <tr><td>Klassisch DACH</td><td>Tabellarischer Aufbau im deutschen Standard.</td></tr>
+        <tr><td>Kreativ Header</td><td>Dunkler Kopfbereich, darunter zweispaltig.</td></tr>
+        <tr><td>Kompakt Zeitachse</td><td>Zeitleisten-Format, platzsparend.</td></tr>
+        <tr><td>Executive</td><td>Zentriert, elegant, zurueckhaltend.</td></tr>
+        <tr><td>Zweispaltig</td><td>Skills/Bildung links, Erfahrung/Projekte rechts (Teal-Akzent).</td></tr>
+        <tr><td>Seitenlinie</td><td>Einspaltig mit farbiger Linie je Abschnitt.</td></tr>
+        <tr><td>Profilkarte</td><td>Farbiger Profilkopf mit integriertem Foto.</td></tr>
+        <tr><td>Schlicht ATS</td><td>Schwarz-weiss, maximale Kompatibilitaet mit Bewerbungssystemen.</td></tr>
+      </table>
+      <div class="box tip"><span class="label">Welche Vorlage?</span>Fuer automatische Bewerbungssysteme (ATS) ist "Schlicht ATS" oder "Minimal" am sichersten. Fuer einen kreativen Eindruck eignen sich "Kreativ Header" oder "Profilkarte".</div>
+    </section>
+
+    <section id="schrift">
+      <h2 class="sec">8. Schriftart waehlen</h2>
+      <p>Unter <strong>Schrift</strong> waehlen Sie aus 11 Schriftarten (zum Beispiel Inter, Arial, Calibri, Georgia, Times New Roman). Die Vorschau aktualisiert sich sofort. Serifenschriften (Georgia, Times, EB Garamond) wirken klassisch, serifenlose (Inter, Arial, Lato) modern.</p>
+    </section>
+
+    <section id="textfarbe">
+      <h2 class="sec">9. Textfarbe aendern</h2>
+      <p>Standardmaessig ist der Text <strong>schwarz</strong> - das ist am besten lesbar und wird von Personalverantwortlichen erwartet. Sie koennen die Farbe aber anpassen:</p>
+      <ol class="steps">
+        <li>Klicken Sie oben in der Leiste bei <strong>Textfarbe</strong> auf das Farbfeld.</li>
+        <li>Waehlen Sie eine Farbe. Die Vorschau aktualisiert sich sofort.</li>
+        <li>Mit dem Knopf <strong>Schwarz</strong> setzen Sie die Farbe jederzeit auf den Standard zurueck.</li>
+      </ol>
+      <div class="box warn"><span class="label">Lesbarkeit beachten</span>Sehr helle Farben (zum Beispiel Hellgrau oder Gelb) sind auf weissem Papier schwer lesbar und wirken unprofessionell. Bleiben Sie bei Schwarz oder einem dunklen Farbton. Die Akzentfarben der Ueberschriften aendern sich hierdurch nicht.</div>
+    </section>
+
+    <section id="links">
+      <h2 class="sec">10. Portfolio, LinkedIn, GitHub und Projekt-Links</h2>
+      <ul class="bullets">
+        <li><strong>Portfolio/Website</strong>: Wenn Sie im Reiter Persoenlich eine Website eintragen, erscheint sie als gut sichtbare Schaltflaeche "Portfolio" - sie faellt auf, statt als lange Adresse unterzugehen.</li>
+        <li><strong>LinkedIn und GitHub</strong>: werden als kompakte Symbole angezeigt (nicht als lange Adresse). Das spart Platz und sieht aufgeraeumt aus.</li>
+        <li><strong>Projekt-Links</strong>: siehe Abschnitt 5 (Projekte). Erscheinen als kleiner Knopf "Ansehen".</li>
+      </ul>
+      <p>Alle diese Links bleiben im exportierten PDF <strong>anklickbar</strong>.</p>
+    </section>
+
+    <section id="reihenfolge">
+      <h2 class="sec">11. Reihenfolge per Drag and Drop</h2>
+      <ol class="steps">
+        <li>Fahren Sie im Editor mit der Maus ueber eine Karte (zum Beispiel eine Berufserfahrung).</li>
+        <li>Klicken und halten Sie die Karte (am Griff-Symbol links) und ziehen Sie sie nach oben oder unten.</li>
+        <li>Lassen Sie an der gewuenschten Position los. Die Reihenfolge im Lebenslauf passt sich sofort an.</li>
+      </ol>
+      <div class="box tip"><span class="label">Empfehlung</span>Stellen Sie die wichtigsten und aktuellsten Eintraege nach oben - sie werden zuerst gelesen.</div>
+    </section>
+
+    <section id="seiten">
+      <h2 class="sec">12. A4-Seiten und Seitenumbrueche</h2>
+      <p>Die Vorschau zeigt Ihren Lebenslauf als echte A4-Seiten. An jeder Seitengrenze sehen Sie eine dezente gestrichelte Linie mit der Beschriftung "Seite 2", "Seite 3" und so weiter.</p>
+      <ul class="bullets">
+        <li>Damit kein Eintrag mitten im Text abgeschnitten wird, schiebt die Anwendung Bloecke, die genau auf einer Seitengrenze liegen wuerden, automatisch auf die naechste Seite (bei einspaltigen Vorlagen).</li>
+        <li>Das exportierte PDF entspricht exakt der Vorschau - inklusive dieser sauberen Umbrueche.</li>
+      </ul>
+      <div class="box tip"><span class="label">Lebenslauf zu lang?</span>Kuerzen Sie Stichpunkte, entfernen Sie aeltere Eintraege oder reduzieren Sie die Anzahl der Projekte. Ein bis zwei Seiten sind ideal.</div>
+    </section>
+
+    <section id="pdf">
+      <h2 class="sec">13. Als PDF exportieren</h2>
+      <ol class="steps">
+        <li>Klicken Sie oben rechts auf <strong>PDF exportieren</strong>.</li>
+        <li>Warten Sie kurz (der Knopf zeigt "Bitte warten..."). Die Anwendung erzeugt ein mehrseitiges A4-PDF.</li>
+        <li>Das PDF wird automatisch heruntergeladen. Der Dateiname enthaelt den Namen Ihres Lebenslaufs.</li>
+      </ol>
+      <ul class="bullets">
+        <li>Die Links (E-Mail, LinkedIn, GitHub, Portfolio, Projekte) bleiben im PDF anklickbar.</li>
+        <li>Das PDF entspricht der Vorschau. Pruefen Sie es vor dem Versenden trotzdem einmal.</li>
+      </ul>
+      <div class="box tip"><span class="label">Internetverbindung</span>Fuer den PDF-Export und das korrekte Laden der Schriftarten ist eine Internetverbindung noetig.</div>
+    </section>
+
+    <section id="jsonbackup">
+      <h2 class="sec">14. Sichern: JSON-Export und -Import</h2>
+      <p>Mit JSON-Dateien sichern Sie Ihre Lebenslaeufe als Datei - die zuverlaessigste Methode gegen Datenverlust und zum Wechsel auf ein anderes Geraet.</p>
+      <h3>Exportieren (sichern)</h3>
+      <ol class="steps">
+        <li>Waehlen Sie oben den gewuenschten Lebenslauf aus.</li>
+        <li>Klicken Sie auf <strong>JSON exportieren</strong>. Es wird eine <code>.json</code>-Datei heruntergeladen.</li>
+        <li>Bewahren Sie diese Datei sicher auf (zum Beispiel in einem Cloud-Ordner).</li>
+      </ol>
+      <h3>Importieren (wiederherstellen)</h3>
+      <ol class="steps">
+        <li>Klicken Sie auf <strong>JSON importieren</strong>.</li>
+        <li>Waehlen Sie Ihre <code>.json</code>-Datei aus.</li>
+        <li>Es wird daraus ein <strong>neuer</strong> Lebenslauf angelegt (vorhandene Lebenslaeufe bleiben unveraendert).</li>
+      </ol>
+      <div class="box tip"><span class="label">Empfehlung</span>Exportieren Sie Ihren fertigen Lebenslauf einmal als JSON und bewahren Sie die Datei auf. So koennen Sie ihn jederzeit auf jedem Geraet wiederherstellen.</div>
+    </section>
+
+    <section id="speicherung">
+      <h2 class="sec">15. Wo werden meine Daten gespeichert?</h2>
+      <p>Das ist wichtig zu verstehen, damit Sie keine Daten verlieren:</p>
+      <ul class="bullets">
+        <li>Ihre Lebenslaeufe werden im <strong>lokalen Speicher Ihres Browsers</strong> gespeichert (LocalStorage), <strong>nicht</strong> auf einem Server.</li>
+        <li>Der Speicher ist <strong>an einen Browser und eine Adresse gebunden</strong>. Auf einem anderen Computer, in einem anderen Browser oder unter einer anderen Webadresse sehen Sie Ihre Daten daher nicht automatisch.</li>
+        <li>Wenn Sie die Browserdaten loeschen (zum Beispiel den Verlauf inklusive Webseitendaten), werden auch Ihre Lebenslaeufe geloescht.</li>
+      </ul>
+      <div class="box warn"><span class="label">So vermeiden Sie Datenverlust</span>Exportieren Sie wichtige Lebenslaeufe als JSON-Datei (Abschnitt 14) und bewahren Sie sie auf. Das ist die einzige sichere Methode fuer eine dauerhafte Sicherung und fuer den Wechsel zwischen Geraeten.</div>
+      <p>Beim ersten Start in einem leeren Browser zeigt die App einen Beispiel-Lebenslauf, damit sie nie leer wirkt. Ihre eigenen Daten werden dadurch niemals ueberschrieben.</p>
+    </section>
+
+    <section id="tipps">
+      <h2 class="sec">16. Tipps fuer einen ueberzeugenden Lebenslauf</h2>
+      <ul class="bullets">
+        <li><strong>Kurz und praegnant</strong>: ein Gedanke pro Stichpunkt, moeglichst eine Zeile. Vermeiden Sie lange Textbloecke.</li>
+        <li><strong>Ergebnisorientiert</strong>: nennen Sie Resultate und Zahlen (zum Beispiel "Ladezeit um 60 Prozent reduziert").</li>
+        <li><strong>Lesbarkeit zuerst</strong>: schwarze Schrift auf weissem Grund, klare Schriftart, genug Abstand.</li>
+        <li><strong>Relevanz</strong>: stellen Sie die wichtigsten Eintraege nach oben (Drag and Drop, Abschnitt 11).</li>
+        <li><strong>Laenge</strong>: ein bis zwei Seiten reichen meist. Weniger ist oft mehr.</li>
+        <li><strong>Pruefen</strong>: kontrollieren Sie Rechtschreibung und das fertige PDF vor dem Versenden.</li>
+      </ul>
+    </section>
+
+    <section id="faq">
+      <h2 class="sec">17. Haeufige Fragen und Problemloesung</h2>
+
+      <details class="faq">
+        <summary>Auf der veroeffentlichten Webseite ist mein Lebenslauf leer. Warum?</summary>
+        <div class="answer">Ihre Daten liegen im lokalen Speicher genau des Browsers und der Adresse, in dem Sie sie erstellt haben (siehe Abschnitt 15). Die Webseite hat einen eigenen, zunaechst leeren Speicher. Loesung: exportieren Sie Ihren Lebenslauf dort als JSON, wo er vorhanden ist, und importieren Sie ihn auf der Webseite (Abschnitt 14).</div>
+      </details>
+
+      <details class="faq">
+        <summary>Meine Daten sind verschwunden. Sind sie verloren?</summary>
+        <div class="answer">Meist nicht. Pruefen Sie, ob Sie denselben Browser und dieselbe Adresse verwenden wie beim Erstellen. Pruefen Sie das Auswahlfeld oben - vielleicht ist nur ein anderer Lebenslauf aktiv. Falls Sie eine JSON-Sicherung haben, importieren Sie diese. Wenn Sie die Browserdaten geloescht haben, lassen sich nur Daten aus einer JSON-Sicherung wiederherstellen.</div>
+      </details>
+
+      <details class="faq">
+        <summary>Das PDF schneidet Inhalte ab.</summary>
+        <div class="answer">Bei einspaltigen Vorlagen werden Bloecke automatisch sauber auf die naechste Seite geschoben. Falls dennoch etwas unguenstig umbricht, kuerzen Sie den betroffenen Eintrag, verschieben Sie ihn per Drag and Drop oder waehlen Sie eine einspaltige Vorlage (zum Beispiel Minimal oder Schlicht ATS).</div>
+      </details>
+
+      <details class="faq">
+        <summary>Die LinkedIn- oder GitHub-Symbole sind im PDF nicht sichtbar.</summary>
+        <div class="answer">Die Symbole passen ihre Farbe an die Textfarbe an und werden beim Export korrekt eingefaerbt. Falls ein Symbol auf einem dunklen Hintergrund nicht erscheint, pruefen Sie, ob die Adresse korrekt eingetragen ist, und exportieren Sie erneut.</div>
+      </details>
+
+      <details class="faq">
+        <summary>Kann ich denselben Lebenslauf auf mehreren Geraeten bearbeiten?</summary>
+        <div class="answer">Nicht automatisch, da die Daten lokal im Browser liegen. Exportieren Sie den Lebenslauf als JSON und importieren Sie ihn auf dem anderen Geraet (Abschnitt 14).</div>
+      </details>
+
+      <details class="faq">
+        <summary>Muss ich speichern?</summary>
+        <div class="answer">Nein. Die App speichert automatisch. Wenn oben rechts "Gespeichert" steht, ist Ihr Stand gesichert. Fuer eine dauerhafte Sicherung nutzen Sie zusaetzlich den JSON-Export.</div>
+      </details>
+
+      <details class="faq">
+        <summary>Die Schrift wirkt grau und schwer lesbar.</summary>
+        <div class="answer">Klicken Sie oben bei Textfarbe auf <strong>Schwarz</strong>, um die gut lesbare Standardfarbe zu setzen (Abschnitt 9).</div>
+      </details>
+    </section>
+
+    <p style="margin-top:32px;"><a class="back" href="index.html" style="display:inline-block;">Zurueck zur App</a></p>
+  </main>
+</div>
+
+<footer>CV-Studio - Hilfe und Anleitung. Erstellen Sie professionelle Lebenslaeufe direkt im Browser.</footer>
+</body>
+</html>
