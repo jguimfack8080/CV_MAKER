@@ -9,6 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Lato:wght@400;700&family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="cv-core.js"></script>
 <style>
 /* ====== RESET ====== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -34,6 +35,8 @@ html, body { height: 100%; font-family: 'Inter', system-ui, sans-serif; backgrou
 #topbar .spacer { flex: 1; min-width: 8px; }
 #topbar label { font-size: 11px; color: var(--c-muted); white-space: nowrap; }
 #topbar select { padding: 5px 8px; border: 1px solid var(--c-border); border-radius: var(--radius); font-size: 12px; background: white; color: var(--c-text); }
+#topbar #cv-select { max-width: 180px; font-weight: 600; }
+#topbar button:disabled { opacity: .45; cursor: not-allowed; }
 .workspace { display: flex; flex: 1; overflow: hidden; }
 #editor-panel {
   width: var(--sidebar-w); flex-shrink: 0;
@@ -384,6 +387,13 @@ html, body { height: 100%; font-family: 'Inter', system-ui, sans-serif; backgrou
   <div id="topbar">
     <span class="logo">CV-Studio</span>
     <div class="sep"></div>
+    <label>Lebenslauf</label>
+    <select id="cv-select" onchange="switchToCv(this.value)" title="Lebenslauf auswaehlen"></select>
+    <button class="btn btn-ghost btn-sm" onclick="createNewCv()" title="Neuen Lebenslauf anlegen">+ Neu</button>
+    <button class="btn btn-ghost btn-sm" onclick="duplicateCurrentCv()" title="Aktuellen Lebenslauf duplizieren">Duplizieren</button>
+    <button class="btn btn-ghost btn-sm" onclick="renameCurrentCv()" title="Aktuellen Lebenslauf umbenennen">Umbenennen</button>
+    <button class="btn btn-danger btn-sm" onclick="deleteCurrentCv()" title="Aktuellen Lebenslauf loeschen">Loeschen</button>
+    <div class="sep"></div>
     <label>Vorlage</label>
     <select id="template-select" onchange="onTemplateChange(this.value)">
       <option value="minimal">Minimal</option>
@@ -460,116 +470,93 @@ const FONTS = {
   garamond:   "'EB Garamond', Garamond, serif"
 };
 
-// ====== STANDARDDATEN ======
-const DEFAULT_DATA = {
-  personal: {
-    name: "Jordan Jeuna",
-    jobtitle: "Data Engineer | Data Scientist | AI/ML Engineer",
-    address: "Soddernstr., 27572 Bremerhaven",
-    email: "jeunaj3@gmail.com",
-    phone: "015258575909",
-    birthdate: "05.10.2000",
-    birthplace: "Fongo-Tongo",
-    nationality: "Kamerunisch",
-    marital: "ledig",
-    linkedin: "linkedin.com/in/jordanguimfackjeuna-08b821211",
-    github: "github.com/jguimfack8080",
-    website: "jordandev.portfolio.thetransporterlabs.de",
-    photo: null,
-    photoShape: "circle"
-  },
-  fontKey: "inter",
-  template: "minimal",
-  skills: [
-    { id:"sk1", category:"Programmierung", items:["Python","SQL","Java","JavaScript","PHP","Bash"] },
-    { id:"sk2", category:"Data Engineering", items:["Apache Spark","Apache Airflow","Apache Kafka","Debezium (CDC)","dbt Core","DuckDB","ETL/ELT","Hadoop","Apache NiFi","Apache Beam","Parquet"] },
-    { id:"sk3", category:"Machine Learning & AI", items:["Scikit-learn","Pandas","NumPy","Feature Engineering","NLP","Predictive Modelling","Datentransformation","Datenqualitaet"] },
-    { id:"sk4", category:"Generative AI & LLMs", items:["RAG (Retrieval-Augmented Generation)","Groq API","LangChain","Milvus (Vektordatenbank)","Sentence-Transformers","Prompt Engineering"] },
-    { id:"sk5", category:"Cloud & DevOps", items:["Google Cloud Platform (GCP)","Docker","Docker Compose","Nginx","Linux/VPS","Git"] },
-    { id:"sk6", category:"Datenbanken & Visualisierung", items:["PostgreSQL","MySQL","Power BI","FastAPI","React Native","Flutter"] }
-  ],
-  experience: [
-    { id:"ex1", title:"Big Data Engineer Werkstudent", company:"CEWE Stiftung & Co. KGaA", location:"Oldenburg", from:"02/2024", to:"heute",
-      bullets:["Konzeption, Entwicklung und Betrieb skalierbarer ETL- und Datenpipelines (Batch & Streaming) mit Hadoop, GCP, Apache Airflow und Apache Spark","Datenmodellierung, Qualitaetssicherung und Automatisierung zur Bereitstellung belastbarer Daten fuer BI- und Data-Science-Anwendungen","Enge Zusammenarbeit mit BI Engineers, Data Scientists, Business Analysts und Fachexperten zur Optimierung von Datenmodellen"] },
-    { id:"ex2", title:"Bachelorand - Streaming-Architektur fuer Predictive Maintenance", company:"CEWE Stiftung & Co. KGaA", location:"Oldenburg", from:"02/2025", to:"05/2025",
-      bullets:["Konzeption und prototypische Implementierung einer Echtzeit-Streaming-Architektur auf Google Cloud Platform (GCP) als Grundlage fuer Predictive Maintenance (Camelot-Projekt)","Einsatz von Apache NiFi, Apache Beam SDK (Python) und GCP-Technologien zur Verarbeitung von Maschinendaten in Echtzeit"] },
-    { id:"ex3", title:"Werkstudent Data Analytics & Business Intelligence", company:"INIT Individuelle Softwareentwicklung & Beratung", location:"Stuttgart", from:"07/2023", to:"01/2024",
-      bullets:["Datenintegration, -analyse und -aufbereitung zur Erstellung aussagekraeftiger Power BI-Dashboards fuer interne Entscheidungsprozesse"] },
-    { id:"ex4", title:"Praktikant Softwareentwicklung", company:"INIT Individuelle Softwareentwicklung & Beratung", location:"Bremerhaven", from:"02/2023", to:"06/2023",
-      bullets:["Mobile- und Web-Entwicklung mit React Native, Swift und Cross-Platform-Ansaetzen"] },
-    { id:"ex5", title:"Studentische Hilfskraft", company:"Atlantic Hotel Sail City", location:"Bremerhaven", from:"10/2021", to:"heute",
-      bullets:["Technischer Support, Remote-Diagnose und Behebung von Hardware- und Softwareproblemen"] }
-  ],
-  education: [
-    { id:"edu1", degree:"Masterstudium Informatik, M.Sc.", institution:"Hochschule Bremerhaven", location:"Bremerhaven", from:"10/2025", to:"heute", notes:"" },
-    { id:"edu2", degree:"Wirtschaftsinformatik, B.Sc.", institution:"Hochschule Bremerhaven", location:"Bremerhaven", from:"10/2020", to:"05/2025", notes:"" }
-  ],
-  projects: [
-    { id:"pr1", title:"Data Job Radar Deutschland", type:"Persoenliches Projekt", from:"2025", to:"heute",
-      stack:["Python","DuckDB","dbt Core","Apache Airflow","FastAPI","Next.js","Docker","Nginx","Linux/VPS"],
-      bullets:["Konzipiert, implementiert und in Produktion betrieben: End-to-End-Analyseplattform fuer den deutschen IT-Arbeitsmarkt mit taeglich ueber 2.600 bereinigten Stellenanzeigen im Gold-Layer","Automatisierte Multi-Source-Ingestionpipeline (5 APIs) mit fuenfstufiger Zero-Duplikat-Garantie","Medallion Data Lake (Bronze/Silver/Gold) mit Apache Parquet, DuckDB als Analysemotor und dbt Core (7 automatisierte Datentests)","Orchestrierung mit Apache Airflow: 6-Task-DAG, 4 Laeufe/Tag, Retry-Backoff, E-Mail-Alerting; Deployment via Docker Compose auf Linux-VPS hinter Nginx mit TLS","NLP-Skill-Extraktor (Regex, erweiterbare Taxonomie) und Gehaltsanalysen (P25/Median/P75) via DuckDB APPROX_QUANTILE","REST-API mit FastAPI (13 kombinierbare Filter, Keyset-Pagination, In-Memory-Cache) und Next.js-Dashboard mit 6 Seiten","Ressourcenbedarf unter 512 MB - Pipeline dauerhaft gruen"] },
-    { id:"pr2", title:"BizCora - Enterprise SaaS Bestands- und Abrechnungsapp", type:"Eigenprojekt (Multi-Tenant SaaS)", from:"03/2025", to:"heute",
-      stack:["FastAPI","Flutter","PostgreSQL","Docker","RabbitMQ","Celery","WebSocket","JWT","Microservices","Groq API","LangChain","Milvus","Kafka","Debezium","Sentence-Transformers"],
-      bullets:["Architektur und Entwicklung einer mandantenfaehigen Enterprise-Applikation mit strikter Multi-Tenant-Isolation (company_id immer aus JWT)","RAG-Modul mit Vektorsuche via Milvus, Echtzeit-Datensync via Kafka/Debezium (CDC), Embeddings via Sentence-Transformers, Antwortgenerierung via Groq API, orchestriert mit LangChain","RBAC-System (Admin/Manager/Kassierer), JWT-Authentifizierung, Echtzeit-Benachrichtigungen via WebSocket/RabbitMQ/Celery"] },
-    { id:"pr3", title:"Zugverspaetungs-Vorhersagesystem", type:"Persoenliches Projekt", from:"09/2025", to:"heute",
-      stack:["PostgreSQL","Python","Apache Airflow","Scikit-learn","ETL","REST APIs","Data Quality"],
-      bullets:["PostgreSQL Data Warehouse mit vierstufiger Architektur (STG/RAW/DWH/META)","Automatisierte ETL-Pipeline mit Apache Airflow (Deutsche Bahn, Open-Meteo APIs)","ML-Modell (Scikit-learn) zur Zugverspaetungsvorhersage; SQL-Optimierung steigerte die Performance um Faktor 10","Data-Quality-Framework mit RBAC und vollstaendigem Audit-Trail"] },
-    { id:"pr4", title:"IoT-Angriffserkennung mit Machine Learning", type:"Studienprojekt - M.Sc. Informatik (Modul IT-Sicherheit)", from:"2025", to:"2026",
-      stack:["Python","Scikit-learn","Pandas","NumPy"],
-      bullets:["Zweistufige ML-Pipeline zur Angriffserkennung in IoT-Netzwerken (CICIoT2023, ~8,5 GB, 8 Angriffskategorien)","Vergleich PCA vs. StandardScaler, Hyperparameter-Optimierung via Grid Search","Balanced Accuracy 0,99 in Stufe 1 der Klassifikationspipeline"] },
-    { id:"pr5", title:"SeasideAR", type:"Bachelorprojekt", from:"04/2023", to:"03/2024",
-      stack:["ARCore","Unity/C#","Spring Boot","Flutter","Java"],
-      bullets:["Analyse, Konzeption und prototypische Umsetzung einer Mixed-Reality-Anwendung mit ARCore und Unity/C#"] },
-    { id:"pr6", title:"PGP-Schluesselsignaturdienst", type:"Hochschulprojekt", from:"10/2023", to:"03/2024",
-      stack:["Python","Flask","Kryptographie","SMTP"],
-      bullets:["Automatisierter PGP-Schluesselsignaturdienst mit Python (Flask), verschluesselter SMTP-Kommunikation und sicherer Datenhaltung"] }
-  ],
-  languages: [
-    { id:"la1", name:"Franzoesisch", level:"Muttersprache" },
-    { id:"la2", name:"Deutsch", level:"C1" },
-    { id:"la3", name:"Englisch", level:"B1" },
-    { id:"la4", name:"Spanisch", level:"A1" }
-  ],
-  interests: [
-    { id:"in1", text:"Joggen" },
-    { id:"in2", text:"Gemeinsames Kochen" },
-    { id:"in3", text:"Fuehrerschein Klasse B" }
-  ]
-};
-
-// ====== ZUSTAND ======
-let cvData = JSON.parse(JSON.stringify(DEFAULT_DATA));
+// ====== ZUSTAND (Mehrfach-Lebenslauf) ======
+// Die Daten- und Geschaeftslogik liegt in cv-core.js (Store, Models, Library).
+// Hier wird nur der UI-nahe Zustand gehalten: aktiver CV im Speicher + aktiver Reiter.
+const library = CVCore.createLibrary();   // Geschaeftslogik ueber localStorage
+let cvData = CVCore.Models.createEmptyCv(); // Daten des aktuell bearbeiteten CV
+let currentCvId = null;                     // ID des aktiven Lebenslaufs
 let currentTab = 'personal';
 let saveTimer = null;
 
-function loadFromStorage() {
-  const saved = localStorage.getItem('cvstudio_data');
-  if (saved) {
-    try {
-      const parsed = JSON.parse(saved);
-      cvData = { ...JSON.parse(JSON.stringify(DEFAULT_DATA)), ...parsed };
-      if (!cvData.personal.github) cvData.personal.github = '';
-      if (!cvData.personal.website) cvData.personal.website = '';
-      ensureIds();
-    } catch(e) { cvData = JSON.parse(JSON.stringify(DEFAULT_DATA)); }
-  }
+// Laedt die Bibliothek beim Start: vorhandene CVs, sonst Migration des alten
+// Einzel-CV, sonst ein neuer leerer Lebenslauf. Setzt cvData/currentCvId.
+function initLibrary() {
+  currentCvId = library.ensureAtLeastOne('Mein Lebenslauf');
+  const active = library.loadActive();
+  currentCvId = active.id;
+  cvData = active.data;
 }
-function ensureIds() {
-  const u = () => Math.random().toString(36).substr(2,6);
-  ['skills','experience','education','projects','languages','interests'].forEach(k => {
-    if (Array.isArray(cvData[k])) cvData[k].forEach(i => { if (!i.id) i.id = u(); });
-  });
+
+// Wechselt den aktiven Lebenslauf und laedt dessen Daten.
+function switchToCv(id) {
+  if (!library.exists(id)) return;
+  library.setActive(id);
+  currentCvId = id;
+  cvData = library.load(id);
+  currentTab = 'personal';
+  renderCvBar();
+  renderEditor();
+  renderPreview();
+  applyFont();
 }
+
+// Speichert den aktiven Lebenslauf (verzoegert) und aktualisiert die Vorschau.
 function saveToStorage() {
   const ind = document.getElementById('save-indicator');
   if (ind) { ind.textContent = 'Speichert...'; ind.className = 'autosave-indicator saving'; }
   if (saveTimer) clearTimeout(saveTimer);
   saveTimer = setTimeout(() => {
-    localStorage.setItem('cvstudio_data', JSON.stringify(cvData));
+    if (currentCvId) library.save(currentCvId, cvData);
     if (ind) { ind.textContent = 'Gespeichert'; ind.className = 'autosave-indicator'; }
+    renderCvBar(); // aktualisiert ggf. den angezeigten Namen/Datum
   }, 600);
 }
 function markDirty() { saveToStorage(); renderPreview(); }
+
+// ====== CV-VERWALTUNG (UI-Aktionen ueber die Geschaeftslogik) ======
+function createNewCv() {
+  const name = (prompt('Name des neuen Lebenslaufs:', 'Lebenslauf ' + (library.count() + 1)) || '').trim();
+  if (name === '') return; // Abbruch
+  const id = library.create(name);
+  switchToCv(id);
+}
+function duplicateCurrentCv() {
+  if (!currentCvId) return;
+  const id = library.duplicate(currentCvId);
+  if (id) switchToCv(id);
+}
+function renameCurrentCv() {
+  if (!currentCvId) return;
+  const aktuell = library.getName(currentCvId) || '';
+  const name = (prompt('Lebenslauf umbenennen:', aktuell) || '').trim();
+  if (name === '' || name === aktuell) return;
+  library.rename(currentCvId, name);
+  renderCvBar();
+}
+function deleteCurrentCv() {
+  if (!currentCvId) return;
+  const name = library.getName(currentCvId) || 'diesen Lebenslauf';
+  if (!confirm('Lebenslauf "' + name + '" wirklich loeschen? Dies kann nicht rueckgaengig gemacht werden.')) return;
+  library.remove(currentCvId);
+  // Nach dem Loeschen sicherstellen, dass mindestens ein CV existiert
+  currentCvId = library.ensureAtLeastOne('Mein Lebenslauf');
+  switchToCv(currentCvId);
+}
+
+// Aktualisiert die Lebenslauf-Auswahl in der oberen Leiste.
+function renderCvBar() {
+  const sel = document.getElementById('cv-select');
+  if (!sel) return;
+  const items = library.list();
+  sel.innerHTML = items.map(function (it) {
+    const sel2 = it.id === currentCvId ? ' selected' : '';
+    return `<option value="${it.id}"${sel2}>${esc(it.name)}</option>`;
+  }).join('');
+  // Loeschen nur erlauben, wenn mehr als ein Lebenslauf existiert
+  const delBtn = document.querySelector('[onclick="deleteCurrentCv()"]');
+  if (delBtn) delBtn.disabled = items.length <= 1;
+}
 
 // ====== REITER ======
 function showTab(tab) {
@@ -1514,28 +1501,30 @@ function applyFont() {
 }
 
 // ====== JSON IMPORT / EXPORT ======
+// Export: aktiver Lebenslauf inkl. Name (Wrapper-Format der Geschaeftslogik).
 function exportJSON() {
-  const blob=new Blob([JSON.stringify(cvData,null,2)],{type:'application/json'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a'); a.href=url; a.download='cv-daten.json'; a.click();
+  if (!currentCvId) return;
+  const payload = library.exportData(currentCvId);
+  const dateiname = (library.getName(currentCvId) || 'lebenslauf')
+    .replace(/[^\w\- ]+/g, '').replace(/\s+/g, '_').toLowerCase() || 'lebenslauf';
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = dateiname + '.json'; a.click();
   URL.revokeObjectURL(url);
 }
 function importJSON() { document.getElementById('json-file-input').click(); }
+// Import: legt einen NEUEN Lebenslauf an (nicht-destruktiv) und wechselt dorthin.
 function onJSONFileSelected(e) {
-  const file=e.target.files[0]; if(!file)return;
-  const reader=new FileReader();
-  reader.onload=ev=>{
+  const file = e.target.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
     try {
-      const parsed=JSON.parse(ev.target.result);
-      cvData={...JSON.parse(JSON.stringify(DEFAULT_DATA)),...parsed};
-      if(!cvData.personal.github) cvData.personal.github='';
-      if(!cvData.personal.website) cvData.personal.website='';
-      ensureIds(); saveToStorage(); renderEditor(); renderPreview(); applyFont();
-      const sel=document.getElementById('template-select');
-      if(sel) sel.value=cvData.template||'minimal';
-    } catch(err){alert('Fehler beim Lesen der Datei: '+err.message);}
+      const parsed = JSON.parse(ev.target.result);
+      const id = library.importData(parsed);
+      switchToCv(id);
+    } catch (err) { alert('Fehler beim Lesen der Datei: ' + err.message); }
   };
-  reader.readAsText(file); e.target.value='';
+  reader.readAsText(file); e.target.value = '';
 }
 
 // ====== KLICKBARE LINKS IM PDF ======
@@ -1650,9 +1639,11 @@ function uid() { return Math.random().toString(36).substr(2,8); }
 
 // ====== INITIALISIERUNG ======
 window.addEventListener('DOMContentLoaded', () => {
-  loadFromStorage();
+  // Bibliothek aufbauen (vorhandene CVs / Migration / leerer CV) und aktiven CV laden
+  initLibrary();
   const sel = document.getElementById('template-select');
   if (sel) sel.value = cvData.template || 'minimal';
+  renderCvBar();
   renderEditor();
   renderPreview();
   applyFont();
