@@ -18,7 +18,12 @@
   header.top .logo { font-weight: 800; font-size: 20px; color: var(--accent); letter-spacing: -.5px; }
   header.top .back { margin-left: auto; background: var(--accent); color: #fff; text-decoration: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; font-size: 14px; }
   header.top .back:hover { background: var(--accent-dark); }
+  .langsel { display: flex; gap: 6px; }
+  .langsel button { padding: 6px 12px; border: 1px solid var(--border); background: #fff; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 14px; color: var(--ink); }
+  .langsel button.active { background: var(--accent); color: #fff; border-color: var(--accent); }
   .layout { display: flex; max-width: 1180px; margin: 0 auto; gap: 32px; padding: 24px; align-items: flex-start; }
+  .wiki-lang { display: none; }
+  .wiki-lang.active { display: flex; }
   nav.toc { position: sticky; top: 84px; flex: 0 0 270px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; max-height: calc(100vh - 110px); overflow-y: auto; font-size: 14px; }
   nav.toc h2 { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--soft); margin: 0 0 10px; }
   nav.toc ol { list-style: none; margin: 0; padding: 0; counter-reset: toc; }
@@ -58,31 +63,37 @@
 <body>
 <header class="top">
   <span class="logo">CV-Studio</span>
-  <span style="color:var(--soft);font-size:14px;">Hilfe und vollstaendige Anleitung</span>
-  <a class="back" href="index.html">Zurueck zur App</a>
+  <span id="wiki-subtitle" style="color:var(--soft);font-size:14px;">Hilfe und vollstaendige Anleitung</span>
+  <div class="langsel">
+    <button data-l="de" onclick="setWikiLang('de')">DE</button>
+    <button data-l="en" onclick="setWikiLang('en')">EN</button>
+    <button data-l="fr" onclick="setWikiLang('fr')">FR</button>
+  </div>
+  <a class="back" id="wiki-back" href="index.html">Zurueck zur App</a>
 </header>
 
-<div class="layout">
+<!-- ===================== DEUTSCH ===================== -->
+<div class="layout wiki-lang" data-lang="de">
   <nav class="toc" aria-label="Inhaltsverzeichnis">
     <h2>Inhalt</h2>
     <ol>
-      <li><a href="#ueberblick">1. Was ist CV-Studio?</a></li>
-      <li><a href="#start">2. Erste Schritte</a></li>
-      <li><a href="#oberflaeche">3. Die Oberflaeche im Ueberblick</a></li>
-      <li><a href="#mehrere">4. Mehrere Lebenslaeufe verwalten</a></li>
-      <li><a href="#bearbeiten">5. Inhalte bearbeiten (alle Bereiche)</a></li>
-      <li><a href="#foto">6. Foto hochladen</a></li>
-      <li><a href="#vorlagen">7. Vorlagen (Designs)</a></li>
-      <li><a href="#schrift">8. Schriftart waehlen</a></li>
-      <li><a href="#textfarbe">9. Textfarbe aendern</a></li>
-      <li><a href="#links">10. Portfolio, LinkedIn, GitHub, Projekt-Links</a></li>
-      <li><a href="#reihenfolge">11. Reihenfolge per Drag and Drop</a></li>
-      <li><a href="#seiten">12. A4-Seiten und Seitenumbrueche</a></li>
-      <li><a href="#pdf">13. Als PDF exportieren</a></li>
-      <li><a href="#jsonbackup">14. Sichern: JSON-Export und -Import</a></li>
-      <li><a href="#speicherung">15. Wo werden meine Daten gespeichert?</a></li>
-      <li><a href="#tipps">16. Tipps fuer einen ueberzeugenden Lebenslauf</a></li>
-      <li><a href="#faq">17. Haeufige Fragen und Problemloesung</a></li>
+      <li><a href="#de-ueberblick">1. Was ist CV-Studio?</a></li>
+      <li><a href="#de-start">2. Erste Schritte</a></li>
+      <li><a href="#de-oberflaeche">3. Die Oberflaeche im Ueberblick</a></li>
+      <li><a href="#de-mehrere">4. Mehrere Lebenslaeufe verwalten</a></li>
+      <li><a href="#de-bearbeiten">5. Inhalte bearbeiten (alle Bereiche)</a></li>
+      <li><a href="#de-foto">6. Foto hochladen</a></li>
+      <li><a href="#de-vorlagen">7. Vorlagen (Designs)</a></li>
+      <li><a href="#de-schrift">8. Schriftart waehlen</a></li>
+      <li><a href="#de-textfarbe">9. Textfarbe aendern</a></li>
+      <li><a href="#de-links">10. Portfolio, LinkedIn, GitHub, Projekt-Links</a></li>
+      <li><a href="#de-reihenfolge">11. Reihenfolge per Drag and Drop</a></li>
+      <li><a href="#de-seiten">12. A4-Seiten und Seitenumbrueche</a></li>
+      <li><a href="#de-pdf">13. Als PDF exportieren</a></li>
+      <li><a href="#de-jsonbackup">14. Sichern: JSON-Export und -Import</a></li>
+      <li><a href="#de-speicherung">15. Wo werden meine Daten gespeichert?</a></li>
+      <li><a href="#de-tipps">16. Tipps fuer einen ueberzeugenden Lebenslauf</a></li>
+      <li><a href="#de-faq">17. Haeufige Fragen und Problemloesung</a></li>
     </ol>
   </nav>
 
@@ -90,7 +101,7 @@
     <h1>Vollstaendige Anleitung</h1>
     <p class="lead">Diese Anleitung erklaert CV-Studio Schritt fuer Schritt - von ganz vorne. Sie ist fuer absolute Einsteiger geschrieben: jeder Knopf, jede Funktion und jeder Handgriff wird erklaert. Damit Sie sich nie verloren fuehlen.</p>
 
-    <section id="ueberblick">
+    <section id="de-ueberblick">
       <h2 class="sec">1. Was ist CV-Studio?</h2>
       <p>CV-Studio ist eine kostenlose Anwendung, mit der Sie professionelle Lebenslaeufe direkt im Browser erstellen, bearbeiten und als PDF exportieren koennen. Sie brauchen kein Konto, keine Installation und keine Internetverbindung (ausser fuer den PDF-Export und das Laden der Schriftarten).</p>
       <ul class="bullets">
@@ -103,7 +114,7 @@
       <div class="box tip"><span class="label">Gut zu wissen</span>Sie koennen nichts kaputt machen. Probieren Sie ruhig alles aus - mit JSON-Export (Abschnitt 14) sichern Sie Ihren Stand jederzeit.</div>
     </section>
 
-    <section id="start">
+    <section id="de-start">
       <h2 class="sec">2. Erste Schritte</h2>
       <ol class="steps">
         <li>Oeffnen Sie die Anwendung: entweder die Datei <code>index.html</code> per Doppelklick oder die im Web veroeffentlichte Adresse.</li>
@@ -115,7 +126,7 @@
       </ol>
     </section>
 
-    <section id="oberflaeche">
+    <section id="de-oberflaeche">
       <h2 class="sec">3. Die Oberflaeche im Ueberblick</h2>
       <p>Die Anwendung besteht aus drei Bereichen:</p>
       <ul class="bullets">
@@ -126,7 +137,7 @@
       <div class="box tip"><span class="label">Automatisches Speichern</span>Sie muessen nichts manuell speichern. Sobald oben rechts "Gespeichert" steht, ist Ihr aktueller Stand im Browser gesichert.</div>
     </section>
 
-    <section id="mehrere">
+    <section id="de-mehrere">
       <h2 class="sec">4. Mehrere Lebenslaeufe verwalten</h2>
       <p>In der oberen Leiste finden Sie ganz links den Bereich <strong>Lebenslauf</strong> mit einem Auswahlfeld und vier Knoepfen.</p>
       <h3>Einen neuen Lebenslauf anlegen</h3>
@@ -146,7 +157,7 @@
       <div class="box warn"><span class="label">Achtung beim Loeschen</span>Loeschen kann nicht rueckgaengig gemacht werden. Wenn Sie unsicher sind, exportieren Sie den Lebenslauf vorher als JSON (Abschnitt 14).</div>
     </section>
 
-    <section id="bearbeiten">
+    <section id="de-bearbeiten">
       <h2 class="sec">5. Inhalte bearbeiten (alle Bereiche)</h2>
       <p>Im Editor links waehlen Sie oben einen Reiter. Jede Aenderung erscheint sofort in der Vorschau.</p>
 
@@ -191,7 +202,7 @@
       <div class="box tip"><span class="label">Eintraege schliessen</span>Mit erneutem Klick auf <strong>Bearbeiten</strong> klappen Sie eine Karte wieder zu. Das schafft Uebersicht.</div>
     </section>
 
-    <section id="foto">
+    <section id="de-foto">
       <h2 class="sec">6. Foto hochladen</h2>
       <ol class="steps">
         <li>Gehen Sie in den Reiter <strong>Persoenlich</strong>.</li>
@@ -203,7 +214,7 @@
       <div class="box tip"><span class="label">Tipp zum Bild</span>Verwenden Sie ein moeglichst quadratisches, gut belichtetes Portraitfoto. Das Bild wird direkt im Browser gespeichert und nirgendwohin hochgeladen.</div>
     </section>
 
-    <section id="vorlagen">
+    <section id="de-vorlagen">
       <h2 class="sec">7. Vorlagen (Designs)</h2>
       <p>Oben in der Leiste waehlen Sie unter <strong>Vorlage</strong> aus 10 Designs. Der Inhalt bleibt gleich, nur das Aussehen aendert sich.</p>
       <table>
@@ -223,12 +234,12 @@
       <div class="box tip"><span class="label">Welche Vorlage?</span>Fuer automatische Bewerbungssysteme (ATS) ist "Schlicht ATS" oder "Minimal" am sichersten. Fuer einen kreativen Eindruck eignen sich "Kreativ Header" oder "Profilkarte".</div>
     </section>
 
-    <section id="schrift">
+    <section id="de-schrift">
       <h2 class="sec">8. Schriftart waehlen</h2>
       <p>Unter <strong>Schrift</strong> waehlen Sie aus 11 Schriftarten (zum Beispiel Inter, Arial, Calibri, Georgia, Times New Roman). Die Vorschau aktualisiert sich sofort. Serifenschriften (Georgia, Times, EB Garamond) wirken klassisch, serifenlose (Inter, Arial, Lato) modern.</p>
     </section>
 
-    <section id="textfarbe">
+    <section id="de-textfarbe">
       <h2 class="sec">9. Textfarbe aendern</h2>
       <p>Standardmaessig ist der Text <strong>schwarz</strong> - das ist am besten lesbar und wird von Personalverantwortlichen erwartet. Sie koennen die Farbe aber anpassen:</p>
       <ol class="steps">
@@ -239,7 +250,7 @@
       <div class="box warn"><span class="label">Lesbarkeit beachten</span>Sehr helle Farben (zum Beispiel Hellgrau oder Gelb) sind auf weissem Papier schwer lesbar und wirken unprofessionell. Bleiben Sie bei Schwarz oder einem dunklen Farbton. Die Akzentfarben der Ueberschriften aendern sich hierdurch nicht.</div>
     </section>
 
-    <section id="links">
+    <section id="de-links">
       <h2 class="sec">10. Portfolio, LinkedIn, GitHub und Projekt-Links</h2>
       <ul class="bullets">
         <li><strong>Portfolio/Website</strong>: Wenn Sie im Reiter Persoenlich eine Website eintragen, erscheint sie als gut sichtbare Schaltflaeche "Portfolio" - sie faellt auf, statt als lange Adresse unterzugehen.</li>
@@ -249,7 +260,7 @@
       <p>Alle diese Links bleiben im exportierten PDF <strong>anklickbar</strong>.</p>
     </section>
 
-    <section id="reihenfolge">
+    <section id="de-reihenfolge">
       <h2 class="sec">11. Reihenfolge per Drag and Drop</h2>
       <ol class="steps">
         <li>Fahren Sie im Editor mit der Maus ueber eine Karte (zum Beispiel eine Berufserfahrung).</li>
@@ -259,7 +270,7 @@
       <div class="box tip"><span class="label">Empfehlung</span>Stellen Sie die wichtigsten und aktuellsten Eintraege nach oben - sie werden zuerst gelesen.</div>
     </section>
 
-    <section id="seiten">
+    <section id="de-seiten">
       <h2 class="sec">12. A4-Seiten und Seitenumbrueche</h2>
       <p>Die Vorschau zeigt Ihren Lebenslauf als echte A4-Seiten. An jeder Seitengrenze sehen Sie eine dezente gestrichelte Linie mit der Beschriftung "Seite 2", "Seite 3" und so weiter.</p>
       <ul class="bullets">
@@ -269,7 +280,7 @@
       <div class="box tip"><span class="label">Lebenslauf zu lang?</span>Kuerzen Sie Stichpunkte, entfernen Sie aeltere Eintraege oder reduzieren Sie die Anzahl der Projekte. Ein bis zwei Seiten sind ideal.</div>
     </section>
 
-    <section id="pdf">
+    <section id="de-pdf">
       <h2 class="sec">13. Als PDF exportieren</h2>
       <ol class="steps">
         <li>Klicken Sie oben rechts auf <strong>PDF exportieren</strong>.</li>
@@ -283,7 +294,7 @@
       <div class="box tip"><span class="label">Internetverbindung</span>Fuer den PDF-Export und das korrekte Laden der Schriftarten ist eine Internetverbindung noetig.</div>
     </section>
 
-    <section id="jsonbackup">
+    <section id="de-jsonbackup">
       <h2 class="sec">14. Sichern: JSON-Export und -Import</h2>
       <p>Mit JSON-Dateien sichern Sie Ihre Lebenslaeufe als Datei - die zuverlaessigste Methode gegen Datenverlust und zum Wechsel auf ein anderes Geraet.</p>
       <h3>Exportieren (sichern)</h3>
@@ -301,7 +312,7 @@
       <div class="box tip"><span class="label">Empfehlung</span>Exportieren Sie Ihren fertigen Lebenslauf einmal als JSON und bewahren Sie die Datei auf. So koennen Sie ihn jederzeit auf jedem Geraet wiederherstellen.</div>
     </section>
 
-    <section id="speicherung">
+    <section id="de-speicherung">
       <h2 class="sec">15. Wo werden meine Daten gespeichert?</h2>
       <p>Das ist wichtig zu verstehen, damit Sie keine Daten verlieren:</p>
       <ul class="bullets">
@@ -313,7 +324,7 @@
       <p>Beim ersten Start in einem leeren Browser zeigt die App einen Beispiel-Lebenslauf, damit sie nie leer wirkt. Ihre eigenen Daten werden dadurch niemals ueberschrieben.</p>
     </section>
 
-    <section id="tipps">
+    <section id="de-tipps">
       <h2 class="sec">16. Tipps fuer einen ueberzeugenden Lebenslauf</h2>
       <ul class="bullets">
         <li><strong>Kurz und praegnant</strong>: ein Gedanke pro Stichpunkt, moeglichst eine Zeile. Vermeiden Sie lange Textbloecke.</li>
@@ -325,7 +336,7 @@
       </ul>
     </section>
 
-    <section id="faq">
+    <section id="de-faq">
       <h2 class="sec">17. Haeufige Fragen und Problemloesung</h2>
 
       <details class="faq">
@@ -368,6 +379,650 @@
   </main>
 </div>
 
-<footer>CV-Studio - Hilfe und Anleitung. Erstellen Sie professionelle Lebenslaeufe direkt im Browser.</footer>
+<!-- ===================== ENGLISH ===================== -->
+<div class="layout wiki-lang" data-lang="en">
+  <nav class="toc" aria-label="Table of contents">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#en-ueberblick">1. What is CV-Studio?</a></li>
+      <li><a href="#en-start">2. First steps</a></li>
+      <li><a href="#en-oberflaeche">3. The interface at a glance</a></li>
+      <li><a href="#en-mehrere">4. Managing multiple resumes</a></li>
+      <li><a href="#en-bearbeiten">5. Editing content (all sections)</a></li>
+      <li><a href="#en-foto">6. Uploading a photo</a></li>
+      <li><a href="#en-vorlagen">7. Templates (designs)</a></li>
+      <li><a href="#en-schrift">8. Choosing a font</a></li>
+      <li><a href="#en-textfarbe">9. Changing the text color</a></li>
+      <li><a href="#en-links">10. Portfolio, LinkedIn, GitHub, project links</a></li>
+      <li><a href="#en-reihenfolge">11. Reordering with drag and drop</a></li>
+      <li><a href="#en-seiten">12. A4 pages and page breaks</a></li>
+      <li><a href="#en-pdf">13. Exporting as PDF</a></li>
+      <li><a href="#en-jsonbackup">14. Backups: JSON export and import</a></li>
+      <li><a href="#en-speicherung">15. Where is my data stored?</a></li>
+      <li><a href="#en-tipps">16. Tips for a convincing resume</a></li>
+      <li><a href="#en-faq">17. Frequently asked questions and troubleshooting</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <h1>Complete guide</h1>
+    <p class="lead">This guide explains CV-Studio step by step - from the very beginning. It is written for absolute beginners: every button, every feature and every action is explained. So you never feel lost.</p>
+
+    <section id="en-ueberblick">
+      <h2 class="sec">1. What is CV-Studio?</h2>
+      <p>CV-Studio is a free application that lets you create, edit and export professional resumes as PDF directly in your browser. You do not need an account, an installation or an internet connection (except for the PDF export and loading the fonts).</p>
+      <ul class="bullets">
+        <li><strong>Multiple resumes</strong>: Create as many independent resumes as you like (for example one per application target).</li>
+        <li><strong>Live preview</strong>: Every change appears immediately on the right in the A4 preview.</li>
+        <li><strong>10 templates and 11 fonts</strong>: Shape the look with just a few clicks.</li>
+        <li><strong>PDF export</strong>: Generate a print-ready PDF with clickable links.</li>
+        <li><strong>Your data stays with you</strong>: Everything is stored locally in your browser (see section 15).</li>
+      </ul>
+      <div class="box tip"><span class="label">Good to know</span>You cannot break anything. Feel free to try everything - with the JSON export (section 14) you can save your current state at any time.</div>
+    </section>
+
+    <section id="en-start">
+      <h2 class="sec">2. First steps</h2>
+      <ol class="steps">
+        <li>Open the application: either the file <code>index.html</code> by double-clicking, or the address published on the web.</li>
+        <li>On the very first start you see an <strong>example resume</strong> (demo). This shows you right away what a finished resume looks like.</li>
+        <li>Create your own resume: click <strong>+ New</strong> at the top left (see section 4). Or simply edit the demo with your own data.</li>
+        <li>Fill in the sections on the left. The preview on the right updates automatically.</li>
+        <li>Choose a template and a font you like (sections 7 and 8).</li>
+        <li>Export the result as PDF (section 13).</li>
+      </ol>
+    </section>
+
+    <section id="en-oberflaeche">
+      <h2 class="sec">3. The interface at a glance</h2>
+      <p>The application consists of three areas:</p>
+      <ul class="bullets">
+        <li><strong>Top bar</strong>: Here you manage resumes (selection, New, Duplicate, Rename, Delete), choose the template, font and text color, and find the buttons for JSON import, JSON export and PDF export. On the far right there is a save notice (for example "Saved").</li>
+        <li><strong>Editor (left)</strong>: Here you enter your content. At the top there are tabs: Personal, Skills, Experience, Education, Projects, Languages, Other.</li>
+        <li><strong>Preview (right)</strong>: Shows your resume in real time as an A4 page. Dashed lines show where one page ends and the next begins.</li>
+      </ul>
+      <div class="box tip"><span class="label">Automatic saving</span>You do not have to save anything manually. As soon as "Saved" appears at the top right, your current state is secured in the browser.</div>
+    </section>
+
+    <section id="en-mehrere">
+      <h2 class="sec">4. Managing multiple resumes</h2>
+      <p>In the top bar, on the far left, you find the <strong>Resume</strong> area with a selection field and four buttons.</p>
+      <h3>Creating a new resume</h3>
+      <ol class="steps">
+        <li>Click <strong>+ New</strong>.</li>
+        <li>Enter a name (for example "Application Data Engineer") and confirm.</li>
+        <li>An empty resume is created and immediately active. Now fill it in.</li>
+      </ol>
+      <h3>Switching between resumes</h3>
+      <p>Open the <strong>selection field</strong> and choose the desired resume. The application loads its content immediately.</p>
+      <h3>Duplicate, Rename, Delete</h3>
+      <ul class="bullets">
+        <li><strong>Duplicate</strong>: creates an independent copy of the current resume (for example to try out a variant).</li>
+        <li><strong>Rename</strong>: changes the name of the current resume.</li>
+        <li><strong>Delete</strong>: removes the current resume permanently. A safety prompt appears. The button is disabled when only one resume is left.</li>
+      </ul>
+      <div class="box warn"><span class="label">Caution when deleting</span>Deleting cannot be undone. If you are unsure, export the resume as JSON beforehand (section 14).</div>
+    </section>
+
+    <section id="en-bearbeiten">
+      <h2 class="sec">5. Editing content (all sections)</h2>
+      <p>In the editor on the left you choose a tab at the top. Every change appears immediately in the preview.</p>
+
+      <h3>Personal</h3>
+      <p>Here is your master data: name, job title, address, e-mail, phone, LinkedIn, GitHub, portfolio/website, date of birth, place of birth, citizenship and marital status. Enter whatever you want to show. Empty fields are simply omitted in the preview.</p>
+
+      <h3>Skills</h3>
+      <ol class="steps">
+        <li>Click <strong>+ Add category</strong> (for example "Programming").</li>
+        <li>Click <strong>Edit</strong> on the category.</li>
+        <li>Change the category name if needed.</li>
+        <li>Enter a skill in the field at the bottom (for example "Python") and press <span class="kbd">Enter</span> or the <strong>+</strong>. Repeat this for further skills.</li>
+        <li>A skill can be removed again via the small <strong>x</strong> next to the entry.</li>
+        <li>Optional: set a <strong>star rating</strong> per skill (selection to the right of the skill, 1 to 5 stars or "none"). The stars are shown in the "Profil Klassisch" template; other templates ignore them.</li>
+      </ol>
+
+      <h3>Experience (work experience)</h3>
+      <ol class="steps">
+        <li>Click <strong>+ Add entry</strong>.</li>
+        <li>Click <strong>Edit</strong> and fill in position, company, location, From and To.</li>
+        <li>Under "Tasks", add individual bullet points with <strong>+ Point</strong>. Keep them short (see section 16).</li>
+      </ol>
+
+      <h3>Education</h3>
+      <p>Like the experience: degree, institution, location, From, To and optional notes.</p>
+
+      <h3>Projects</h3>
+      <ol class="steps">
+        <li>Click <strong>+ Add entry</strong> and then <strong>Edit</strong>.</li>
+        <li>Enter the project title and type/context.</li>
+        <li>Optional: under <strong>Project link</strong>, enter the address of the project (for example your GitHub repository). Then a subtle "View" button appears in the resume, which is clickable in the PDF.</li>
+        <li>Under "Tech stack", add the technologies used (type and <span class="kbd">Enter</span>).</li>
+        <li>Under "Results", add short bullet points.</li>
+      </ol>
+
+      <h3>Languages</h3>
+      <p>Add language and level (for example "German" / "C1").</p>
+
+      <h3>Other (interests)</h3>
+      <p>Short entries such as interests, driving license or volunteer work.</p>
+
+      <div class="box tip"><span class="label">Closing entries</span>By clicking <strong>Edit</strong> again you collapse a card. This keeps things tidy.</div>
+    </section>
+
+    <section id="en-foto">
+      <h2 class="sec">6. Uploading a photo</h2>
+      <ol class="steps">
+        <li>Go to the <strong>Personal</strong> tab.</li>
+        <li>Click <strong>Choose photo</strong> and select an image file from your device.</li>
+        <li>Under <strong>Photo display</strong> you choose between <em>Round</em> and <em>Square</em>.</li>
+        <li>With the <strong>Photo zoom</strong> slider you enlarge the image crop (100 to 250 percent), and with <strong>Photo position vertical</strong> you move the crop up or down - so the face sits perfectly in the frame. The original file remains unchanged.</li>
+        <li>With <strong>Remove</strong> you delete the photo again.</li>
+      </ol>
+      <div class="box tip"><span class="label">Photo tip</span>Use a portrait photo that is as square as possible and well lit. The image is stored directly in the browser and is not uploaded anywhere.</div>
+    </section>
+
+    <section id="en-vorlagen">
+      <h2 class="sec">7. Templates (designs)</h2>
+      <p>At the top of the bar you choose from 10 designs under <strong>Template</strong>. The content stays the same, only the look changes.</p>
+      <table>
+        <tr><th>Template</th><th>Description</th></tr>
+        <tr><td>Minimal</td><td>Clear and modern, blue accent color. A good all-purpose choice.</td></tr>
+        <tr><td>Sidebar-Akzent</td><td>Dark sidebar on the left, content on the right.</td></tr>
+        <tr><td>Klassisch DACH</td><td>Tabular layout in the German standard.</td></tr>
+        <tr><td>Kreativ Header</td><td>Dark header area, two columns below.</td></tr>
+        <tr><td>Kompakt Zeitachse</td><td>Timeline format, space-saving.</td></tr>
+        <tr><td>Executive</td><td>Centered, elegant, restrained.</td></tr>
+        <tr><td>Zweispaltig</td><td>Skills/Education on the left, Experience/Projects on the right (teal accent).</td></tr>
+        <tr><td>Seitenlinie</td><td>Single column with a colored line per section.</td></tr>
+        <tr><td>Profilkarte</td><td>Colored profile header with an integrated photo.</td></tr>
+        <tr><td>Schlicht ATS</td><td>Black and white, maximum compatibility with applicant tracking systems.</td></tr>
+        <tr><td>Profil Klassisch</td><td>Light sidebar with photo and personal data on the left, career on the right with a date column and blue section markers.</td></tr>
+      </table>
+      <div class="box tip"><span class="label">Which template?</span>For automated applicant tracking systems (ATS), "Schlicht ATS" or "Minimal" is the safest. For a creative impression, "Kreativ Header" or "Profilkarte" are suitable.</div>
+    </section>
+
+    <section id="en-schrift">
+      <h2 class="sec">8. Choosing a font</h2>
+      <p>Under <strong>Font</strong> you choose from 11 fonts (for example Inter, Arial, Calibri, Georgia, Times New Roman). The preview updates immediately. Serif fonts (Georgia, Times, EB Garamond) feel classic, sans-serif ones (Inter, Arial, Lato) modern.</p>
+    </section>
+
+    <section id="en-textfarbe">
+      <h2 class="sec">9. Changing the text color</h2>
+      <p>By default the text is <strong>black</strong> - that is the most readable and is expected by recruiters. But you can adjust the color:</p>
+      <ol class="steps">
+        <li>At the top of the bar, click the color field at <strong>Text color</strong>.</li>
+        <li>Choose a color. The preview updates immediately.</li>
+        <li>With the <strong>Black</strong> button you can reset the color to the default at any time.</li>
+      </ol>
+      <div class="box warn"><span class="label">Mind readability</span>Very light colors (for example light gray or yellow) are hard to read on white paper and look unprofessional. Stick to black or a dark shade. The accent colors of the headings do not change through this.</div>
+    </section>
+
+    <section id="en-links">
+      <h2 class="sec">10. Portfolio, LinkedIn, GitHub and project links</h2>
+      <ul class="bullets">
+        <li><strong>Portfolio/Website</strong>: If you enter a website in the Personal tab, it appears as a clearly visible "Portfolio" button - it stands out instead of getting lost as a long address.</li>
+        <li><strong>LinkedIn and GitHub</strong>: are shown as compact icons (not as a long address). This saves space and looks tidy.</li>
+        <li><strong>Project links</strong>: see section 5 (Projects). They appear as a small "View" button.</li>
+      </ul>
+      <p>All of these links remain <strong>clickable</strong> in the exported PDF.</p>
+    </section>
+
+    <section id="en-reihenfolge">
+      <h2 class="sec">11. Reordering with drag and drop</h2>
+      <ol class="steps">
+        <li>In the editor, move the mouse over a card (for example a work experience).</li>
+        <li>Click and hold the card (on the handle icon on the left) and drag it up or down.</li>
+        <li>Release at the desired position. The order in the resume adjusts immediately.</li>
+      </ol>
+      <div class="box tip"><span class="label">Recommendation</span>Put the most important and most recent entries at the top - they are read first.</div>
+    </section>
+
+    <section id="en-seiten">
+      <h2 class="sec">12. A4 pages and page breaks</h2>
+      <p>The preview shows your resume as real A4 pages. At every page boundary you see a subtle dashed line labeled "Page 2", "Page 3" and so on.</p>
+      <ul class="bullets">
+        <li>So that no entry is cut off in the middle of the text, the application automatically pushes lines that would fall exactly on a page boundary to the next page - in all templates.</li>
+        <li>The exported PDF matches the preview exactly - including these clean breaks.</li>
+      </ul>
+      <div class="box tip"><span class="label">Resume too long?</span>Shorten bullet points, remove older entries or reduce the number of projects. One to two pages are ideal.</div>
+    </section>
+
+    <section id="en-pdf">
+      <h2 class="sec">13. Exporting as PDF</h2>
+      <ol class="steps">
+        <li>Click <strong>Export PDF</strong> at the top right.</li>
+        <li>Wait a moment (the button shows "Please wait..."). The application generates a multi-page A4 PDF.</li>
+        <li>The PDF is downloaded automatically. The file name contains the name of your resume.</li>
+      </ol>
+      <ul class="bullets">
+        <li>The links (e-mail, LinkedIn, GitHub, portfolio, projects) remain clickable in the PDF.</li>
+        <li>The PDF matches the preview. Still, check it once before sending.</li>
+      </ul>
+      <div class="box tip"><span class="label">Internet connection</span>An internet connection is needed for the PDF export and for loading the fonts correctly.</div>
+    </section>
+
+    <section id="en-jsonbackup">
+      <h2 class="sec">14. Backups: JSON export and import</h2>
+      <p>With JSON files you save your resumes as a file - the most reliable method against data loss and for switching to another device.</p>
+      <h3>Exporting (saving)</h3>
+      <ol class="steps">
+        <li>Select the desired resume at the top.</li>
+        <li>Click <strong>Export JSON</strong>. A <code>.json</code> file is downloaded.</li>
+        <li>Keep this file safe (for example in a cloud folder).</li>
+      </ol>
+      <h3>Importing (restoring)</h3>
+      <ol class="steps">
+        <li>Click <strong>Import JSON</strong>.</li>
+        <li>Select your <code>.json</code> file.</li>
+        <li>A <strong>new</strong> resume is created from it (existing resumes remain unchanged).</li>
+      </ol>
+      <div class="box tip"><span class="label">Recommendation</span>Export your finished resume once as JSON and keep the file. This way you can restore it at any time on any device.</div>
+    </section>
+
+    <section id="en-speicherung">
+      <h2 class="sec">15. Where is my data stored?</h2>
+      <p>This is important to understand so that you do not lose any data:</p>
+      <ul class="bullets">
+        <li>Your resumes are stored in the <strong>local storage of your browser</strong> (LocalStorage), <strong>not</strong> on a server.</li>
+        <li>The storage is <strong>bound to one browser and one address</strong>. On another computer, in another browser or under a different web address, you therefore do not see your data automatically.</li>
+        <li>If you delete the browser data (for example the history including website data), your resumes are deleted too.</li>
+      </ul>
+      <div class="box warn"><span class="label">How to avoid data loss</span>Export important resumes as a JSON file (section 14) and keep them. This is the only secure method for a permanent backup and for switching between devices.</div>
+      <p>On the first start in an empty browser, the app shows an example resume so that it never appears empty. Your own data is never overwritten by this.</p>
+    </section>
+
+    <section id="en-tipps">
+      <h2 class="sec">16. Tips for a convincing resume</h2>
+      <ul class="bullets">
+        <li><strong>Short and concise</strong>: one thought per bullet point, ideally one line. Avoid long blocks of text.</li>
+        <li><strong>Results-oriented</strong>: state results and numbers (for example "reduced loading time by 60 percent").</li>
+        <li><strong>Readability first</strong>: black text on a white background, a clear font, enough spacing.</li>
+        <li><strong>Relevance</strong>: put the most important entries at the top (drag and drop, section 11).</li>
+        <li><strong>Length</strong>: one to two pages are usually enough. Less is often more.</li>
+        <li><strong>Check</strong>: review the spelling and the finished PDF before sending.</li>
+      </ul>
+    </section>
+
+    <section id="en-faq">
+      <h2 class="sec">17. Frequently asked questions and troubleshooting</h2>
+
+      <details class="faq">
+        <summary>On the published website my resume is empty. Why?</summary>
+        <div class="answer">Your data is located in the local storage of exactly the browser and the address in which you created it (see section 15). The website has its own, initially empty storage. Solution: export your resume as JSON where it is present, and import it on the website (section 14).</div>
+      </details>
+
+      <details class="faq">
+        <summary>My data has disappeared. Is it lost?</summary>
+        <div class="answer">Usually not. Check whether you are using the same browser and the same address as when creating it. Check the selection field at the top - maybe just a different resume is active. If you have a JSON backup, import it. If you deleted the browser data, only data from a JSON backup can be restored.</div>
+      </details>
+
+      <details class="faq">
+        <summary>The PDF cuts off content.</summary>
+        <div class="answer">Individual lines that would fall on a page boundary are automatically pushed to the next page in all templates. If something still breaks unfavorably, shorten the affected entry or move it with drag and drop.</div>
+      </details>
+
+      <details class="faq">
+        <summary>The LinkedIn or GitHub icons are not visible in the PDF.</summary>
+        <div class="answer">The icons adapt their color to the text color and are colored correctly during export. If an icon does not appear on a dark background, check whether the address is entered correctly, and export again.</div>
+      </details>
+
+      <details class="faq">
+        <summary>Can I edit the same resume on multiple devices?</summary>
+        <div class="answer">Not automatically, since the data is stored locally in the browser. Export the resume as JSON and import it on the other device (section 14).</div>
+      </details>
+
+      <details class="faq">
+        <summary>Do I have to save?</summary>
+        <div class="answer">No. The app saves automatically. When "Saved" appears at the top right, your state is secured. For a permanent backup, additionally use the JSON export.</div>
+      </details>
+
+      <details class="faq">
+        <summary>The text looks gray and hard to read.</summary>
+        <div class="answer">At the top, click <strong>Black</strong> at the text color to set the easily readable default color (section 9).</div>
+      </details>
+    </section>
+
+    <p style="margin-top:32px;"><a class="back" href="index.html" style="display:inline-block;">Back to the app</a></p>
+  </main>
+</div>
+
+<!-- ===================== FRANCAIS ===================== -->
+<div class="layout wiki-lang" data-lang="fr">
+  <nav class="toc" aria-label="Table des matieres">
+    <h2>Sommaire</h2>
+    <ol>
+      <li><a href="#fr-ueberblick">1. Qu'est-ce que CV-Studio ?</a></li>
+      <li><a href="#fr-start">2. Premiers pas</a></li>
+      <li><a href="#fr-oberflaeche">3. L'interface en un coup d'oeil</a></li>
+      <li><a href="#fr-mehrere">4. Gerer plusieurs CV</a></li>
+      <li><a href="#fr-bearbeiten">5. Modifier le contenu (toutes les rubriques)</a></li>
+      <li><a href="#fr-foto">6. Importer une photo</a></li>
+      <li><a href="#fr-vorlagen">7. Modeles (designs)</a></li>
+      <li><a href="#fr-schrift">8. Choisir une police</a></li>
+      <li><a href="#fr-textfarbe">9. Changer la couleur du texte</a></li>
+      <li><a href="#fr-links">10. Portfolio, LinkedIn, GitHub, liens de projet</a></li>
+      <li><a href="#fr-reihenfolge">11. Reordonner par glisser-deposer</a></li>
+      <li><a href="#fr-seiten">12. Pages A4 et sauts de page</a></li>
+      <li><a href="#fr-pdf">13. Exporter en PDF</a></li>
+      <li><a href="#fr-jsonbackup">14. Sauvegarde : export et import JSON</a></li>
+      <li><a href="#fr-speicherung">15. Ou mes donnees sont-elles enregistrees ?</a></li>
+      <li><a href="#fr-tipps">16. Conseils pour un CV convaincant</a></li>
+      <li><a href="#fr-faq">17. Questions frequentes et resolution de problemes</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <h1>Guide complet</h1>
+    <p class="lead">Ce guide explique CV-Studio etape par etape - depuis le tout debut. Il est ecrit pour les debutants absolus : chaque bouton, chaque fonction et chaque manipulation est explique. Pour que vous ne vous sentiez jamais perdu.</p>
+
+    <section id="fr-ueberblick">
+      <h2 class="sec">1. Qu'est-ce que CV-Studio ?</h2>
+      <p>CV-Studio est une application gratuite qui vous permet de creer, modifier et exporter en PDF des CV professionnels directement dans le navigateur. Vous n'avez besoin ni de compte, ni d'installation, ni de connexion internet (sauf pour l'export PDF et le chargement des polices).</p>
+      <ul class="bullets">
+        <li><strong>Plusieurs CV</strong> : creez autant de CV independants que vous le souhaitez (par exemple un par objectif de candidature).</li>
+        <li><strong>Apercu en direct</strong> : chaque modification apparait immediatement a droite dans l'apercu A4.</li>
+        <li><strong>10 modeles et 11 polices</strong> : composez l'apparence en quelques clics.</li>
+        <li><strong>Export PDF</strong> : generez un PDF pret a imprimer avec des liens cliquables.</li>
+        <li><strong>Vos donnees restent chez vous</strong> : tout est enregistre localement dans votre navigateur (voir section 15).</li>
+      </ul>
+      <div class="box tip"><span class="label">Bon a savoir</span>Vous ne pouvez rien casser. Essayez tout en toute tranquillite - avec l'export JSON (section 14), vous sauvegardez votre etat a tout moment.</div>
+    </section>
+
+    <section id="fr-start">
+      <h2 class="sec">2. Premiers pas</h2>
+      <ol class="steps">
+        <li>Ouvrez l'application : soit le fichier <code>index.html</code> par double-clic, soit l'adresse publiee sur le web.</li>
+        <li>Au tout premier demarrage, vous voyez un <strong>CV d'exemple</strong> (demo). Cela vous montre tout de suite a quoi ressemble un CV termine.</li>
+        <li>Creez votre propre CV : cliquez en haut a gauche sur <strong>+ Nouveau</strong> (voir section 4). Ou modifiez simplement la demo avec vos donnees.</li>
+        <li>Remplissez les rubriques a gauche. L'apercu a droite se met a jour automatiquement.</li>
+        <li>Choisissez un modele et une police qui vous plaisent (sections 7 et 8).</li>
+        <li>Exportez le resultat en PDF (section 13).</li>
+      </ol>
+    </section>
+
+    <section id="fr-oberflaeche">
+      <h2 class="sec">3. L'interface en un coup d'oeil</h2>
+      <p>L'application se compose de trois zones :</p>
+      <ul class="bullets">
+        <li><strong>Barre superieure</strong> : c'est ici que vous gerez les CV (selection, Nouveau, Dupliquer, Renommer, Supprimer), choisissez le modele, la police et la couleur du texte, et trouvez les boutons d'import JSON, d'export JSON et d'export PDF. Tout a droite figure une indication d'enregistrement (par exemple "Enregistre").</li>
+        <li><strong>Editeur (a gauche)</strong> : c'est ici que vous saisissez votre contenu. En haut se trouvent des onglets : Personnel, Competences, Experience, Formation, Projets, Langues, Divers.</li>
+        <li><strong>Apercu (a droite)</strong> : affiche votre CV en temps reel sous forme de page A4. Des lignes en pointilles indiquent ou une page se termine et ou la suivante commence.</li>
+      </ul>
+      <div class="box tip"><span class="label">Enregistrement automatique</span>Vous n'avez rien a enregistrer manuellement. Des que "Enregistre" s'affiche en haut a droite, votre etat actuel est sauvegarde dans le navigateur.</div>
+    </section>
+
+    <section id="fr-mehrere">
+      <h2 class="sec">4. Gerer plusieurs CV</h2>
+      <p>Dans la barre superieure, tout a gauche, vous trouvez la zone <strong>CV</strong> avec un champ de selection et quatre boutons.</p>
+      <h3>Creer un nouveau CV</h3>
+      <ol class="steps">
+        <li>Cliquez sur <strong>+ Nouveau</strong>.</li>
+        <li>Saisissez un nom (par exemple "Candidature Data Engineer") et confirmez.</li>
+        <li>Un CV vide est cree et devient immediatement actif. Remplissez-le maintenant.</li>
+      </ol>
+      <h3>Basculer d'un CV a l'autre</h3>
+      <p>Ouvrez le <strong>champ de selection</strong> et choisissez le CV souhaite. L'application charge immediatement son contenu.</p>
+      <h3>Dupliquer, Renommer, Supprimer</h3>
+      <ul class="bullets">
+        <li><strong>Dupliquer</strong> : cree une copie independante du CV actuel (par exemple pour essayer une variante).</li>
+        <li><strong>Renommer</strong> : modifie le nom du CV actuel.</li>
+        <li><strong>Supprimer</strong> : retire definitivement le CV actuel. Une demande de confirmation apparait. Le bouton est desactive lorsqu'il ne reste plus qu'un seul CV.</li>
+      </ul>
+      <div class="box warn"><span class="label">Attention a la suppression</span>La suppression ne peut pas etre annulee. Si vous avez un doute, exportez le CV au prealable en JSON (section 14).</div>
+    </section>
+
+    <section id="fr-bearbeiten">
+      <h2 class="sec">5. Modifier le contenu (toutes les rubriques)</h2>
+      <p>Dans l'editeur a gauche, vous choisissez un onglet en haut. Chaque modification apparait immediatement dans l'apercu.</p>
+
+      <h3>Personnel</h3>
+      <p>Ici figurent vos donnees de base : nom, intitule de poste, adresse, e-mail, telephone, LinkedIn, GitHub, portfolio/site web, date de naissance, lieu de naissance, nationalite et situation familiale. Renseignez ce que vous souhaitez montrer. Les champs vides sont simplement omis dans l'apercu.</p>
+
+      <h3>Competences (Skills)</h3>
+      <ol class="steps">
+        <li>Cliquez sur <strong>+ Ajouter une categorie</strong> (par exemple "Programmation").</li>
+        <li>Cliquez sur <strong>Modifier</strong> au niveau de la categorie.</li>
+        <li>Modifiez le nom de la categorie si necessaire.</li>
+        <li>Saisissez une competence dans le champ en bas (par exemple "Python") et appuyez sur <span class="kbd">Entree</span> ou sur le <strong>+</strong>. Repetez l'operation pour d'autres competences.</li>
+        <li>Une competence peut etre supprimee via le petit <strong>x</strong> a cote de l'entree.</li>
+        <li>Facultatif : reglez une <strong>note en etoiles</strong> par competence (selection a droite de la competence, 1 a 5 etoiles ou "sans"). Les etoiles sont affichees dans le modele "Profil Klassisch" ; les autres modeles les ignorent.</li>
+      </ol>
+
+      <h3>Experience (experience professionnelle)</h3>
+      <ol class="steps">
+        <li>Cliquez sur <strong>+ Ajouter une entree</strong>.</li>
+        <li>Cliquez sur <strong>Modifier</strong> et renseignez le poste, l'entreprise, le lieu, De et A.</li>
+        <li>Sous "Taches", ajoutez des puces individuelles avec <strong>+ Point</strong>. Gardez-les courtes (voir section 16).</li>
+      </ol>
+
+      <h3>Formation</h3>
+      <p>Comme pour l'experience : diplome, etablissement, lieu, De, A et remarques facultatives.</p>
+
+      <h3>Projets</h3>
+      <ol class="steps">
+        <li>Cliquez sur <strong>+ Ajouter une entree</strong>, puis sur <strong>Modifier</strong>.</li>
+        <li>Renseignez le titre du projet ainsi que le type/contexte.</li>
+        <li>Facultatif : sous <strong>Lien de projet</strong>, saisissez l'adresse du projet (par exemple votre depot GitHub). Un bouton discret "Voir" apparait alors dans le CV, cliquable dans le PDF.</li>
+        <li>Sous "Stack technique", ajoutez les technologies utilisees (saisie et <span class="kbd">Entree</span>).</li>
+        <li>Sous "Resultats", ajoutez de courtes puces.</li>
+      </ol>
+
+      <h3>Langues</h3>
+      <p>Ajoutez la langue et le niveau (par exemple "Allemand" / "C1").</p>
+
+      <h3>Divers (centres d'interet)</h3>
+      <p>De courtes entrees comme les centres d'interet, le permis de conduire ou le benevolat.</p>
+
+      <div class="box tip"><span class="label">Refermer les entrees</span>En cliquant a nouveau sur <strong>Modifier</strong>, vous repliez une carte. Cela garde une vue d'ensemble claire.</div>
+    </section>
+
+    <section id="fr-foto">
+      <h2 class="sec">6. Importer une photo</h2>
+      <ol class="steps">
+        <li>Allez dans l'onglet <strong>Personnel</strong>.</li>
+        <li>Cliquez sur <strong>Choisir une photo</strong> et selectionnez un fichier image depuis votre appareil.</li>
+        <li>Sous <strong>Affichage de la photo</strong>, choisissez entre <em>Ronde</em> et <em>Carree</em>.</li>
+        <li>Avec le curseur <strong>Zoom de la photo</strong>, vous agrandissez le cadrage de l'image (100 a 250 pour cent), et avec <strong>Position verticale de la photo</strong>, vous deplacez le cadrage vers le haut ou vers le bas - ainsi le visage est parfaitement place dans le cadre. Le fichier d'origine reste inchange.</li>
+        <li>Avec <strong>Supprimer</strong>, vous effacez de nouveau la photo.</li>
+      </ol>
+      <div class="box tip"><span class="label">Conseil pour la photo</span>Utilisez une photo de portrait la plus carree possible et bien eclairee. L'image est enregistree directement dans le navigateur et n'est envoyee nulle part.</div>
+    </section>
+
+    <section id="fr-vorlagen">
+      <h2 class="sec">7. Modeles (designs)</h2>
+      <p>En haut de la barre, vous choisissez parmi 10 designs sous <strong>Modele</strong>. Le contenu reste le meme, seule l'apparence change.</p>
+      <table>
+        <tr><th>Modele</th><th>Description</th></tr>
+        <tr><td>Minimal</td><td>Clair et moderne, couleur d'accent bleue. Un bon choix polyvalent.</td></tr>
+        <tr><td>Sidebar-Akzent</td><td>Barre laterale sombre a gauche, contenu a droite.</td></tr>
+        <tr><td>Klassisch DACH</td><td>Structure tabulaire selon le standard allemand.</td></tr>
+        <tr><td>Kreativ Header</td><td>Bandeau d'en-tete sombre, deux colonnes en dessous.</td></tr>
+        <tr><td>Kompakt Zeitachse</td><td>Format chronologique, peu encombrant.</td></tr>
+        <tr><td>Executive</td><td>Centre, elegant, sobre.</td></tr>
+        <tr><td>Zweispaltig</td><td>Competences/Formation a gauche, Experience/Projets a droite (accent teal).</td></tr>
+        <tr><td>Seitenlinie</td><td>Une colonne avec une ligne coloree par section.</td></tr>
+        <tr><td>Profilkarte</td><td>En-tete de profil colore avec photo integree.</td></tr>
+        <tr><td>Schlicht ATS</td><td>Noir et blanc, compatibilite maximale avec les systemes de candidature.</td></tr>
+        <tr><td>Profil Klassisch</td><td>Barre laterale claire avec photo et donnees personnelles a gauche, parcours a droite avec une colonne de dates et des marqueurs de section bleus.</td></tr>
+      </table>
+      <div class="box tip"><span class="label">Quel modele ?</span>Pour les systemes de candidature automatiques (ATS), "Schlicht ATS" ou "Minimal" est le plus sur. Pour une impression creative, "Kreativ Header" ou "Profilkarte" conviennent.</div>
+    </section>
+
+    <section id="fr-schrift">
+      <h2 class="sec">8. Choisir une police</h2>
+      <p>Sous <strong>Police</strong>, vous choisissez parmi 11 polices (par exemple Inter, Arial, Calibri, Georgia, Times New Roman). L'apercu se met a jour immediatement. Les polices a empattements (Georgia, Times, EB Garamond) font classique, les polices sans empattement (Inter, Arial, Lato) font moderne.</p>
+    </section>
+
+    <section id="fr-textfarbe">
+      <h2 class="sec">9. Changer la couleur du texte</h2>
+      <p>Par defaut, le texte est <strong>noir</strong> - c'est le plus lisible et c'est ce qu'attendent les recruteurs. Vous pouvez toutefois ajuster la couleur :</p>
+      <ol class="steps">
+        <li>En haut de la barre, cliquez sur le champ de couleur au niveau de <strong>Couleur du texte</strong>.</li>
+        <li>Choisissez une couleur. L'apercu se met a jour immediatement.</li>
+        <li>Avec le bouton <strong>Noir</strong>, vous remettez la couleur sur la valeur par defaut a tout moment.</li>
+      </ol>
+      <div class="box warn"><span class="label">Attention a la lisibilite</span>Les couleurs tres claires (par exemple gris clair ou jaune) sont difficiles a lire sur du papier blanc et font peu professionnel. Restez sur le noir ou un ton fonce. Les couleurs d'accent des titres ne changent pas pour autant.</div>
+    </section>
+
+    <section id="fr-links">
+      <h2 class="sec">10. Portfolio, LinkedIn, GitHub et liens de projet</h2>
+      <ul class="bullets">
+        <li><strong>Portfolio/Site web</strong> : si vous saisissez un site web dans l'onglet Personnel, il apparait sous forme d'un bouton "Portfolio" bien visible - il attire l'oeil au lieu de se perdre comme une longue adresse.</li>
+        <li><strong>LinkedIn et GitHub</strong> : sont affiches sous forme d'icones compactes (et non comme une longue adresse). Cela economise de la place et donne un rendu epure.</li>
+        <li><strong>Liens de projet</strong> : voir section 5 (Projets). Ils apparaissent sous forme d'un petit bouton "Voir".</li>
+      </ul>
+      <p>Tous ces liens restent <strong>cliquables</strong> dans le PDF exporte.</p>
+    </section>
+
+    <section id="fr-reihenfolge">
+      <h2 class="sec">11. Reordonner par glisser-deposer</h2>
+      <ol class="steps">
+        <li>Dans l'editeur, passez la souris au-dessus d'une carte (par exemple une experience professionnelle).</li>
+        <li>Cliquez et maintenez la carte (sur l'icone de poignee a gauche) et faites-la glisser vers le haut ou vers le bas.</li>
+        <li>Relachez a la position souhaitee. L'ordre dans le CV s'adapte immediatement.</li>
+      </ol>
+      <div class="box tip"><span class="label">Recommandation</span>Placez les entrees les plus importantes et les plus recentes en haut - elles sont lues en premier.</div>
+    </section>
+
+    <section id="fr-seiten">
+      <h2 class="sec">12. Pages A4 et sauts de page</h2>
+      <p>L'apercu affiche votre CV sous forme de vraies pages A4. A chaque limite de page, vous voyez une discrete ligne en pointilles portant la mention "Page 2", "Page 3" et ainsi de suite.</p>
+      <ul class="bullets">
+        <li>Pour qu'aucune entree ne soit coupee au milieu du texte, l'application pousse automatiquement vers la page suivante les lignes qui tomberaient exactement sur une limite de page - dans tous les modeles.</li>
+        <li>Le PDF exporte correspond exactement a l'apercu - y compris ces sauts de page propres.</li>
+      </ul>
+      <div class="box tip"><span class="label">CV trop long ?</span>Raccourcissez les puces, retirez les entrees plus anciennes ou reduisez le nombre de projets. Une a deux pages, c'est l'ideal.</div>
+    </section>
+
+    <section id="fr-pdf">
+      <h2 class="sec">13. Exporter en PDF</h2>
+      <ol class="steps">
+        <li>Cliquez en haut a droite sur <strong>Exporter PDF</strong>.</li>
+        <li>Patientez un instant (le bouton affiche "Veuillez patienter..."). L'application genere un PDF A4 de plusieurs pages.</li>
+        <li>Le PDF est telecharge automatiquement. Le nom de fichier contient le nom de votre CV.</li>
+      </ol>
+      <ul class="bullets">
+        <li>Les liens (e-mail, LinkedIn, GitHub, portfolio, projets) restent cliquables dans le PDF.</li>
+        <li>Le PDF correspond a l'apercu. Verifiez-le tout de meme une fois avant l'envoi.</li>
+      </ul>
+      <div class="box tip"><span class="label">Connexion internet</span>Une connexion internet est necessaire pour l'export PDF et pour le chargement correct des polices.</div>
+    </section>
+
+    <section id="fr-jsonbackup">
+      <h2 class="sec">14. Sauvegarde : export et import JSON</h2>
+      <p>Avec les fichiers JSON, vous sauvegardez vos CV sous forme de fichier - la methode la plus fiable contre la perte de donnees et pour passer a un autre appareil.</p>
+      <h3>Exporter (sauvegarder)</h3>
+      <ol class="steps">
+        <li>Selectionnez en haut le CV souhaite.</li>
+        <li>Cliquez sur <strong>Exporter JSON</strong>. Un fichier <code>.json</code> est telecharge.</li>
+        <li>Conservez ce fichier en lieu sur (par exemple dans un dossier cloud).</li>
+      </ol>
+      <h3>Importer (restaurer)</h3>
+      <ol class="steps">
+        <li>Cliquez sur <strong>Importer JSON</strong>.</li>
+        <li>Selectionnez votre fichier <code>.json</code>.</li>
+        <li>Un <strong>nouveau</strong> CV est cree a partir de celui-ci (les CV existants restent inchanges).</li>
+      </ol>
+      <div class="box tip"><span class="label">Recommandation</span>Exportez une fois votre CV termine en JSON et conservez le fichier. Vous pouvez ainsi le restaurer a tout moment sur n'importe quel appareil.</div>
+    </section>
+
+    <section id="fr-speicherung">
+      <h2 class="sec">15. Ou mes donnees sont-elles enregistrees ?</h2>
+      <p>C'est important a comprendre pour ne perdre aucune donnee :</p>
+      <ul class="bullets">
+        <li>Vos CV sont enregistres dans le <strong>stockage local de votre navigateur</strong> (LocalStorage), <strong>pas</strong> sur un serveur.</li>
+        <li>Le stockage est <strong>lie a un navigateur et a une adresse</strong>. Sur un autre ordinateur, dans un autre navigateur ou sous une autre adresse web, vous ne voyez donc pas vos donnees automatiquement.</li>
+        <li>Si vous effacez les donnees du navigateur (par exemple l'historique avec les donnees de sites web), vos CV sont egalement supprimes.</li>
+      </ul>
+      <div class="box warn"><span class="label">Comment eviter la perte de donnees</span>Exportez les CV importants en fichier JSON (section 14) et conservez-les. C'est la seule methode sure pour une sauvegarde durable et pour passer d'un appareil a l'autre.</div>
+      <p>Au premier demarrage dans un navigateur vide, l'application affiche un CV d'exemple afin qu'elle ne paraisse jamais vide. Vos propres donnees ne sont jamais ecrasees par cela.</p>
+    </section>
+
+    <section id="fr-tipps">
+      <h2 class="sec">16. Conseils pour un CV convaincant</h2>
+      <ul class="bullets">
+        <li><strong>Court et percutant</strong> : une idee par puce, idealement une ligne. Evitez les longs blocs de texte.</li>
+        <li><strong>Oriente resultats</strong> : indiquez des resultats et des chiffres (par exemple "temps de chargement reduit de 60 pour cent").</li>
+        <li><strong>La lisibilite d'abord</strong> : texte noir sur fond blanc, police claire, espacement suffisant.</li>
+        <li><strong>Pertinence</strong> : placez les entrees les plus importantes en haut (glisser-deposer, section 11).</li>
+        <li><strong>Longueur</strong> : une a deux pages suffisent le plus souvent. Souvent, moins c'est plus.</li>
+        <li><strong>Verifier</strong> : controlez l'orthographe et le PDF termine avant l'envoi.</li>
+      </ul>
+    </section>
+
+    <section id="fr-faq">
+      <h2 class="sec">17. Questions frequentes et resolution de problemes</h2>
+
+      <details class="faq">
+        <summary>Sur le site publie, mon CV est vide. Pourquoi ?</summary>
+        <div class="answer">Vos donnees se trouvent dans le stockage local exactement du navigateur et de l'adresse ou vous les avez creees (voir section 15). Le site web possede son propre stockage, vide au depart. Solution : exportez votre CV en JSON la ou il est present, et importez-le sur le site (section 14).</div>
+      </details>
+
+      <details class="faq">
+        <summary>Mes donnees ont disparu. Sont-elles perdues ?</summary>
+        <div class="answer">Le plus souvent non. Verifiez que vous utilisez le meme navigateur et la meme adresse que lors de la creation. Verifiez le champ de selection en haut - peut-etre qu'un autre CV est simplement actif. Si vous disposez d'une sauvegarde JSON, importez-la. Si vous avez efface les donnees du navigateur, seules les donnees d'une sauvegarde JSON peuvent etre restaurees.</div>
+      </details>
+
+      <details class="faq">
+        <summary>Le PDF coupe du contenu.</summary>
+        <div class="answer">Les lignes individuelles qui tomberaient sur une limite de page sont automatiquement poussees vers la page suivante dans tous les modeles. Si malgre tout quelque chose se coupe de maniere genante, raccourcissez l'entree concernee ou deplacez-la par glisser-deposer.</div>
+      </details>
+
+      <details class="faq">
+        <summary>Les icones LinkedIn ou GitHub ne sont pas visibles dans le PDF.</summary>
+        <div class="answer">Les icones adaptent leur couleur a la couleur du texte et sont colorees correctement lors de l'export. Si une icone n'apparait pas sur un fond sombre, verifiez que l'adresse est correctement saisie, et exportez de nouveau.</div>
+      </details>
+
+      <details class="faq">
+        <summary>Puis-je modifier le meme CV sur plusieurs appareils ?</summary>
+        <div class="answer">Pas automatiquement, car les donnees sont stockees localement dans le navigateur. Exportez le CV en JSON et importez-le sur l'autre appareil (section 14).</div>
+      </details>
+
+      <details class="faq">
+        <summary>Dois-je enregistrer ?</summary>
+        <div class="answer">Non. L'application enregistre automatiquement. Lorsque "Enregistre" s'affiche en haut a droite, votre etat est sauvegarde. Pour une sauvegarde durable, utilisez en plus l'export JSON.</div>
+      </details>
+
+      <details class="faq">
+        <summary>Le texte parait gris et difficile a lire.</summary>
+        <div class="answer">En haut, cliquez sur <strong>Noir</strong> au niveau de la couleur du texte pour retablir la couleur par defaut bien lisible (section 9).</div>
+      </details>
+    </section>
+
+    <p style="margin-top:32px;"><a class="back" href="index.html" style="display:inline-block;">Retour a l'application</a></p>
+  </main>
+</div>
+
+<footer id="wiki-footer">CV-Studio - Hilfe und Anleitung. Erstellen Sie professionelle Lebenslaeufe direkt im Browser.</footer>
+
+<script>
+function setWikiLang(l){
+  if(!['de','en','fr'].includes(l)) l='de';
+  document.querySelectorAll('.wiki-lang').forEach(b=>b.classList.toggle('active', b.getAttribute('data-lang')===l));
+  document.querySelectorAll('.langsel button').forEach(b=>b.classList.toggle('active', b.getAttribute('data-l')===l));
+  document.documentElement.lang=l;
+  var sub=document.getElementById('wiki-subtitle');
+  var back=document.getElementById('wiki-back');
+  var foot=document.getElementById('wiki-footer');
+  var T={
+    de:{sub:'Hilfe und vollstaendige Anleitung',back:'Zurueck zur App',foot:'CV-Studio - Hilfe und Anleitung. Erstellen Sie professionelle Lebenslaeufe direkt im Browser.'},
+    en:{sub:'Help and complete guide',back:'Back to the app',foot:'CV-Studio - Help and guide. Create professional resumes directly in your browser.'},
+    fr:{sub:'Aide et guide complet',back:'Retour a l\'application',foot:'CV-Studio - Aide et guide. Creez des CV professionnels directement dans votre navigateur.'}
+  };
+  if(sub) sub.textContent=T[l].sub;
+  if(back) back.textContent=T[l].back;
+  if(foot) foot.textContent=T[l].foot;
+  try{ localStorage.setItem('cvstudio_lang', l); }catch(e){}
+}
+(function(){
+  var l=null;
+  try{ l=localStorage.getItem('cvstudio_lang'); }catch(e){}
+  if(!l || !['de','en','fr'].includes(l)){
+    var nav=(navigator.language||'de').slice(0,2);
+    l=['de','en','fr'].includes(nav)?nav:'de';
+  }
+  setWikiLang(l);
+})();
+</script>
 </body>
 </html>
