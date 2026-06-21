@@ -335,6 +335,12 @@ html, body { height: 100%; font-family: 'Inter', system-ui, sans-serif; backgrou
   body.mob-preview #editor-panel { display: none; }
   body.mob-edit #preview-panel { display: none; }
   #preview-scroller { padding: 12px; }
+  /* Topbar umbrechen statt horizontal scrollen: sonst sind Schaltflaechen am
+     rechten Rand (z. B. "PDF exportieren") unsichtbar, weil die Scrollleiste
+     ausgeblendet ist. Beim Umbruch bleibt JEDE Schaltflaeche erreichbar. */
+  #topbar { height: auto; flex-wrap: wrap; overflow: visible; padding: 8px 10px; row-gap: 8px; }
+  #topbar .spacer { display: none; }
+  #topbar .sep { display: none; }
 }
 /* Sehr kleine Geraete (Smartphones hochkant): kompaktere Topbar-Abstaende */
 @media (max-width: 560px) {
