@@ -53,8 +53,16 @@ html, body { height: 100%; font-family: 'Inter', system-ui, sans-serif; backgrou
 #preview-panel { flex: 1; background: #d1d5db; display: flex; flex-direction: column; overflow: hidden; }
 #preview-bar { padding: 6px 14px; background: #374151; flex-shrink: 0; }
 #preview-bar span { color: #9ca3af; font-size: 11px; }
-#preview-scroller { flex: 1; overflow: auto; padding: 20px; display: flex; justify-content: center; }
-#cv-preview { background: white; width: 794px; min-height: 1123px; flex-shrink: 0; position: relative; font-family: 'Inter', system-ui, sans-serif; --cv-ink: #1a1a1a; color: var(--cv-ink); }
+#preview-scroller { flex: 1; overflow: auto; padding: 20px; display: flex; justify-content: center; align-items: flex-start; }
+/* preview-fit traegt die skalierte Groesse (Layout-Box), cv-preview die echte A4-Box.
+   Auf dem Desktop (Skala 1) verhaelt es sich wie ein einfacher Wrapper. */
+#preview-fit { flex-shrink: 0; }
+#cv-preview { background: white; width: 794px; min-height: 1123px; position: relative; font-family: 'Inter', system-ui, sans-serif; --cv-ink: #1a1a1a; color: var(--cv-ink); transform-origin: top left; }
+
+/* ====== MOBILE-UMSCHALTER (Bearbeiten / Vorschau) ====== */
+#mobile-switch { display: none; gap: 6px; padding: 8px 12px; background: var(--c-surface); border-bottom: 1px solid var(--c-border); flex-shrink: 0; }
+#mobile-switch .mob-tab { flex: 1; padding: 9px 12px; border: 1px solid var(--c-border); background: white; color: var(--c-muted); font-size: 13px; font-weight: 600; border-radius: var(--radius); cursor: pointer; transition: var(--transition); }
+#mobile-switch .mob-tab.active { background: var(--c-accent); color: white; border-color: var(--c-accent); }
 
 /* ====== BUTTONS ====== */
 .btn { display: inline-flex; align-items: center; gap: 5px; padding: 6px 12px; border-radius: var(--radius); border: none; cursor: pointer; font-size: 12px; font-weight: 500; transition: var(--transition); white-space: nowrap; }
@@ -314,7 +322,28 @@ html, body { height: 100%; font-family: 'Inter', system-ui, sans-serif; backgrou
 .tpl-exec .lang-level { color: var(--cv-ink); font-style: italic; }
 .tpl-exec .tech-stack { font-size: 10px; color: var(--cv-ink); margin-top: 4px; }
 
-@media print { #editor-panel, #topbar, #preview-bar { display: none !important; } #cv-preview { width: 100% !important; } }
+/* ====== RESPONSIVE: TABLET & MOBILE ====== */
+/* Auf schmalen Bildschirmen passen Editor und Vorschau nicht nebeneinander.
+   Beide Bereiche werden uebereinander gelegt und ueber den Mobile-Umschalter
+   gewechselt. Die A4-Vorschau wird per JS (applyPreviewScale) auf die Bildschirm-
+   breite skaliert - so ist die App auf JEDER Bildschirmgroesse voll nutzbar. */
+@media (max-width: 900px) {
+  #mobile-switch { display: flex; }
+  .workspace { position: relative; }
+  #editor-panel { width: 100%; border-right: none; }
+  /* Standard: Editor sichtbar, Vorschau ausgeblendet (per body-Klasse gesteuert) */
+  body.mob-preview #editor-panel { display: none; }
+  body.mob-edit #preview-panel { display: none; }
+  #preview-scroller { padding: 12px; }
+}
+/* Sehr kleine Geraete (Smartphones hochkant): kompaktere Topbar-Abstaende */
+@media (max-width: 560px) {
+  #topbar { gap: 7px; padding: 0 10px; }
+  #topbar label { display: none; }   /* Platz sparen - Selects bleiben verstaendlich */
+  #editor-body { padding: 12px 12px 40px; }
+}
+
+@media print { #editor-panel, #topbar, #mobile-switch, #preview-bar { display: none !important; } #preview-fit { width: auto !important; height: auto !important; } #cv-preview { width: 100% !important; transform: none !important; } body.mob-edit #preview-panel, body.mob-preview #editor-panel { display: block !important; } }
 
 /* ====== SEITENTRENNLINIEN (nur in Vorschau, nicht im PDF) ====== */
 /* .pbc-Elemente werden beim PDF-Export temporaer ausgeblendet */
@@ -506,6 +535,14 @@ html, body { height: 100%; font-family: 'Inter', system-ui, sans-serif; backgrou
     <span class="autosave-indicator" id="save-indicator">Gespeichert</span>
   </div>
 
+  <!-- Mobile-Umschalter: nur auf kleinen Bildschirmen sichtbar (siehe Media Query).
+       Erlaubt das Wechseln zwischen Bearbeiten und Vorschau, da beide Bereiche
+       auf schmalen Geraeten nicht nebeneinander passen. -->
+  <div id="mobile-switch">
+    <button class="mob-tab active" data-view="edit" onclick="setMobileView('edit')">Bearbeiten</button>
+    <button class="mob-tab" data-view="preview" onclick="setMobileView('preview')">Vorschau</button>
+  </div>
+
   <div class="workspace">
     <div id="editor-panel">
       <div id="editor-tabs">
@@ -523,7 +560,12 @@ html, body { height: 100%; font-family: 'Inter', system-ui, sans-serif; backgrou
     <div id="preview-panel">
       <div id="preview-bar"><span>A4 Live-Vorschau - Aenderungen erscheinen sofort</span></div>
       <div id="preview-scroller">
-        <div id="cv-preview"></div>
+        <!-- preview-fit faltet die skalierte Vorschau auf ihre sichtbare Groesse
+             zusammen (kein horizontales Scrollen auf kleinen Bildschirmen).
+             cv-preview behaelt seine echte A4-Breite (794px) fuer den PDF-Export. -->
+        <div id="preview-fit">
+          <div id="cv-preview"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -1698,6 +1740,10 @@ function applyPageLayout() {
   el.style.height = '';
   el.style.overflow = '';
   if (child) child.style.minHeight = '';
+  // Skalierung fuer die Messung entfernen: getBoundingClientRect liefert sonst
+  // skalierte Koordinaten und die Seitenumbruch-Berechnung (gegen A4_PAGE_PX in
+  // echten Pixeln) waere falsch. Nach der Messung wird wieder skaliert.
+  el.style.transform = 'none';
   // Seitenumbrueche vermeiden: einzelne Zeilen, die eine A4-Grenze kreuzen, auf
   // die naechste Seite schieben - kein abgeschnittener Text
   vermeideSeitenumbrueche(el);
@@ -1712,6 +1758,48 @@ function applyPageLayout() {
   el.style.overflow = 'hidden';
   if (child) child.style.minHeight = cvGesamthoehePx + 'px';
   addSeitentrennlinien(cvSeitenAnzahl);
+  // Vorschau auf die verfuegbare Breite skalieren (Desktop = 1, Mobil < 1)
+  applyPreviewScale();
+}
+
+// Skaliert die A4-Vorschau so, dass sie immer vollstaendig in die verfuegbare
+// Breite passt - auf JEDER Bildschirmgroesse, ohne horizontales Scrollen.
+// Wichtig: Es wird nur fuer die ANZEIGE skaliert. cv-preview behaelt seine echte
+// Breite (794px); der Wrapper preview-fit traegt die skalierte Layout-Groesse,
+// damit die Zentrierung stimmt und kein Leerraum/Ueberlauf entsteht.
+// Der PDF-Export setzt die Skalierung vorher zurueck (echte 794px Aufloesung).
+function applyPreviewScale() {
+  const el = document.getElementById('cv-preview');
+  const fit = document.getElementById('preview-fit');
+  const scroller = document.getElementById('preview-scroller');
+  if (!el || !fit || !scroller) return;
+  const cs = getComputedStyle(scroller);
+  const padX = parseFloat(cs.paddingLeft || 0) + parseFloat(cs.paddingRight || 0);
+  const avail = scroller.clientWidth - padX;
+  const A4_W = 794;
+  const scale = Math.min(1, avail / A4_W);
+  const realH = cvGesamthoehePx || A4_PAGE_PX;
+  if (scale >= 1) {
+    // Desktop / breit genug: keine Skalierung, Wrapper neutral
+    el.style.transform = 'none';
+    fit.style.width = '';
+    fit.style.height = '';
+  } else {
+    el.style.transform = `scale(${scale})`;
+    // Layout-Box auf die sichtbare (skalierte) Groesse zusammenfalten
+    fit.style.width = (A4_W * scale) + 'px';
+    fit.style.height = (realH * scale) + 'px';
+  }
+}
+
+// Wechselt auf kleinen Bildschirmen zwischen Bearbeiten und Vorschau.
+function setMobileView(view) {
+  document.body.classList.toggle('mob-edit', view === 'edit');
+  document.body.classList.toggle('mob-preview', view === 'preview');
+  document.querySelectorAll('#mobile-switch .mob-tab').forEach(b =>
+    b.classList.toggle('active', b.dataset.view === view));
+  // Beim Wechsel zur Vorschau neu skalieren (Scroller-Breite ist jetzt bekannt)
+  if (view === 'preview') applyPreviewScale();
 }
 
 // Verschiebt nur die EINZELNE Zeile (Stichpunkt, Titelzeile, Abschnittstitel),
@@ -1937,6 +2025,10 @@ async function exportPDF() {
   btn.textContent = 'Bitte warten...'; btn.disabled = true;
 
   const el = document.getElementById('cv-preview');
+  // Eventuelle Anzeige-Skalierung (Mobil) zuruecksetzen: der Export rendert immer
+  // in echter A4-Aufloesung (794px). Wird im finally wiederhergestellt.
+  const prevTransform = el.style.transform;
+  el.style.transform = 'none';
   // Seitentrennlinien beim Capture ausblenden
   el.querySelectorAll('.pbc').forEach(x => x.style.display = 'none');
 
@@ -2022,6 +2114,9 @@ async function exportPDF() {
     el.querySelectorAll('.pbc').forEach(x => x.style.display = '');
     // SVG-Icon-Farben zuruecksetzen (currentColor wieder aktiv fuer den Bildschirm)
     iconSvgs.forEach(svg => { svg.style.fill = svg.dataset.prevFill || ''; });
+    // Anzeige-Skalierung wiederherstellen (Mobil)
+    el.style.transform = prevTransform;
+    applyPreviewScale();
   }
 
   btn.textContent = origText; btn.disabled = false;
@@ -2045,6 +2140,16 @@ window.addEventListener('DOMContentLoaded', () => {
   renderEditor();
   renderPreview();
   applyFont();
+  // Mobile-Ansicht initialisieren (Standard: Bearbeiten). Auf dem Desktop ohne
+  // sichtbare Wirkung, da der Umschalter per Media Query ausgeblendet ist.
+  setMobileView('edit');
+  // Vorschau bei Groessenaenderung (Drehen/Resize) neu skalieren - entkoppelt,
+  // um Layout-Thrashing zu vermeiden.
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => applyPreviewScale(), 120);
+  });
   // Layout nach vollstaendigem Laden der Schriftarten neu berechnen: vorher
   // koennen abweichende Schriftmasse die Seitenumbruch-Berechnung verfaelschen.
   if (document.fonts && document.fonts.ready) {
