@@ -17,7 +17,7 @@ Dieses Projekt entstand aus einer konkreten Erfahrung: Jedes Mal, wenn ich meine
 ## Funktionen
 
 - **Live-Vorschau**: Aenderungen erscheinen sofort in der A4-Vorschau rechts
-- **6 Vorlagen**: Minimal, Sidebar-Akzent, Klassisch DACH, Kreativ Header, Kompakt Zeitachse, Executive
+- **10 Vorlagen**: Minimal, Sidebar-Akzent, Klassisch DACH, Kreativ Header, Kompakt Zeitachse, Executive, Zweispaltig, Seitenlinie, Profilkarte, Schlicht ATS
 - **11 Schriftarten**: Inter, Roboto, Open Sans, Montserrat, Lato, Arial, Helvetica Neue, Calibri, Georgia, Times New Roman, EB Garamond
 - **Auto-Speicherung**: Alle Daten werden automatisch im LocalStorage des Browsers gesichert
 - **Foto-Upload**: Profilfoto hochladen, runde oder eckige Darstellung waehlbar
@@ -39,6 +39,10 @@ Dieses Projekt entstand aus einer konkreten Erfahrung: Jedes Mal, wenn ich meine
 | Kreativ Header | Dunkler Vollbreiten-Kopfbereich, zweispaltig darunter |
 | Kompakt Zeitachse | Zeitleistenformat, platzsparend und strukturiert |
 | Executive | Zentrierter Aufbau, elegante Typografie, minimale Dekorationen |
+| Zweispaltig | Zweispaltig: Skills/Bildung links, Erfahrung/Projekte rechts, Teal-Akzent |
+| Seitenlinie | Einzelspaltig mit blauer vertikaler Linie pro Sektion, Datum als Badge |
+| Profilkarte | Farbiger Profilkopf (Indigo), Foto integriert, klare Sektionen darunter |
+| Schlicht ATS | Schwarz-weiss, maximum ATS-Kompatibilitaet, tabellarisches Format |
 
 ---
 
@@ -49,12 +53,13 @@ Die gesamte Anwendung besteht aus einer einzigen HTML-Datei (`cv-studio.html`). 
 ```
 cv-studio.html
   - HTML-Struktur (Editor links, Vorschau rechts)
-  - CSS (Editor-UI, 6 CV-Vorlagen)
+  - CSS (Editor-UI, 10 CV-Vorlagen)
   - JavaScript
       - Datenverwaltung (JSON-Schema, LocalStorage)
       - Editor (Tabs, Formulare, Drag and Drop)
-      - Vorlagen-Builder (6 Funktionen, je eine pro Vorlage)
-      - PDF-Export (html2canvas + jsPDF, Multi-Page, klickbare Links)
+      - Vorlagen-Builder (10 Funktionen, je eine pro Vorlage)
+      - Seitentrennlinien in der Vorschau (A4-Seitengrenzen sichtbar)
+      - PDF-Export (html2canvas + jsPDF, Multi-Page, exaktes A4-Verhaeltnis, klickbare Links)
       - Schriftartverwaltung
       - JSON-Import und -Export
 ```
