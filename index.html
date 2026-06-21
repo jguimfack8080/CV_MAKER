@@ -1020,10 +1020,14 @@ function photoBox(w, h, extraCss) {
   const br = p.photoShape === 'square' ? '4px' : '50%';
   const zoom = p.photoZoom || 1;
   const posY = (p.photoPosY != null) ? p.photoPosY : 50;
-  // Bei bekanntem Seitenverhaeltnis die Cover-Groesse exakt berechnen und mit dem
-  // Zoom multiplizieren (zuverlaessig fuer html2canvas). Sonst klassisches "cover".
+  // Bei bekanntem Seitenverhaeltnis die Cover-Groesse IMMER exakt in Pixeln
+  // berechnen (auch bei Zoom 1). Grund: html2canvas rendert "background-size:cover"
+  // zusammen mit border-radius unzuverlaessig - das Foto kann ueber den Rahmen
+  // hinaus / doppelt gezeichnet werden (sichtbarer Geister-/Duplikat-Effekt im PDF).
+  // Eine explizite Pixelgroesse vermeidet das vollstaendig und ist deckungsgleich
+  // mit der Vorschau. Nur ohne bekanntes Seitenverhaeltnis bleibt "cover" als Fallback.
   let sizeCss;
-  if (p.photoAspect && zoom !== 1) {
+  if (p.photoAspect) {
     const a = p.photoAspect;       // natuerliches Verhaeltnis Breite/Hoehe
     let bgW, bgH;
     if (w / h > a) { bgW = w; bgH = w / a; } else { bgH = h; bgW = h * a; }
@@ -1031,7 +1035,12 @@ function photoBox(w, h, extraCss) {
   } else {
     sizeCss = `background-size:cover;`;
   }
-  return `<div data-photo-overlay="1" style="width:${w}px;height:${h}px;border-radius:${br};background-image:url('${p.photo}');${sizeCss}background-position:center ${posY}%;background-repeat:no-repeat;flex-shrink:0;${extraCss||''}"></div>`;
+  // border-radius (Form: rund/eckig) bewusst ZULETZT setzen, damit die vom Nutzer
+  // gewaehlte Form immer Vorrang vor evtl. in extraCss gesetzten Werten der Vorlage
+  // hat (sonst bleibt z. B. die Profil-Vorlage trotz Auswahl bei eckigen Ecken).
+  // data-photo-overlay markiert das Foto fuer das native, scharfe Nachzeichnen im
+  // PDF-Export (overlayPhotoNatif).
+  return `<div data-photo-overlay="1" style="width:${w}px;height:${h}px;background-image:url('${p.photo}');${sizeCss}background-position:center ${posY}%;background-repeat:no-repeat;flex-shrink:0;${extraCss||''}border-radius:${br};"></div>`;
 }
 
 // Bereitet die Fotos fuer den PDF-Export in gestochen scharfer Qualitaet vor.
