@@ -85,7 +85,8 @@
           name: '', jobtitle: '', address: '', email: '', phone: '',
           birthdate: '', birthplace: '', nationality: '', marital: '',
           linkedin: '', github: '', website: '',
-          photo: null, photoShape: 'circle'
+          photo: null, photoShape: 'circle',
+          photoZoom: 1, photoPosY: 50, photoAspect: null
         },
         fontKey: 'inter',
         template: 'minimal',
@@ -106,10 +107,18 @@
       if (!cv.personal.github)  cv.personal.github = '';
       if (!cv.personal.website) cv.personal.website = '';
       if (!cv.personal.photoShape) cv.personal.photoShape = 'circle';
+      if (cv.personal.photoZoom == null) cv.personal.photoZoom = 1;
+      if (cv.personal.photoPosY == null) cv.personal.photoPosY = 50;
+      if (cv.personal.photoAspect === undefined) cv.personal.photoAspect = null;
       LIST_SECTIONS.forEach(function (key) {
         if (!Array.isArray(cv[key])) cv[key] = [];
         cv[key].forEach(function (item) {
           if (item && !item.id) item.id = uid();
+          // Skill-Kategorien: optionale Sternebewertungen je Eintrag sicherstellen
+          if (key === 'skills' && item) {
+            if (!Array.isArray(item.items)) item.items = [];
+            if (!item.ratings || typeof item.ratings !== 'object') item.ratings = {};
+          }
         });
       });
       if (!cv.fontKey)   cv.fontKey = 'inter';

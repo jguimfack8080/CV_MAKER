@@ -36,10 +36,11 @@ window.CV_DEMO = {
     fontKey: 'inter',
     template: 'minimal',
     skills: [
-      { id: 'd-sk1', category: 'Programmierung', items: ['Python', 'SQL', 'Java', 'Bash'] },
-      { id: 'd-sk2', category: 'Data Engineering', items: ['Apache Spark', 'Apache Airflow', 'Apache Kafka', 'dbt', 'ETL/ELT', 'Parquet'] },
-      { id: 'd-sk3', category: 'Cloud & DevOps', items: ['AWS', 'Docker', 'Kubernetes', 'Terraform', 'Git', 'CI/CD'] },
-      { id: 'd-sk4', category: 'Datenbanken & BI', items: ['PostgreSQL', 'Snowflake', 'Power BI', 'Tableau'] }
+      { id: 'd-sk0', category: 'Kenntnisse', items: ['Lernbereitschaft', 'Zuverlaessigkeit', 'Teamfaehigkeit'], ratings: { 'Lernbereitschaft': 5, 'Zuverlaessigkeit': 5, 'Teamfaehigkeit': 5 } },
+      { id: 'd-sk1', category: 'Programmierung', items: ['Python', 'SQL', 'Java', 'Bash'], ratings: { 'Python': 5, 'SQL': 5, 'Java': 4, 'Bash': 3 } },
+      { id: 'd-sk2', category: 'Data Engineering', items: ['Apache Spark', 'Apache Airflow', 'Apache Kafka', 'dbt', 'ETL/ELT', 'Parquet'], ratings: { 'Apache Spark': 5, 'Apache Airflow': 5, 'Apache Kafka': 4, 'dbt': 4, 'ETL/ELT': 5, 'Parquet': 4 } },
+      { id: 'd-sk3', category: 'Cloud & DevOps', items: ['AWS', 'Docker', 'Kubernetes', 'Terraform', 'Git', 'CI/CD'], ratings: { 'AWS': 4, 'Docker': 5, 'Kubernetes': 3, 'Terraform': 3, 'Git': 5, 'CI/CD': 4 } },
+      { id: 'd-sk4', category: 'Datenbanken & BI', items: ['PostgreSQL', 'Snowflake', 'Power BI', 'Tableau'], ratings: { 'PostgreSQL': 5, 'Snowflake': 4, 'Power BI': 4, 'Tableau': 3 } }
     ],
     experience: [
       {

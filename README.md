@@ -28,7 +28,8 @@ Dieses Projekt entstand aus einer konkreten Erfahrung: Jedes Mal, wenn ich meine
 - **11 Vorlagen**: Minimal, Sidebar-Akzent, Klassisch DACH, Kreativ Header, Kompakt Zeitachse, Executive, Zweispaltig, Seitenlinie, Profilkarte, Schlicht ATS, Profil Klassisch
 - **11 Schriftarten**: Inter, Roboto, Open Sans, Montserrat, Lato, Arial, Helvetica Neue, Calibri, Georgia, Times New Roman, EB Garamond
 - **Auto-Speicherung**: Alle Daten werden automatisch im LocalStorage des Browsers gesichert (je Lebenslauf ein eigener Schluessel)
-- **Foto-Upload**: Profilfoto hochladen, runde oder eckige Darstellung waehlbar
+- **Foto-Upload**: Profilfoto hochladen, runde oder eckige Darstellung waehlbar, mit Zoom und vertikaler Position einstellbar (Originaldatei bleibt unveraendert)
+- **Skill-Bewertungen**: optionale Sternebewertung (1 bis 5) je Skill, angezeigt in der Vorlage "Profil Klassisch"
 - **Drag and Drop**: Eintraege in allen Sektionen per Drag and Drop neu anordnen
 - **JSON-Import / JSON-Export**: Lebenslauf als `.json`-Datei sichern; Import legt einen neuen Lebenslauf an (nicht-destruktiv)
 - **PDF-Export**: Vollstaendiger A4-Export mit korrekter Seitentrennung und hoher Bildqualitaet (PNG lossless)

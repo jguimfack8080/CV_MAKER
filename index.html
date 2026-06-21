@@ -92,6 +92,9 @@ html, body { height: 100%; font-family: 'Inter', system-ui, sans-serif; backgrou
 .tag { display: inline-flex; align-items: center; gap: 3px; background: var(--c-accent-lt); color: var(--c-accent); border: 1px solid #bfdbfe; border-radius: 4px; padding: 2px 7px; font-size: 11px; }
 .tag-rm { cursor: pointer; font-size: 13px; opacity: .6; }
 .tag-rm:hover { opacity: 1; }
+.skill-edit-row { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+.skill-edit-name { flex: 1; font-size: 12px; color: var(--c-text); }
+.skill-edit-rate { width: 92px; flex-shrink: 0; padding: 3px 5px; border: 1px solid var(--c-border); border-radius: var(--radius); font-size: 11px; background: white; }
 .bullet-list { list-style: none; }
 .bullet-item { display: flex; gap: 5px; margin-bottom: 5px; align-items: flex-start; }
 .bullet-item textarea { flex: 1; }
@@ -430,9 +433,10 @@ html, body { height: 100%; font-family: 'Inter', system-ui, sans-serif; backgrou
 .tpl-profil .pf-data-item { margin-bottom: 8px; }
 .tpl-profil .pf-label { font-size: 9.5px; font-weight: 700; color: var(--cv-ink); }
 .tpl-profil .pf-value { font-size: 9.5px; color: var(--cv-ink); word-break: break-word; }
-.tpl-profil .kn-row { margin-bottom: 7px; }
-.tpl-profil .kn-name { font-size: 10.5px; font-weight: 600; color: var(--cv-ink); margin-bottom: 2px; }
 .tpl-profil .kn-items { font-size: 9.5px; color: var(--cv-ink); }
+.tpl-profil .pf-skill-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 5px; }
+.tpl-profil .pf-skill-name { font-size: 10px; color: var(--cv-ink); }
+.tpl-profil .pf-stars { font-size: 11px; letter-spacing: 1.5px; white-space: nowrap; flex-shrink: 0; line-height: 1; }
 .tpl-profil .pf-lang { font-size: 10px; color: var(--cv-ink); margin-bottom: 3px; }
 .tpl-profil .pf-rsection-title { position: relative; font-size: 15px; font-weight: 700; color: var(--cv-ink); padding-left: 24px; margin-bottom: 14px; padding-bottom: 6px; border-bottom: 1px solid #d1d5db; }
 .tpl-profil .pf-rsection-title::before { content: ''; position: absolute; left: 0; top: 2px; width: 0; height: 0; border-style: solid; border-width: 8px 0 8px 13px; border-color: transparent transparent transparent #1d4ed8; }
@@ -674,6 +678,12 @@ function renderPersonalEditor() {
         <option value="square" ${p.photoShape==='square'?'selected':''}>Eckig</option>
       </select>
     </div>
+    ${p.photo ? `
+    <div class="field"><label>Foto-Zoom (${Math.round((p.photoZoom||1)*100)} %)</label>
+      <input type="range" min="100" max="250" step="1" value="${Math.round((p.photoZoom||1)*100)}" style="width:100%" oninput="setPhotoZoom(this.value)"></div>
+    <div class="field"><label>Foto-Position vertikal (${p.photoPosY!=null?p.photoPosY:50} %)</label>
+      <input type="range" min="0" max="100" step="1" value="${p.photoPosY!=null?p.photoPosY:50}" style="width:100%" oninput="setPhotoPosY(this.value)"></div>
+    ` : ''}
     <div class="field"><label>Name</label><input type="text" id="p-name" value="${esc(p.name)}"></div>
     <div class="field"><label>Berufsbezeichnung / Profil</label><input type="text" id="p-jobtitle" value="${esc(p.jobtitle)}"></div>
     <div class="field"><label>Adresse</label><input type="text" id="p-address" value="${esc(p.address)}"></div>
@@ -699,10 +709,27 @@ function bindPersonal() {
 function onPhotoUpload(e) {
   const file = e.target.files[0]; if (!file) return;
   const reader = new FileReader();
-  reader.onload = ev => { cvData.personal.photo = ev.target.result; markDirty(); renderEditor(); };
+  reader.onload = ev => {
+    cvData.personal.photo = ev.target.result;
+    // Zoom/Position auf Standard setzen und natuerliches Seitenverhaeltnis
+    // bestimmen (fuer den Zoom), ohne die Originalqualitaet zu veraendern.
+    cvData.personal.photoZoom = 1;
+    cvData.personal.photoPosY = 50;
+    const img = new Image();
+    img.onload = () => {
+      cvData.personal.photoAspect = img.naturalWidth / img.naturalHeight;
+      markDirty(); renderEditor();
+    };
+    img.src = ev.target.result;
+    markDirty(); renderEditor();
+  };
   reader.readAsDataURL(file);
 }
-function removePhoto() { cvData.personal.photo = null; markDirty(); renderEditor(); }
+function removePhoto() { cvData.personal.photo = null; cvData.personal.photoAspect = null; markDirty(); renderEditor(); }
+// Foto-Groesse (Zoom) und vertikale Position anpassen - die Originaldatei bleibt
+// unveraendert, nur die Darstellung im Rahmen wird angepasst.
+function setPhotoZoom(v) { cvData.personal.photoZoom = (parseInt(v) || 100) / 100; markDirty(); }
+function setPhotoPosY(v) { cvData.personal.photoPosY = parseInt(v); if (isNaN(cvData.personal.photoPosY)) cvData.personal.photoPosY = 50; markDirty(); }
 
 // -- KENNTNISSE --
 function renderSkillsEditor() {
@@ -721,8 +748,17 @@ function renderSkillsEditor() {
           </div>
           <div class="card-body" id="sk-body-${i}">
             <div class="field"><label>Kategorie</label><input type="text" value="${esc(cat.category)}" onchange="updateSkillCat('${cat.id}','category',this.value)"></div>
-            <label style="font-size:11px;font-weight:600;color:var(--c-muted);margin-bottom:4px;display:block;">SKILLS</label>
-            <div class="tags-list">${cat.items.map(it=>`<span class="tag">${esc(it)}<span class="tag-rm" onclick="removeSkillTag('${cat.id}','${escAttr(it)}')">x</span></span>`).join('')}</div>
+            <label style="font-size:11px;font-weight:600;color:var(--c-muted);margin-bottom:4px;display:block;">SKILLS (Bewertung optional, fuer Vorlage "Profil Klassisch")</label>
+            <div>${cat.items.map(it=>{
+              const lvl=(cat.ratings&&cat.ratings[it])||0;
+              return `<div class="skill-edit-row">
+                <span class="skill-edit-name">${esc(it)}</span>
+                <select class="skill-edit-rate" onchange="setSkillRating('${cat.id}','${escAttr(it)}',this.value)">
+                  ${[0,1,2,3,4,5].map(n=>`<option value="${n}" ${n===lvl?'selected':''}>${n===0?'ohne':n+' Sterne'}</option>`).join('')}
+                </select>
+                <span class="tag-rm" onclick="removeSkillTag('${cat.id}','${escAttr(it)}')">x</span>
+              </div>`;
+            }).join('')}</div>
             <div class="tag-input-wrap" style="margin-top:8px;">
               <input type="text" id="sk-inp-${cat.id}" placeholder="Skill hinzufuegen..." style="flex:1;padding:6px 9px;border:1px solid var(--c-border);border-radius:var(--radius);font-size:12px;" onkeydown="if(event.key==='Enter'){event.preventDefault();addSkillTag('${cat.id}')}">
               <button class="btn btn-primary btn-sm" onclick="addSkillTag('${cat.id}')">+</button>
@@ -735,14 +771,23 @@ function renderSkillsEditor() {
 function toggleCard(id) { const el=document.getElementById(id); if(el) el.classList.toggle('open'); }
 function updateSkillCat(id,f,v) { const c=cvData.skills.find(x=>x.id===id); if(c){c[f]=v;markDirty();} }
 function removeSkillCat(id) { cvData.skills=cvData.skills.filter(c=>c.id!==id); markDirty(); renderEditor(); }
-function addSkillCat() { cvData.skills.push({id:uid(),category:'Neue Kategorie',items:[]}); markDirty(); renderEditor(); }
+function addSkillCat() { cvData.skills.push({id:uid(),category:'Neue Kategorie',items:[],ratings:{}}); markDirty(); renderEditor(); }
 function addSkillTag(catId) {
   const inp=document.getElementById('sk-inp-'+catId); const v=inp.value.trim(); if(!v) return;
   const cat=cvData.skills.find(c=>c.id===catId);
   if(cat&&!cat.items.includes(v)){cat.items.push(v);markDirty();renderEditor();showTab('skills');}
   else inp.value='';
 }
-function removeSkillTag(catId,tag) { const c=cvData.skills.find(x=>x.id===catId); if(c){c.items=c.items.filter(i=>i!==tag);markDirty();renderEditor();} }
+function removeSkillTag(catId,tag) { const c=cvData.skills.find(x=>x.id===catId); if(c){c.items=c.items.filter(i=>i!==tag); if(c.ratings) delete c.ratings[tag]; markDirty();renderEditor();} }
+// Sternebewertung eines Skills setzen (0 = ohne). Wird nur in der Vorlage
+// "Profil Klassisch" angezeigt; andere Vorlagen ignorieren die Bewertung.
+function setSkillRating(catId,name,val) {
+  const c=cvData.skills.find(x=>x.id===catId); if(!c) return;
+  if(!c.ratings) c.ratings={};
+  const n=parseInt(val)||0;
+  if(n===0) delete c.ratings[name]; else c.ratings[name]=n;
+  markDirty();
+}
 
 // -- LISTEN-EDITOREN --
 function renderListEditor(listKey,title,cardFn) {
@@ -925,7 +970,20 @@ function photoBox(w, h, extraCss) {
   const p = cvData.personal;
   if (!p.photo) return '';
   const br = p.photoShape === 'square' ? '4px' : '50%';
-  return `<div style="width:${w}px;height:${h}px;border-radius:${br};background:url('${p.photo}') center 15%/cover no-repeat;flex-shrink:0;${extraCss||''}"></div>`;
+  const zoom = p.photoZoom || 1;
+  const posY = (p.photoPosY != null) ? p.photoPosY : 50;
+  // Bei bekanntem Seitenverhaeltnis die Cover-Groesse exakt berechnen und mit dem
+  // Zoom multiplizieren (zuverlaessig fuer html2canvas). Sonst klassisches "cover".
+  let sizeCss;
+  if (p.photoAspect && zoom !== 1) {
+    const a = p.photoAspect;       // natuerliches Verhaeltnis Breite/Hoehe
+    let bgW, bgH;
+    if (w / h > a) { bgW = w; bgH = w / a; } else { bgH = h; bgW = h * a; }
+    sizeCss = `background-size:${Math.round(bgW * zoom)}px ${Math.round(bgH * zoom)}px;`;
+  } else {
+    sizeCss = `background-size:cover;`;
+  }
+  return `<div style="width:${w}px;height:${h}px;border-radius:${br};background-image:url('${p.photo}');${sizeCss}background-position:center ${posY}%;background-repeat:no-repeat;flex-shrink:0;${extraCss||''}"></div>`;
 }
 
 // Hilfsfunktion fuer Kontakt-Links
@@ -952,6 +1010,15 @@ function iconLink(url, svg, label) {
 // Optionaler, dezenter Projekt-Link (oeffnet das jeweilige Projekt).
 function projectLink(url) {
   return `<a href="${fullUrl(url)}" class="cv-link cv-proj-link">↗ Ansehen</a>`;
+}
+
+// Sterne-Bewertung (1-5) als gefuellte/leere Sterne. Gefuellte in Akzentblau,
+// leere in Hellblau - wie in der Vorlage "Profil Klassisch".
+function sterne(level) {
+  const n = Math.max(0, Math.min(5, parseInt(level) || 0));
+  let s = '';
+  for (let i = 1; i <= 5; i++) s += `<span style="color:${i <= n ? '#1d4ed8' : '#bcd0f5'}">&#9733;</span>`;
+  return `<span class="pf-stars">${s}</span>`;
 }
 
 // ====== VORLAGEN-BUILDER ======
@@ -1517,7 +1584,7 @@ function buildPlain() {
 // ====== TEMPLATE: PROFIL KLASSISCH ======
 function buildProfil() {
   const p = cvData.personal;
-  const photo = p.photo ? `<div class="pf-photo" style="background-image:url('${p.photo}')"></div>` : '';
+  const photo = p.photo ? photoBox(236, 220, 'border-radius:4px;margin-bottom:16px;') : '';
   const dataItem = (label, val) => val ? `<div class="pf-data-item"><div class="pf-label">${label}</div><div class="pf-value">${val}</div></div>` : '';
   const persData = [
     dataItem('Anschrift', esc(p.address)),
@@ -1531,7 +1598,14 @@ function buildProfil() {
     p.github ? dataItem('GitHub', iconLink(p.github, SVG_GITHUB, 'GitHub')) : '',
     p.website ? dataItem('Portfolio', portfolioLink(p.website)) : ''
   ].join('');
-  const knHtml = cvData.skills.map(c => `<div class="kn-row"><div class="kn-name">${esc(c.category)}</div><div class="kn-items">${c.items.map(esc).join(', ')}</div></div>`).join('');
+  const knHtml = cvData.skills.map(c => `
+    <div class="pf-section">
+      <div class="pf-section-title">${esc(c.category)}</div>
+      ${c.items.map(it => {
+        const lvl = (c.ratings && c.ratings[it]) || 0;
+        return `<div class="pf-skill-row"><span class="pf-skill-name">${esc(it)}</span>${lvl > 0 ? sterne(lvl) : ''}</div>`;
+      }).join('')}
+    </div>`).join('');
   const langHtml = cvData.languages.map(l => `<div class="pf-lang">${esc(l.name)} (${esc(l.level)})</div>`).join('');
   const intHtml = cvData.interests.map(i => esc(i.text)).filter(Boolean).join(' · ');
   const entry = (from, to, title, company, bullets, stack, desc) => `
@@ -1554,7 +1628,7 @@ function buildProfil() {
       ${photo}
       ${p.jobtitle ? `<div style="font-size:11px;color:var(--cv-ink);font-weight:600;margin-bottom:16px">${esc(p.jobtitle)}</div>` : ''}
       <div class="pf-section"><div class="pf-section-title">Persoenliche Daten</div>${persData}</div>
-      ${knHtml ? `<div class="pf-section"><div class="pf-section-title">Kenntnisse</div>${knHtml}</div>` : ''}
+      ${knHtml}
       ${langHtml ? `<div class="pf-section"><div class="pf-section-title">Sprachen</div>${langHtml}</div>` : ''}
       ${intHtml ? `<div class="pf-section"><div class="pf-section-title">Interessen</div><div class="kn-items">${intHtml}</div></div>` : ''}
     </div>
@@ -1652,7 +1726,7 @@ const ZEILEN_SELEKTOR = [
   '.cv-tl-entry', '.cv-tl-title', '.cv-tl-sub',
   '.skill-cat', '.skill-row', '.lang-item', '.pers-item', '.contact-item',
   '.left-skill-cat', '.kn-row',
-  '.pf-entry', '.pf-rsection-title', '.pf-section-title', '.pf-data-item', '.pf-lang'
+  '.pf-entry', '.pf-rsection-title', '.pf-section-title', '.pf-data-item', '.pf-lang', '.pf-skill-row'
 ].join(', ');
 
 // Gilt fuer ALLE Vorlagen (auch mehrspaltige): jede Spalte ist ein eigener Fluss,
