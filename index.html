@@ -1043,57 +1043,28 @@ function photoBox(w, h, extraCss) {
   return `<div data-photo-overlay="1" style="width:${w}px;height:${h}px;background-image:url('${p.photo}');${sizeCss}background-position:center ${posY}%;background-repeat:no-repeat;flex-shrink:0;${extraCss||''}border-radius:${br};"></div>`;
 }
 
-// Bereitet die Fotos fuer den PDF-Export in gestochen scharfer Qualitaet vor.
+// Blendet die Foto-Hintergruende waehrend des html2canvas-Captures aus.
 //
-// Problem: html2canvas skaliert das (oft sehr grosse) Originalfoto mit niedriger
-// Glaettungsqualitaet herunter -> im PDF wirkt das Foto unscharf, obwohl die
-// Live-Vorschau (vom Browser in hoher Qualitaet gerendert) perfekt aussieht.
+// Warum: Das Foto wird anschliessend von overlayPhotoNatif() NATIV, scharf und
+// exakt geclippt (rund/eckig) direkt auf den Canvas gezeichnet. Wuerde html2canvas
+// das Hintergrundbild ebenfalls rendern, entstuenden Duplikate bzw. ueberlaufende
+// "Geisterbilder" im PDF - html2canvas clippt Hintergrundbilder unzuverlaessig und
+// zeichnet sie teils stark vergroessert ueber den Rahmen hinaus. Indem html2canvas
+// fuer das Foto NICHTS rendert, ist ein Duplikat ausgeschlossen; das einzige Foto
+// stammt aus overlayPhotoNatif (volle Aufloesung, gestochen scharf).
 //
-// Loesung: Vor dem Capture wird die Foto-Quelle temporaer durch eine Version
-// ersetzt, die exakt auf die angezeigte Groesse * Export-Skala gerechnet ist -
-// mit hochwertiger Glaettung (imageSmoothingQuality 'high'). html2canvas muss
-// dann praktisch nichts mehr skalieren -> das Foto bleibt scharf.
-//
-// Nicht-destruktiv: Das Originalfoto im Speicher und die Live-Vorschau bleiben
-// unveraendert. Die Funktion gibt eine Wiederherstellungsliste zurueck, die der
-// Aufrufer nach dem Capture (auch im Fehlerfall) abarbeitet.
+// Nicht-destruktiv: Die Live-Vorschau bleibt unveraendert. Die zurueckgegebene
+// Liste stellt die Hintergruende nach dem Capture wieder her (auch im Fehlerfall).
 async function bereiteFotosFuerExportVor(container, skala) {
   const p = cvData.personal;
   if (!p.photo) return [];
   // Foto-Divs erkennen: die per photoBox erzeugten Hintergrundbild-Container
   const divs = Array.from(container.querySelectorAll('div[style*="background-image"]'))
     .filter(d => (d.style.backgroundImage || '').includes('url('));
-  if (!divs.length) return [];
-  // Originalbild einmalig laden (gemeinsame Quelle aller Foto-Divs)
-  const img = await new Promise((resolve, reject) => {
-    const im = new Image();
-    im.onload = () => resolve(im);
-    im.onerror = reject;
-    im.src = p.photo;
-  });
-  const aspekt = p.photoAspect || (img.naturalWidth / img.naturalHeight) || 1;
-  const zoom = p.photoZoom || 1;
   const restores = [];
   divs.forEach(div => {
-    const w = parseFloat(div.style.width);
-    const h = parseFloat(div.style.height);
-    if (!w || !h) return;
-    // Gerenderte Hintergrundgroesse (Cover-Logik, identisch zu photoBox)
-    let bgW, bgH;
-    if (w / h > aspekt) { bgW = w; bgH = w / aspekt; } else { bgH = h; bgW = h * aspekt; }
-    bgW *= zoom; bgH *= zoom;
-    // Zielaufloesung = angezeigte Hintergrundgroesse * Export-Skala
-    const cw = Math.max(1, Math.round(bgW * skala));
-    const ch = Math.max(1, Math.round(bgH * skala));
-    const cv = document.createElement('canvas');
-    cv.width = cw; cv.height = ch;
-    const ctx = cv.getContext('2d');
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
-    ctx.drawImage(img, 0, 0, cw, ch);
-    const sharp = cv.toDataURL('image/jpeg', 0.95);
     const prev = div.style.backgroundImage;
-    div.style.backgroundImage = `url('${sharp}')`;
+    div.style.backgroundImage = 'none';
     restores.push(() => { div.style.backgroundImage = prev; });
   });
   return restores;
@@ -2183,7 +2154,7 @@ async function exportPDF() {
     svg.style.fill = col;
   });
 
-  // Wiederherstellung der temporaer geschaerften Fotos (im finally ausgefuehrt)
+  // Wiederherstellung der temporaer ausgeblendeten Foto-Hintergruende (im finally)
   let fotoRestores = [];
 
   try {
@@ -2200,8 +2171,9 @@ async function exportPDF() {
     // wird - dadurch bleibt die Bildqualitaet auch bei langen Lebenslaeufen erhalten.
     const MAX_CANVAS = 16000;
     const skala = Math.max(2, Math.min(3, MAX_CANVAS / captureHoehe));
-    // Fotos exakt auf die Export-Aufloesung schaerfen (verhindert Unschaerfe durch
-    // das Herunterskalieren grosser Originalbilder in html2canvas).
+    // Foto-Hintergruende fuer den Capture ausblenden: html2canvas soll das Foto
+    // NICHT rendern (sonst Duplikate/Geisterbilder). Das scharfe Foto kommt danach
+    // ausschliesslich aus overlayPhotoNatif().
     fotoRestores = await bereiteFotosFuerExportVor(el, skala);
     const canvas = await html2canvas(el, {
       scale: skala,
