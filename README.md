@@ -29,6 +29,7 @@ Dieses Projekt entstand aus einer konkreten Erfahrung: Jedes Mal, wenn ich meine
 - **JSON-Import / JSON-Export**: Lebenslauf als `.json`-Datei sichern; Import legt einen neuen Lebenslauf an (nicht-destruktiv)
 - **PDF-Export**: Vollstaendiger A4-Export mit korrekter Seitentrennung und hoher Bildqualitaet (PNG lossless)
 - **Klickbare Links im PDF**: E-Mail, LinkedIn, GitHub und Portfolio-Links bleiben im exportierten PDF anklickbar
+- **Portfolio-Hervorhebung**: ist ein Portfolio/Website hinterlegt, wird es als gut sichtbare Pille dargestellt (faellt sofort auf, statt als lange URL unterzugehen) - in allen Vorlagen
 - **Automatische Migration**: ein evtl. vorhandener alter Einzel-Lebenslauf wird beim ersten Start in die Bibliothek uebernommen
 
 ---
