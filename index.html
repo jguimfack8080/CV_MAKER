@@ -1068,8 +1068,8 @@ function buildMinimal() {
     </div>
     <div class="cv-section"><div class="cv-section-title">Berufliche Kenntnisse</div><div class="skill-grid">${skillsHtml}</div></div>
     <div class="cv-section"><div class="cv-section-title">Beruflicher Werdegang</div>${expHtml}</div>
-    <div class="cv-section"><div class="cv-section-title">Projekte</div>${projHtml}</div>
     <div class="cv-section"><div class="cv-section-title">Ausbildung</div>${eduHtml}</div>
+    <div class="cv-section"><div class="cv-section-title">Projekte</div>${projHtml}</div>
     <div class="cv-section"><div class="cv-section-title">Sprachen</div>${langHtml}</div>
     ${intHtml?`<div class="cv-section"><div class="cv-section-title">Interessen & Sonstiges</div><div style="font-size:10px">${intHtml}</div></div>`:''}
   </div>`;
@@ -1128,8 +1128,8 @@ function buildSidebar() {
     </div>
     <div class="cv-right">
       <div class="cv-section"><div class="cv-section-title">Beruflicher Werdegang</div>${expHtml}</div>
-      <div class="cv-section"><div class="cv-section-title">Projekte</div>${projHtml}</div>
       <div class="cv-section"><div class="cv-section-title">Ausbildung</div>${eduHtml}</div>
+      <div class="cv-section"><div class="cv-section-title">Projekte</div>${projHtml}</div>
     </div>
   </div>`;
 }
@@ -1180,8 +1180,8 @@ function buildDach() {
     <hr class="cv-rule">
     ${sec('Kenntnisse',skillsHtml)}
     ${sec('Beruflicher Werdegang',expHtml)}
-    ${sec('Projekte',projHtml)}
     ${sec('Ausbildung',eduHtml)}
+    ${sec('Projekte',projHtml)}
     ${sec('Sprachen',langHtml)}
     ${intHtml?sec('Sonstiges',`<div style="font-size:10px">${intHtml}</div>`):''}
   </div>`;
@@ -1245,8 +1245,8 @@ function buildHeader() {
       </div>
       <div class="cv-col-right">
         <div class="cv-section"><div class="cv-section-title">Beruflicher Werdegang</div>${expHtml}</div>
-        <div class="cv-section"><div class="cv-section-title">Projekte</div>${projHtml}</div>
         <div class="cv-section"><div class="cv-section-title">Ausbildung</div>${eduHtml}</div>
+        <div class="cv-section"><div class="cv-section-title">Projekte</div>${projHtml}</div>
       </div>
     </div>
   </div>`;
@@ -1298,8 +1298,8 @@ function buildCompact() {
     </div>
     <div class="cv-section"><div class="cv-section-title">Berufliche Kenntnisse</div>${skillsHtml}</div>
     <div class="cv-section"><div class="cv-section-title">Beruflicher Werdegang</div><div class="cv-timeline">${expHtml}</div></div>
-    <div class="cv-section"><div class="cv-section-title">Projekte</div><div class="cv-timeline">${projHtml}</div></div>
     <div class="cv-section"><div class="cv-section-title">Ausbildung</div><div class="cv-timeline">${eduHtml}</div></div>
+    <div class="cv-section"><div class="cv-section-title">Projekte</div><div class="cv-timeline">${projHtml}</div></div>
     <div style="display:flex;gap:24px">
       <div style="flex:1"><div class="cv-section"><div class="cv-section-title">Sprachen</div>${langHtml}</div></div>
       ${intHtml?`<div style="flex:1"><div class="cv-section"><div class="cv-section-title">Sonstiges</div><div style="font-size:10px">${intHtml}</div></div></div>`:''}
@@ -1353,9 +1353,9 @@ function buildExec() {
     <hr class="cv-rule-thin">
     <div class="cv-section"><div class="cv-section-title">Beruflicher Werdegang</div>${expHtml}</div>
     <hr class="cv-rule-thin">
-    <div class="cv-section"><div class="cv-section-title">Projekte</div>${projHtml}</div>
-    <hr class="cv-rule-thin">
     <div class="cv-section"><div class="cv-section-title">Ausbildung</div>${eduHtml}</div>
+    <hr class="cv-rule-thin">
+    <div class="cv-section"><div class="cv-section-title">Projekte</div>${projHtml}</div>
     <hr class="cv-rule-thin">
     <div class="cv-section"><div class="cv-section-title">Sprachen</div>${langHtml}</div>
     ${intHtml?`<hr class="cv-rule-thin"><div class="cv-section"><div class="cv-section-title">Interessen & Sonstiges</div><div style="font-size:10px;text-align:center">${intHtml}</div></div>`:''}
@@ -1468,8 +1468,8 @@ function buildLineleft() {
     </div>
     <div class="cv-section"><div class="cv-section-title">Berufliche Kenntnisse</div>${skillsHtml}</div>
     <div class="cv-section"><div class="cv-section-title">Beruflicher Werdegang</div>${expHtml}</div>
-    <div class="cv-section"><div class="cv-section-title">Projekte</div>${projHtml}</div>
     <div class="cv-section"><div class="cv-section-title">Ausbildung</div>${eduHtml}</div>
+    <div class="cv-section"><div class="cv-section-title">Projekte</div>${projHtml}</div>
     <div class="cv-section"><div class="cv-section-title">Sprachen</div>${langHtml}</div>
     ${intHtml?`<div class="cv-section"><div class="cv-section-title">Interessen & Sonstiges</div><div style="font-size:10px">${intHtml}</div></div>`:''}
   </div>`;
@@ -1521,8 +1521,8 @@ function buildCard() {
     <div class="cv-body">
       <div class="cv-section"><div class="cv-section-title">Berufliche Kenntnisse</div>${skillsHtml}</div>
       <div class="cv-section"><div class="cv-section-title">Beruflicher Werdegang</div>${expHtml}</div>
-      <div class="cv-section"><div class="cv-section-title">Projekte</div>${projHtml}</div>
       <div class="cv-section"><div class="cv-section-title">Ausbildung</div>${eduHtml}</div>
+      <div class="cv-section"><div class="cv-section-title">Projekte</div>${projHtml}</div>
       <div class="cv-section"><div class="cv-section-title">Sprachen</div>${langHtml}</div>
       ${intHtml?`<div class="cv-section"><div class="cv-section-title">Interessen & Sonstiges</div><div style="font-size:10px">${intHtml}</div></div>`:''}
     </div>
@@ -1574,8 +1574,8 @@ function buildPlain() {
     <hr class="cv-rule">
     ${sec('Kenntnisse',skillsHtml)}
     ${sec('Beruflicher Werdegang',expHtml)}
-    ${sec('Projekte',projHtml)}
     ${sec('Ausbildung',eduHtml)}
+    ${sec('Projekte',projHtml)}
     ${sec('Sprachen',langHtml)}
     ${intHtml?sec('Sonstiges',`<div style="font-size:10px">${intHtml}</div>`):''}
   </div>`;
@@ -1634,8 +1634,8 @@ function buildProfil() {
     </div>
     <div class="pf-right">
       <div class="pf-section"><div class="pf-rsection-title">Beruflicher Werdegang</div>${expHtml}</div>
-      ${projHtml ? `<div class="pf-section"><div class="pf-rsection-title">Projekte</div>${projHtml}</div>` : ''}
       ${eduHtml ? `<div class="pf-section"><div class="pf-rsection-title">Ausbildung</div>${eduHtml}</div>` : ''}
+      ${projHtml ? `<div class="pf-section"><div class="pf-rsection-title">Projekte</div>${projHtml}</div>` : ''}
     </div>
   </div>`;
 }
@@ -1856,27 +1856,43 @@ function istFastLeereZeile(buf, breite, zeile) {
 }
 
 // Liefert die Y-Schnittpunkte (Canvas-Pixel) fuer die Seiten. Nahe jeder A4-Grenze
-// wird die naechste (fast) leere Zeile oberhalb gesucht, damit kein Text getrennt wird.
+// wird die zur Grenze NAECHSTGELEGENE (fast) leere Zeile gesucht (oberhalb wie
+// unterhalb), damit kein Text getrennt wird und sich der Schnitt nicht aufsummiert
+// (das wuerde sonst eine fast leere Zusatzseite erzeugen).
 function berechneSchnittpunkte(canvas, PAGE_H_PX, skala) {
   const ctx = canvas.getContext('2d');
   const breite = canvas.width;
-  const lookback = Math.round(90 * skala); // Suchbereich oberhalb der Grenze
+  const lookback = Math.round(80 * skala);    // Suchbereich oberhalb der Grenze
+  const lookforward = Math.round(14 * skala); // kleiner Bereich unterhalb der Grenze
   const cuts = [0];
   let cur = 0;
-  while (cur + PAGE_H_PX < canvas.height) {
+  while (cur + PAGE_H_PX < canvas.height - 1) {
     const target = cur + PAGE_H_PX;
     const von = Math.max(cur + Math.floor(PAGE_H_PX * 0.5), target - lookback);
-    let schnitt = target;
+    const bis = Math.min(canvas.height, target + lookforward);
+    let schnitt = target, bestDist = Infinity;
     try {
-      const region = ctx.getImageData(0, von, breite, target - von).data;
-      for (let y = (target - von) - 1; y >= 0; y--) {
-        if (istFastLeereZeile(region, breite, y)) { schnitt = von + y; break; }
+      const region = ctx.getImageData(0, von, breite, bis - von).data;
+      for (let y = 0; y < bis - von; y++) {
+        if (istFastLeereZeile(region, breite, y)) {
+          const yc = von + y;
+          const d = Math.abs(yc - target);
+          if (d < bestDist) { bestDist = d; schnitt = yc; }
+        }
       }
     } catch (e) { schnitt = target; }
+    if (schnitt <= cur) schnitt = target; // Fortschritt sicherstellen
     cuts.push(schnitt);
     cur = schnitt;
   }
-  cuts.push(canvas.height);
+  // Winzigen Rest vermeiden: faellt am Ende nur ein kleiner Streifen an, wird er
+  // in die letzte Seite gezogen statt eine fast leere Zusatzseite zu erzeugen.
+  const rest = canvas.height - cur;
+  if (cuts.length >= 2 && rest <= 0.10 * PAGE_H_PX) {
+    cuts[cuts.length - 1] = canvas.height;
+  } else {
+    cuts.push(canvas.height);
+  }
   return cuts;
 }
 
