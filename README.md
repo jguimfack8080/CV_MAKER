@@ -22,9 +22,10 @@ Dieses Projekt entstand aus einer konkreten Erfahrung: Jedes Mal, wenn ich meine
 - **Demo beim ersten Start**: ist der Speicher komplett leer, laedt die App einen neutralen Beispiel-Lebenslauf (fiktive Daten), damit sie nie leer wirkt und sofort ausprobierbar ist
 - **Live-Vorschau**: Aenderungen erscheinen sofort in der A4-Vorschau rechts, mit sichtbaren A4-Seitengrenzen
 - **Schwarze Schrift (gut lesbar) als Standard**: frei waehlbare Textfarbe ueber die obere Leiste, jederzeit auf Schwarz zuruecksetzbar; Akzentfarben der Ueberschriften bleiben erhalten
-- **Saubere Seitenumbrueche**: einzelne Zeilen, die auf einer A4-Grenze liegen wuerden, werden auf die naechste Seite geschoben - kein abgeschnittener Text, minimaler Leerraum (einspaltige Vorlagen)
+- **Saubere Seitenumbrueche**: einzelne Zeilen, die auf einer A4-Grenze liegen wuerden, werden auf die naechste Seite geschoben - kein abgeschnittener Text, minimaler Leerraum, in allen Vorlagen
+- **Hohe Bildqualitaet**: das Profilfoto bleibt im PDF scharf (dynamisch hohe Aufloesung beim Export)
 - **Integrierte Anleitung**: ausfuehrliche deutsche Hilfeseite (`wiki.html`), erreichbar ueber "Hilfe & Anleitung" in der oberen Leiste
-- **10 Vorlagen**: Minimal, Sidebar-Akzent, Klassisch DACH, Kreativ Header, Kompakt Zeitachse, Executive, Zweispaltig, Seitenlinie, Profilkarte, Schlicht ATS
+- **11 Vorlagen**: Minimal, Sidebar-Akzent, Klassisch DACH, Kreativ Header, Kompakt Zeitachse, Executive, Zweispaltig, Seitenlinie, Profilkarte, Schlicht ATS, Profil Klassisch
 - **11 Schriftarten**: Inter, Roboto, Open Sans, Montserrat, Lato, Arial, Helvetica Neue, Calibri, Georgia, Times New Roman, EB Garamond
 - **Auto-Speicherung**: Alle Daten werden automatisch im LocalStorage des Browsers gesichert (je Lebenslauf ein eigener Schluessel)
 - **Foto-Upload**: Profilfoto hochladen, runde oder eckige Darstellung waehlbar
@@ -53,6 +54,7 @@ Dieses Projekt entstand aus einer konkreten Erfahrung: Jedes Mal, wenn ich meine
 | Seitenlinie | Einzelspaltig mit blauer vertikaler Linie pro Sektion, Datum als Badge |
 | Profilkarte | Farbiger Profilkopf (Indigo), Foto integriert, klare Sektionen darunter |
 | Schlicht ATS | Schwarz-weiss, maximum ATS-Kompatibilitaet, tabellarisches Format |
+| Profil Klassisch | Helle Seitenleiste mit Foto und persoenlichen Daten, Werdegang rechts mit Datumsspalte und blauen Abschnitts-Markern |
 
 ---
 

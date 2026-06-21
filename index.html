@@ -418,6 +418,33 @@ html, body { height: 100%; font-family: 'Inter', system-ui, sans-serif; backgrou
 .tpl-plain .lang-row { display: flex; flex-wrap: wrap; gap: 3px 20px; }
 .tpl-plain .lang-item { font-size: 10px; }
 .tpl-plain .tech-stack { font-size: 10px; color: var(--cv-ink); margin-top: 3px; font-style: italic; }
+
+/* ====== TEMPLATE: PROFIL KLASSISCH (helle Seitenleiste, Werdegang mit Datumsspalte) ====== */
+.tpl-profil { display: flex; font-family: inherit; font-size: 10.5px; line-height: 1.55; color: var(--cv-ink); }
+.tpl-profil .pf-left { width: 296px; flex-shrink: 0; padding: 36px 24px 36px 36px; }
+.tpl-profil .pf-right { flex: 1; padding: 36px 36px 36px 22px; }
+.tpl-profil .pf-name { font-size: 29px; font-weight: 800; color: #1d4ed8; letter-spacing: -.5px; line-height: 1.1; margin-bottom: 16px; }
+.tpl-profil .pf-photo { width: 100%; height: 220px; border-radius: 4px; background-size: cover; background-position: center 20%; background-repeat: no-repeat; margin-bottom: 16px; }
+.tpl-profil .pf-section { margin-bottom: 18px; }
+.tpl-profil .pf-section-title { font-size: 13px; font-weight: 700; color: #1d4ed8; margin-bottom: 9px; padding-bottom: 5px; border-bottom: 1px solid #c7d2fe; }
+.tpl-profil .pf-data-item { margin-bottom: 8px; }
+.tpl-profil .pf-label { font-size: 9.5px; font-weight: 700; color: var(--cv-ink); }
+.tpl-profil .pf-value { font-size: 9.5px; color: var(--cv-ink); word-break: break-word; }
+.tpl-profil .kn-row { margin-bottom: 7px; }
+.tpl-profil .kn-name { font-size: 10.5px; font-weight: 600; color: var(--cv-ink); margin-bottom: 2px; }
+.tpl-profil .kn-items { font-size: 9.5px; color: var(--cv-ink); }
+.tpl-profil .pf-lang { font-size: 10px; color: var(--cv-ink); margin-bottom: 3px; }
+.tpl-profil .pf-rsection-title { position: relative; font-size: 15px; font-weight: 700; color: var(--cv-ink); padding-left: 24px; margin-bottom: 14px; padding-bottom: 6px; border-bottom: 1px solid #d1d5db; }
+.tpl-profil .pf-rsection-title::before { content: ''; position: absolute; left: 0; top: 2px; width: 0; height: 0; border-style: solid; border-width: 8px 0 8px 13px; border-color: transparent transparent transparent #1d4ed8; }
+.tpl-profil .pf-entry { display: flex; gap: 14px; margin-bottom: 15px; }
+.tpl-profil .pf-date { width: 66px; flex-shrink: 0; font-size: 9.5px; color: var(--cv-ink); line-height: 1.4; padding-top: 1px; }
+.tpl-profil .pf-body { flex: 1; }
+.tpl-profil .pf-title { font-size: 12px; font-weight: 700; color: var(--cv-ink); }
+.tpl-profil .pf-company { font-size: 10.5px; font-style: italic; color: var(--cv-ink); margin: 1px 0 4px; }
+.tpl-profil .pf-desc { font-size: 10px; color: var(--cv-ink); margin-top: 2px; }
+.tpl-profil .cv-bullets { padding-left: 14px; margin-top: 3px; }
+.tpl-profil .cv-bullets li { font-size: 10px; color: var(--cv-ink); margin-bottom: 2px; }
+.tpl-profil .tech-badge { display: inline-block; background: #eff6ff; color: #1d4ed8; border-radius: 3px; padding: 2px 6px; font-size: 9px; font-weight: 500; margin: 3px 3px 0 0; }
 </style>
 </head>
 <body>
@@ -444,6 +471,7 @@ html, body { height: 100%; font-family: 'Inter', system-ui, sans-serif; backgrou
       <option value="lineleft">Seitenlinie</option>
       <option value="card">Profilkarte</option>
       <option value="plain">Schlicht ATS</option>
+      <option value="profil">Profil Klassisch</option>
     </select>
     <label>Schrift</label>
     <select id="font-select" onchange="onFontChange(this.value)">
@@ -1486,6 +1514,58 @@ function buildPlain() {
   </div>`;
 }
 
+// ====== TEMPLATE: PROFIL KLASSISCH ======
+function buildProfil() {
+  const p = cvData.personal;
+  const photo = p.photo ? `<div class="pf-photo" style="background-image:url('${p.photo}')"></div>` : '';
+  const dataItem = (label, val) => val ? `<div class="pf-data-item"><div class="pf-label">${label}</div><div class="pf-value">${val}</div></div>` : '';
+  const persData = [
+    dataItem('Anschrift', esc(p.address)),
+    dataItem('E-Mail', p.email ? lnk('mailto:'+p.email, esc(p.email)) : ''),
+    dataItem('Telefon', esc(p.phone)),
+    dataItem('Geburtsdatum', esc(p.birthdate)),
+    dataItem('Geburtsort', esc(p.birthplace)),
+    dataItem('Staatsbuergerschaft', esc(p.nationality)),
+    dataItem('Familienstand', esc(p.marital)),
+    p.linkedin ? dataItem('LinkedIn', iconLink(p.linkedin, SVG_LINKEDIN, 'LinkedIn')) : '',
+    p.github ? dataItem('GitHub', iconLink(p.github, SVG_GITHUB, 'GitHub')) : '',
+    p.website ? dataItem('Portfolio', portfolioLink(p.website)) : ''
+  ].join('');
+  const knHtml = cvData.skills.map(c => `<div class="kn-row"><div class="kn-name">${esc(c.category)}</div><div class="kn-items">${c.items.map(esc).join(', ')}</div></div>`).join('');
+  const langHtml = cvData.languages.map(l => `<div class="pf-lang">${esc(l.name)} (${esc(l.level)})</div>`).join('');
+  const intHtml = cvData.interests.map(i => esc(i.text)).filter(Boolean).join(' · ');
+  const entry = (from, to, title, company, bullets, stack, desc) => `
+    <div class="pf-entry">
+      <div class="pf-date">${esc(from)}<br>- ${esc(to)}</div>
+      <div class="pf-body">
+        <div class="pf-title">${title}</div>
+        ${company ? `<div class="pf-company">${company}</div>` : ''}
+        ${desc ? `<div class="pf-desc">${desc}</div>` : ''}
+        ${bullets && bullets.length ? `<ul class="cv-bullets">${bullets.filter(b=>b).map(b=>`<li>${esc(b)}</li>`).join('')}</ul>` : ''}
+        ${stack && stack.length ? `<div>${stack.map(s=>`<span class="tech-badge">${esc(s)}</span>`).join('')}</div>` : ''}
+      </div>
+    </div>`;
+  const expHtml = cvData.experience.map(e => entry(e.from, e.to, esc(e.title), esc(e.company)+(e.location?', '+esc(e.location):''), e.bullets, null, '')).join('');
+  const projHtml = cvData.projects.map(pr => entry(pr.from, pr.to, esc(pr.title)+(pr.link?projectLink(pr.link):''), esc(pr.type), pr.bullets, pr.stack, '')).join('');
+  const eduHtml = cvData.education.map(ed => entry(ed.from, ed.to, esc(ed.degree), esc(ed.institution)+(ed.location?', '+esc(ed.location):''), null, null, ed.notes?esc(ed.notes):'')).join('');
+  return `<div class="tpl-profil">
+    <div class="pf-left">
+      <div class="pf-name">${esc(p.name)}</div>
+      ${photo}
+      ${p.jobtitle ? `<div style="font-size:11px;color:var(--cv-ink);font-weight:600;margin-bottom:16px">${esc(p.jobtitle)}</div>` : ''}
+      <div class="pf-section"><div class="pf-section-title">Persoenliche Daten</div>${persData}</div>
+      ${knHtml ? `<div class="pf-section"><div class="pf-section-title">Kenntnisse</div>${knHtml}</div>` : ''}
+      ${langHtml ? `<div class="pf-section"><div class="pf-section-title">Sprachen</div>${langHtml}</div>` : ''}
+      ${intHtml ? `<div class="pf-section"><div class="pf-section-title">Interessen</div><div class="kn-items">${intHtml}</div></div>` : ''}
+    </div>
+    <div class="pf-right">
+      <div class="pf-section"><div class="pf-rsection-title">Beruflicher Werdegang</div>${expHtml}</div>
+      ${projHtml ? `<div class="pf-section"><div class="pf-rsection-title">Projekte</div>${projHtml}</div>` : ''}
+      ${eduHtml ? `<div class="pf-section"><div class="pf-rsection-title">Ausbildung</div>${eduHtml}</div>` : ''}
+    </div>
+  </div>`;
+}
+
 // ====== VORSCHAU RENDERN ======
 function renderPreview() {
   const tpl = cvData.template || 'minimal';
@@ -1493,7 +1573,8 @@ function renderPreview() {
   const builders = {
     minimal: buildMinimal, sidebar: buildSidebar, dach: buildDach,
     header: buildHeader, compact: buildCompact, exec: buildExec,
-    twocol: buildTwocol, lineleft: buildLineleft, card: buildCard, plain: buildPlain
+    twocol: buildTwocol, lineleft: buildLineleft, card: buildCard, plain: buildPlain,
+    profil: buildProfil
   };
   container.innerHTML = (builders[tpl] || buildMinimal)();
   const sel = document.getElementById('template-select');
@@ -1511,10 +1592,6 @@ const A4_PAGE_PX = 1123; // A4-Seitenhoehe bei 96 DPI (794 x 1123)
 // sind und keine zusaetzliche leere Seite entsteht.
 let cvSeitenAnzahl = 1;
 let cvGesamthoehePx = A4_PAGE_PX;
-
-// Einspaltige Vorlagen, bei denen Seitenumbruch-Vermeidung sicher moeglich ist
-// (mehrspaltige Layouts wuerden durch Margin-Verschiebung entkoppelt -> ausgeschlossen).
-const EINSPALTIGE_VORLAGEN = ['minimal', 'dach', 'compact', 'exec', 'lineleft', 'card', 'plain'];
 
 // Ermittelt die unterste Kante des TATSAECHLICHEN Inhalts (ohne abschliessendes
 // Padding des Templates). So fuehrt ein reiner Padding-Rest nicht faelschlich zu
@@ -1573,11 +1650,15 @@ const ZEILEN_SELEKTOR = [
   '.cv-entry-header', '.cv-entry-sub',
   '.cv-bullets li',
   '.cv-tl-entry', '.cv-tl-title', '.cv-tl-sub',
-  '.skill-cat', '.skill-row', '.lang-item', '.pers-item', '.contact-item'
+  '.skill-cat', '.skill-row', '.lang-item', '.pers-item', '.contact-item',
+  '.left-skill-cat', '.kn-row',
+  '.pf-entry', '.pf-rsection-title', '.pf-section-title', '.pf-data-item', '.pf-lang'
 ].join(', ');
 
+// Gilt fuer ALLE Vorlagen (auch mehrspaltige): jede Spalte ist ein eigener Fluss,
+// das Verschieben einer Zeile per oberem Abstand betrifft nur ihre eigene Spalte.
+// So wird in keiner Spalte eine Textzeile an einer Seitengrenze abgeschnitten.
 function vermeideSeitenumbrueche(el) {
-  if (EINSPALTIGE_VORLAGEN.indexOf(cvData.template) === -1) return;
   const PAGE = A4_PAGE_PX;
   const zeilen = Array.from(el.querySelectorAll(ZEILEN_SELEKTOR));
   zeilen.forEach(zeile => {
@@ -1736,11 +1817,17 @@ async function exportPDF() {
     // Exakt die vom Layout berechnete Gesamthoehe verwenden (volle Seiten),
     // nie el.scrollHeight - so entsteht keine zusaetzliche leere Seite.
     const captureHoehe = cvGesamthoehePx;
+    // Hohe Aufloesung fuer scharfe Schrift UND scharfe Fotos. Der Faktor wird so
+    // begrenzt, dass die maximale Canvas-Groesse (ca. 16384 px) nicht ueberschritten
+    // wird - dadurch bleibt die Bildqualitaet auch bei langen Lebenslaeufen erhalten.
+    const MAX_CANVAS = 16000;
+    const skala = Math.max(2, Math.min(3, MAX_CANVAS / captureHoehe));
     const canvas = await html2canvas(el, {
-      scale: 2,
+      scale: skala,
       useCORS: true,
       allowTaint: true,
       logging: false,
+      imageTimeout: 0,
       backgroundColor: '#ffffff',
       width: 794,
       height: captureHoehe,
