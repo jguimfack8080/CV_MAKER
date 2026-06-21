@@ -1839,33 +1839,79 @@ function onJSONFileSelected(e) {
   reader.readAsText(file); e.target.value = '';
 }
 
+// Pruegt, ob eine Canvas-Zeile (fast) leer/weiss ist - toleriert duenne Linien
+// (z. B. die vertikale Trennlinie der Profil-Vorlage).
+function istFastLeereZeile(buf, breite, zeile) {
+  let nichtWeiss = 0;
+  const grenze = Math.max(2, Math.floor(breite * 0.012));
+  const basis = zeile * breite * 4;
+  for (let i = 0; i < breite; i++) {
+    const p = basis + i * 4;
+    if (buf[p] < 245 || buf[p + 1] < 245 || buf[p + 2] < 245) {
+      nichtWeiss++;
+      if (nichtWeiss > grenze) return false;
+    }
+  }
+  return true;
+}
+
+// Liefert die Y-Schnittpunkte (Canvas-Pixel) fuer die Seiten. Nahe jeder A4-Grenze
+// wird die naechste (fast) leere Zeile oberhalb gesucht, damit kein Text getrennt wird.
+function berechneSchnittpunkte(canvas, PAGE_H_PX, skala) {
+  const ctx = canvas.getContext('2d');
+  const breite = canvas.width;
+  const lookback = Math.round(90 * skala); // Suchbereich oberhalb der Grenze
+  const cuts = [0];
+  let cur = 0;
+  while (cur + PAGE_H_PX < canvas.height) {
+    const target = cur + PAGE_H_PX;
+    const von = Math.max(cur + Math.floor(PAGE_H_PX * 0.5), target - lookback);
+    let schnitt = target;
+    try {
+      const region = ctx.getImageData(0, von, breite, target - von).data;
+      for (let y = (target - von) - 1; y >= 0; y--) {
+        if (istFastLeereZeile(region, breite, y)) { schnitt = von + y; break; }
+      }
+    } catch (e) { schnitt = target; }
+    cuts.push(schnitt);
+    cur = schnitt;
+  }
+  cuts.push(canvas.height);
+  return cuts;
+}
+
 // ====== KLICKBARE LINKS IM PDF ======
-function addClickableLinks(pdf, previewEl) {
-  const PAGE_H_MM = 297;
-  const mmPerPx = 210 / previewEl.offsetWidth;
+// Ordnet jeden Link der richtigen Seite zu - auf Basis der tatsaechlichen
+// Schnittpunkte (Seiten koennen leicht unterschiedlich hoch sein).
+function addClickableLinks(pdf, previewEl, cuts, skala, pxPerMM) {
+  const mmPerPxLive = 210 / previewEl.offsetWidth;
   const containerRect = previewEl.getBoundingClientRect();
-  const totalPages = pdf.internal.getNumberOfPages();
+  const seiten = pdf.internal.getNumberOfPages();
 
   previewEl.querySelectorAll('a[href]').forEach(link => {
     const href = link.getAttribute('href');
     if (!href || href === '#') return;
     const r = link.getBoundingClientRect();
-    // Position relativ zur linken oberen Ecke des CV-Preview-Elements
     const relTop = r.top - containerRect.top;
     const relLeft = r.left - containerRect.left;
-    const x = relLeft * mmPerPx;
-    const y_total = relTop * mmPerPx;
-    const w = Math.max(r.width * mmPerPx, 10);
-    const h = Math.max(r.height * mmPerPx, 4);
-    const pageIdx = Math.floor(y_total / PAGE_H_MM);
-    const y_page = y_total - pageIdx * PAGE_H_MM;
-    if (pageIdx >= 0 && pageIdx < totalPages) {
-      pdf.setPage(pageIdx + 1);
-      pdf.link(x, y_page, w, h, { url: href });
+    const yCanvas = relTop * skala;
+    // Seite anhand der Schnittpunkte bestimmen
+    let seite = 0;
+    for (let i = 0; i < cuts.length - 1; i++) {
+      if (yCanvas >= cuts[i] && yCanvas < cuts[i + 1]) { seite = i; break; }
+      if (i === cuts.length - 2) seite = i;
+    }
+    const x = relLeft * mmPerPxLive;
+    const y = (yCanvas - cuts[seite]) / pxPerMM;
+    const w = Math.max(r.width * mmPerPxLive, 10);
+    const h = Math.max(r.height * mmPerPxLive, 4);
+    if (seite >= 0 && seite < seiten) {
+      pdf.setPage(seite + 1);
+      pdf.link(x, y, w, h, { url: href });
     }
   });
 
-  if (totalPages > 0) pdf.setPage(totalPages);
+  if (seiten > 0) pdf.setPage(seiten);
 }
 
 // ====== PDF-EXPORT ======
@@ -1921,17 +1967,20 @@ async function exportPDF() {
 
     const PAGE_W_MM = 210;
     const PAGE_H_MM = 297;
-    // Seitenhoehe aus dem exakten A4-Verhaeltnis berechnen - verhindert Phantom-Seiten
-    const PAGE_W_PX = canvas.width;                                    // 794 * 2 = 1588
-    const PAGE_H_PX = Math.round(PAGE_W_PX * PAGE_H_MM / PAGE_W_MM); // round(1588 * 297/210) = 2246
-    const pxPerMM = PAGE_W_PX / PAGE_W_MM;                            // 7.562
-    // Kleine Epsilon-Toleranz (0.002) verhindert Phantom-Seiten durch Rundungsfehler
-    const totalPages = Math.max(1, Math.ceil(canvas.height / PAGE_H_PX - 0.002));
+    const PAGE_W_PX = canvas.width;
+    const PAGE_H_PX = Math.round(PAGE_W_PX * PAGE_H_MM / PAGE_W_MM);
+    const pxPerMM = PAGE_W_PX / PAGE_W_MM;
 
-    for (let page = 0; page < totalPages; page++) {
-      if (page > 0) pdf.addPage();
-      const startPX = page * PAGE_H_PX;
-      const sliceH = Math.min(PAGE_H_PX, canvas.height - startPX);
+    // Schnittpunkte bestimmen: nahe jeder A4-Grenze die naechste (fast) leere
+    // Zeile suchen und dort schneiden. So wird selbst bei kleinen html2canvas-
+    // Abweichungen nie eine Textzeile durchschnitten (die Vorschau kann leicht
+    // anders umbrechen als der Canvas).
+    const cuts = berechneSchnittpunkte(canvas, PAGE_H_PX, skala);
+
+    for (let i = 0; i < cuts.length - 1; i++) {
+      if (i > 0) pdf.addPage();
+      const startPX = cuts[i];
+      const sliceH = cuts[i + 1] - cuts[i];
       const sliceHeightMM = sliceH / pxPerMM;
 
       const slice = document.createElement('canvas');
@@ -1945,8 +1994,8 @@ async function exportPDF() {
       pdf.addImage(slice.toDataURL('image/png'), 'PNG', 0, 0, PAGE_W_MM, sliceHeightMM);
     }
 
-    // Klickbare Links als PDF-Annotationen hinzufuegen
-    addClickableLinks(pdf, el);
+    // Klickbare Links als PDF-Annotationen hinzufuegen (an die Schnittpunkte angepasst)
+    addClickableLinks(pdf, el, cuts, skala, pxPerMM);
 
     const name = (cvData.personal.name || 'Lebenslauf').replace(/\s+/g, '_');
     pdf.save(`${name}_Lebenslauf.pdf`);
