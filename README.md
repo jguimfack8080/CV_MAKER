@@ -1,6 +1,6 @@
 # CV-Studio
 
-Eine eigenstaendige Web-Anwendung zum Erstellen, Bearbeiten und Exportieren professioneller Lebenslaeufe direkt im Browser - ohne Server, ohne Abonnement, ohne externe Dienste.
+Eine eigenstaendige Web-Anwendung zum Erstellen, Bearbeiten und Exportieren professioneller Lebenslaeufe direkt im Browser - ohne Server, ohne Abonnement, ohne externe Dienste. Die Oberflaeche und die Lebenslauf-Beschriftungen sind in drei Sprachen verfuegbar (Franzoesisch, Englisch, Deutsch), damit Bewerberinnen und Bewerber jeder Herkunft ihren Lebenslauf sauber erstellen koennen.
 
 ---
 
@@ -16,6 +16,7 @@ Dieses Projekt entstand aus einer konkreten Erfahrung: Jedes Mal, wenn ich meine
 
 ## Funktionen
 
+- **Dreisprachig (FR / EN / DE)**: vollstaendige Internationalisierung - nicht nur die Oberflaeche (Menues, Schaltflaechen, Editor), sondern auch alle auf dem Lebenslauf generierten Beschriftungen (Abschnittstitel, Datenfelder) wechseln die Sprache. Umschaltbar ueber die obere Leiste; die Startsprache richtet sich automatisch nach der Browsersprache (sonst Deutsch). Die Wahl wird gespeichert. Das gesamte Woerterbuch ist in `index.html` eingebettet (keine externe Abhaengigkeit)
 - **Mehrere Lebenslaeufe**: beliebig viele eigenstaendige Lebenslaeufe anlegen, bearbeiten, umbenennen, duplizieren und loeschen - mit schnellem Wechsel ueber die obere Leiste
 - **Unabhaengige Datenablage**: jeder Lebenslauf besitzt eine eindeutige ID, eigene Inhalte, ein eigenes Foto, eine eigene Vorlage und eigene Layout-Einstellungen
 - **Generische Anwendung**: keine fest codierten Daten in der Logik - jeder selbst angelegte Lebenslauf startet leer
@@ -23,8 +24,9 @@ Dieses Projekt entstand aus einer konkreten Erfahrung: Jedes Mal, wenn ich meine
 - **Live-Vorschau**: Aenderungen erscheinen sofort in der A4-Vorschau rechts, mit sichtbaren A4-Seitengrenzen
 - **Schwarze Schrift (gut lesbar) als Standard**: frei waehlbare Textfarbe ueber die obere Leiste, jederzeit auf Schwarz zuruecksetzbar; Akzentfarben der Ueberschriften bleiben erhalten
 - **Saubere Seitenumbrueche**: einzelne Zeilen, die auf einer A4-Grenze liegen wuerden, werden auf die naechste Seite geschoben - kein abgeschnittener Text, minimaler Leerraum, in allen Vorlagen
-- **Hohe Bildqualitaet**: das Profilfoto bleibt im PDF scharf (dynamisch hohe Aufloesung beim Export)
-- **Integrierte Anleitung**: ausfuehrliche deutsche Hilfeseite (`wiki.html`), erreichbar ueber "Hilfe & Anleitung" in der oberen Leiste
+- **Hohe Bildqualitaet**: das Profilfoto bleibt im PDF scharf (es wird vor dem Export passgenau in hoher Qualitaet vorgerendert)
+- **Kompakte PDF-Dateien**: die Seiten werden als hochwertiges JPEG eingebettet statt als verlustfreies PNG - dadurch faellt die Dateigroesse von zweistelligen MB auf wenige hundert KB, ohne sichtbaren Qualitaetsverlust
+- **Integrierte Anleitung**: ausfuehrliche Hilfeseite (`wiki.html`), erreichbar ueber "Hilfe & Anleitung" in der oberen Leiste
 - **11 Vorlagen**: Minimal, Sidebar-Akzent, Klassisch DACH, Kreativ Header, Kompakt Zeitachse, Executive, Zweispaltig, Seitenlinie, Profilkarte, Schlicht ATS, Profil Klassisch
 - **11 Schriftarten**: Inter, Roboto, Open Sans, Montserrat, Lato, Arial, Helvetica Neue, Calibri, Georgia, Times New Roman, EB Garamond
 - **Auto-Speicherung**: Alle Daten werden automatisch im LocalStorage des Browsers gesichert (je Lebenslauf ein eigener Schluessel)
@@ -32,7 +34,7 @@ Dieses Projekt entstand aus einer konkreten Erfahrung: Jedes Mal, wenn ich meine
 - **Skill-Bewertungen**: optionale Sternebewertung (1 bis 5) je Skill, angezeigt in der Vorlage "Profil Klassisch"
 - **Drag and Drop**: Eintraege in allen Sektionen per Drag and Drop neu anordnen
 - **JSON-Import / JSON-Export**: Lebenslauf als `.json`-Datei sichern; Import legt einen neuen Lebenslauf an (nicht-destruktiv)
-- **PDF-Export**: Vollstaendiger A4-Export mit korrekter Seitentrennung und hoher Bildqualitaet (PNG lossless)
+- **PDF-Export**: Vollstaendiger A4-Export mit korrekter Seitentrennung und hoher Bildqualitaet (kompaktes JPEG)
 - **Klickbare Links im PDF**: E-Mail, LinkedIn, GitHub und Portfolio-Links bleiben im exportierten PDF anklickbar
 - **Portfolio-Hervorhebung**: ist ein Portfolio/Website hinterlegt, wird es als gut sichtbare Pille dargestellt (faellt sofort auf, statt als lange URL unterzugehen) - in allen Vorlagen
 - **Kompakte Social-Icons**: LinkedIn und GitHub werden als platzsparendes Icon statt als lange URL angezeigt (im PDF weiterhin anklickbar)
@@ -183,13 +185,14 @@ Die Anwendung ist eine statische Seite ohne Build-Schritt. Die Einstiegsdatei he
 
 ## Bedienung
 
-1. **Lebenslaeufe verwalten**: In der oberen Leiste den aktiven Lebenslauf ueber das Auswahlfeld wechseln. Mit "+ Neu" einen neuen (leeren) Lebenslauf anlegen, mit "Duplizieren" den aktuellen kopieren, mit "Umbenennen" den Namen aendern, mit "Loeschen" entfernen. Jeder Lebenslauf wird unabhaengig gespeichert.
-2. **Inhalt bearbeiten**: Linker Bereich mit Tabs (Persoenlich, Skills, Erfahrung, Bildung, Projekte, Sprachen, Sonstiges). Aenderungen erscheinen sofort in der Vorschau.
-3. **Vorlage und Schrift waehlen**: Dropdown-Felder in der oberen Leiste. Das Ergebnis wird sofort aktualisiert.
-4. **Foto hochladen**: Im Tab "Persoenlich", Schaltflaeche "Foto waehlen". Das Bild wird als Base64 im Browser gespeichert.
-5. **Eintraege sortieren**: Karten in den Sektionen per Drag and Drop verschieben.
-6. **Daten sichern**: Schaltflaeche "JSON exportieren" speichert den aktuellen Lebenslauf als Datei. "JSON importieren" legt daraus einen neuen Lebenslauf an.
-7. **PDF exportieren**: Schaltflaeche "PDF exportieren" erzeugt ein vollstaendiges, druckfertiges A4-Dokument mit klickbaren Links.
+1. **Sprache waehlen**: In der oberen Leiste ueber das Sprachfeld zwischen Franzoesisch, Englisch und Deutsch wechseln. Oberflaeche und Lebenslauf-Beschriftungen wechseln sofort; die Auswahl wird gespeichert. Beim ersten Aufruf wird automatisch die Browsersprache verwendet.
+2. **Lebenslaeufe verwalten**: In der oberen Leiste den aktiven Lebenslauf ueber das Auswahlfeld wechseln. Mit "+ Neu" einen neuen (leeren) Lebenslauf anlegen, mit "Duplizieren" den aktuellen kopieren, mit "Umbenennen" den Namen aendern, mit "Loeschen" entfernen. Jeder Lebenslauf wird unabhaengig gespeichert.
+3. **Inhalt bearbeiten**: Linker Bereich mit Tabs (Persoenlich, Skills, Erfahrung, Bildung, Projekte, Sprachen, Sonstiges). Aenderungen erscheinen sofort in der Vorschau.
+4. **Vorlage und Schrift waehlen**: Dropdown-Felder in der oberen Leiste. Das Ergebnis wird sofort aktualisiert.
+5. **Foto hochladen**: Im Tab "Persoenlich", Schaltflaeche "Foto waehlen". Das Bild wird als Base64 im Browser gespeichert.
+6. **Eintraege sortieren**: Karten in den Sektionen per Drag and Drop verschieben.
+7. **Daten sichern**: Schaltflaeche "JSON exportieren" speichert den aktuellen Lebenslauf als Datei. "JSON importieren" legt daraus einen neuen Lebenslauf an.
+8. **PDF exportieren**: Schaltflaeche "PDF exportieren" erzeugt ein vollstaendiges, druckfertiges A4-Dokument mit klickbaren Links.
 
 ---
 
@@ -197,7 +200,7 @@ Die Anwendung ist eine statische Seite ohne Build-Schritt. Die Einstiegsdatei he
 
 - Farbschema-Auswahl pro Vorlage (Akzentfarbe frei waehlbar)
 - Benutzerdefinierte Sektionen (Zertifikate, Ehrenamt, Publikationen)
-- Mehrsprachige Oberflaeche (Deutsch, Englisch, Franzoesisch)
+- Weitere Sprachen fuer die Oberflaeche (zusaetzlich zu FR/EN/DE)
 - Druckansicht direkt aus dem Browser ohne PDF-Bibliothek
 - Exportformat DOCX als Alternative zu PDF
 - Reihenfolge der Lebenslaeufe per Drag and Drop in der Auswahlleiste
