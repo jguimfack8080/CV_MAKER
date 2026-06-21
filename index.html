@@ -758,9 +758,10 @@ function onPhotoUpload(e) {
   const file = e.target.files[0]; if (!file) return;
   const reader = new FileReader();
   reader.onload = ev => {
+    // Originalfoto unveraendert speichern (keine Verkleinerung/Kompression) - die
+    // volle Qualitaet bleibt erhalten. Fuer den PDF-Export wird daraus eine scharf
+    // vorgerenderte Version erzeugt (siehe schaerfeFotosFuerCapture).
     cvData.personal.photo = ev.target.result;
-    // Zoom/Position auf Standard setzen und natuerliches Seitenverhaeltnis
-    // bestimmen (fuer den Zoom), ohne die Originalqualitaet zu veraendern.
     cvData.personal.photoZoom = 1;
     cvData.personal.photoPosY = 50;
     const img = new Image();
@@ -1020,12 +1021,9 @@ function photoBox(w, h, extraCss) {
   const br = p.photoShape === 'square' ? '4px' : '50%';
   const zoom = p.photoZoom || 1;
   const posY = (p.photoPosY != null) ? p.photoPosY : 50;
-  // Bei bekanntem Seitenverhaeltnis die Cover-Groesse IMMER exakt in Pixeln
-  // berechnen (auch bei Zoom 1). Grund: html2canvas rendert "background-size:cover"
-  // zusammen mit border-radius unzuverlaessig - das Foto kann ueber den Rahmen
-  // hinaus / doppelt gezeichnet werden (sichtbarer Geister-/Duplikat-Effekt im PDF).
-  // Eine explizite Pixelgroesse vermeidet das vollstaendig und ist deckungsgleich
-  // mit der Vorschau. Nur ohne bekanntes Seitenverhaeltnis bleibt "cover" als Fallback.
+  // Live-Vorschau: bei bekanntem Seitenverhaeltnis die Cover-Groesse exakt in
+  // Pixeln berechnen und mit dem Zoom multiplizieren (so wirkt der Foto-Zoom in
+  // der Vorschau). Ohne bekanntes Verhaeltnis klassisches "cover".
   let sizeCss;
   if (p.photoAspect) {
     const a = p.photoAspect;       // natuerliches Verhaeltnis Breite/Hoehe
@@ -1038,36 +1036,9 @@ function photoBox(w, h, extraCss) {
   // border-radius (Form: rund/eckig) bewusst ZULETZT setzen, damit die vom Nutzer
   // gewaehlte Form immer Vorrang vor evtl. in extraCss gesetzten Werten der Vorlage
   // hat (sonst bleibt z. B. die Profil-Vorlage trotz Auswahl bei eckigen Ecken).
-  // data-photo-overlay markiert das Foto fuer das native, scharfe Nachzeichnen im
-  // PDF-Export (overlayPhotoNatif).
+  // data-photo-overlay markiert die Foto-Box; beim PDF-Export wird ihr Hintergrund
+  // durch eine scharf vorgerenderte Version ersetzt (schaerfeFotosFuerCapture).
   return `<div data-photo-overlay="1" style="width:${w}px;height:${h}px;background-image:url('${p.photo}');${sizeCss}background-position:center ${posY}%;background-repeat:no-repeat;flex-shrink:0;${extraCss||''}border-radius:${br};"></div>`;
-}
-
-// Blendet die Foto-Hintergruende waehrend des html2canvas-Captures aus.
-//
-// Warum: Das Foto wird anschliessend von overlayPhotoNatif() NATIV, scharf und
-// exakt geclippt (rund/eckig) direkt auf den Canvas gezeichnet. Wuerde html2canvas
-// das Hintergrundbild ebenfalls rendern, entstuenden Duplikate bzw. ueberlaufende
-// "Geisterbilder" im PDF - html2canvas clippt Hintergrundbilder unzuverlaessig und
-// zeichnet sie teils stark vergroessert ueber den Rahmen hinaus. Indem html2canvas
-// fuer das Foto NICHTS rendert, ist ein Duplikat ausgeschlossen; das einzige Foto
-// stammt aus overlayPhotoNatif (volle Aufloesung, gestochen scharf).
-//
-// Nicht-destruktiv: Die Live-Vorschau bleibt unveraendert. Die zurueckgegebene
-// Liste stellt die Hintergruende nach dem Capture wieder her (auch im Fehlerfall).
-async function bereiteFotosFuerExportVor(container, skala) {
-  const p = cvData.personal;
-  if (!p.photo) return [];
-  // Foto-Divs erkennen: die per photoBox erzeugten Hintergrundbild-Container
-  const divs = Array.from(container.querySelectorAll('div[style*="background-image"]'))
-    .filter(d => (d.style.backgroundImage || '').includes('url('));
-  const restores = [];
-  divs.forEach(div => {
-    const prev = div.style.backgroundImage;
-    div.style.backgroundImage = 'none';
-    restores.push(() => { div.style.backgroundImage = prev; });
-  });
-  return restores;
 }
 
 // Hilfsfunktion fuer Kontakt-Links
@@ -2061,74 +2032,72 @@ function addClickableLinks(pdf, previewEl, cuts, skala, pxPerMM) {
 }
 
 // ====== PDF-EXPORT ======
-async function overlayPhotoNatif(canvas, el, skala) {
-  const foto = cvData.personal.photo;
-  if (!foto) return;
-  const photoEl = el.querySelector('[data-photo-overlay]');
-  if (!photoEl) return;
-
+// Ersetzt vor dem html2canvas-Capture den Foto-Hintergrund durch eine exakt auf die
+// Export-Aufloesung vorgerenderte, SCHARFE Version - und stellt ihn danach wieder her.
+//
+// Warum so: Die GROESSE und Position des Fotos uebernimmt das normale html2canvas-
+// Layout (die Foto-Box ist z. B. 168x200 - genau wie alles andere). Es wird KEINE
+// Geometrie berechnet; dadurch kann das Foto nie falsch (zu gross) dimensioniert
+// werden. Die QUALITAET kommt aus dem Vorrendern: Das Originalfoto wird vom Browser
+// mit hoher Glaettung exakt auf (Box-Groesse * Export-Skala) gerechnet, sodass
+// html2canvas praktisch 1:1 zeichnet -> gestochen scharf, kein Qualitaetsverlust.
+//
+// Wichtig: background-size wird EXPLIZIT auf die Box-Groesse gesetzt (nicht "cover").
+// "cover" rendert html2canvas zusammen mit border-radius unzuverlaessig (Ueberlauf/
+// Duplikat). Mit exakter Box-Groesse fuellt das (bereits zugeschnittene) Bild die Box
+// genau aus - kein Ueberlauf, kein Duplikat. Zuschnitt (cover + Zoom + Position)
+// passiert beim Vorrendern, deckungsgleich zur Live-Vorschau.
+async function schaerfeFotosFuerCapture(el, skala) {
+  const p = cvData.personal;
+  if (!p.photo) return [];
+  const boxes = Array.from(el.querySelectorAll('[data-photo-overlay]'));
+  if (!boxes.length) return [];
   const img = await new Promise((ok, ko) => {
     const i = new Image();
     i.onload = () => ok(i);
     i.onerror = ko;
-    i.src = foto;
+    i.src = p.photo;
   });
-
-  const elRect = el.getBoundingClientRect();
-  const pRect  = photoEl.getBoundingClientRect();
-
-  const dx = (pRect.left - elRect.left) * skala;
-  const dy = (pRect.top  - elRect.top)  * skala;
-  const dw = pRect.width  * skala;
-  const dh = pRect.height * skala;
-  if (dw <= 0 || dh <= 0) return;
-
-  const isCircle = cvData.personal.photoShape !== 'square';
-  const zoom = cvData.personal.photoZoom || 1;
-  const posY = cvData.personal.photoPosY != null ? cvData.personal.photoPosY : 50;
-
-  const iw = img.naturalWidth;
-  const ih = img.naturalHeight;
-  if (!iw || !ih) return;
-
-  const boxRatio = dw / dh;
-  const imgRatio = iw / ih;
-  let sw, sh, sx, sy;
-  if (imgRatio > boxRatio) {
-    sh = ih / zoom;
-    sw = sh * boxRatio;
-    sx = (iw - sw) / 2;
-    sy = (ih - sh) * (posY / 100);
-  } else {
-    sw = iw / zoom;
-    sh = sw / boxRatio;
-    sx = (iw - sw) / 2;
-    sy = (ih - sh) * (posY / 100);
-  }
-  sx = Math.max(0, Math.min(sx, iw - sw));
-  sy = Math.max(0, Math.min(sy, ih - sh));
-
-  const ctx = canvas.getContext('2d');
-  ctx.save();
-  ctx.beginPath();
-  if (isCircle) {
-    ctx.arc(dx + dw / 2, dy + dh / 2, Math.min(dw, dh) / 2, 0, Math.PI * 2);
-  } else {
-    const r = 4 * skala;
-    ctx.moveTo(dx + r, dy);
-    ctx.lineTo(dx + dw - r, dy);
-    ctx.arcTo(dx + dw, dy, dx + dw, dy + r, r);
-    ctx.lineTo(dx + dw, dy + dh - r);
-    ctx.arcTo(dx + dw, dy + dh, dx + dw - r, dy + dh, r);
-    ctx.lineTo(dx + r, dy + dh);
-    ctx.arcTo(dx, dy + dh, dx, dy + dh - r, r);
-    ctx.lineTo(dx, dy + r);
-    ctx.arcTo(dx, dy, dx + r, dy, r);
-    ctx.closePath();
-  }
-  ctx.clip();
-  ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
-  ctx.restore();
+  const iw = img.naturalWidth, ih = img.naturalHeight;
+  if (!iw || !ih) return [];
+  const zoom = p.photoZoom || 1;
+  const posY = p.photoPosY != null ? p.photoPosY : 50;
+  const restores = [];
+  boxes.forEach(box => {
+    const bw = box.offsetWidth, bh = box.offsetHeight;
+    if (!bw || !bh) return;
+    // Zielaufloesung des Vorrenderns = Anzeigegroesse * Export-Skala
+    const tw = Math.max(1, Math.round(bw * skala));
+    const th = Math.max(1, Math.round(bh * skala));
+    // cover-Zuschnitt des Originals (inkl. Zoom und vertikaler Position)
+    const boxRatio = bw / bh, imgRatio = iw / ih;
+    let sw, sh;
+    if (imgRatio > boxRatio) { sh = ih / zoom; sw = sh * boxRatio; }
+    else { sw = iw / zoom; sh = sw / boxRatio; }
+    let sx = (iw - sw) / 2;
+    let sy = (ih - sh) * (posY / 100);
+    sx = Math.max(0, Math.min(sx, iw - sw));
+    sy = Math.max(0, Math.min(sy, ih - sh));
+    const cv = document.createElement('canvas');
+    cv.width = tw; cv.height = th;
+    const ctx = cv.getContext('2d');
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(img, sx, sy, sw, sh, 0, 0, tw, th);
+    const sharp = cv.toDataURL('image/jpeg', 0.95);
+    const prevBg = box.style.backgroundImage;
+    const prevSize = box.style.backgroundSize;
+    const prevPos = box.style.backgroundPosition;
+    box.style.backgroundImage = `url('${sharp}')`;
+    box.style.backgroundSize = `${bw}px ${bh}px`;
+    box.style.backgroundPosition = '0 0';
+    restores.push(() => {
+      box.style.backgroundImage = prevBg;
+      box.style.backgroundSize = prevSize;
+      box.style.backgroundPosition = prevPos;
+    });
+  });
+  return restores;
 }
 
 async function exportPDF() {
@@ -2154,7 +2123,8 @@ async function exportPDF() {
     svg.style.fill = col;
   });
 
-  // Wiederherstellung der temporaer ausgeblendeten Foto-Hintergruende (im finally)
+  // Foto-Hintergruende werden fuer den Capture durch eine scharf vorgerenderte
+  // Version ersetzt (siehe schaerfeFotosFuerCapture) und im finally wiederhergestellt.
   let fotoRestores = [];
 
   try {
@@ -2171,10 +2141,8 @@ async function exportPDF() {
     // wird - dadurch bleibt die Bildqualitaet auch bei langen Lebenslaeufen erhalten.
     const MAX_CANVAS = 16000;
     const skala = Math.max(2, Math.min(3, MAX_CANVAS / captureHoehe));
-    // Foto-Hintergruende fuer den Capture ausblenden: html2canvas soll das Foto
-    // NICHT rendern (sonst Duplikate/Geisterbilder). Das scharfe Foto kommt danach
-    // ausschliesslich aus overlayPhotoNatif().
-    fotoRestores = await bereiteFotosFuerExportVor(el, skala);
+    // Foto scharf vorrendern (Groesse uebernimmt das normale html2canvas-Layout)
+    fotoRestores = await schaerfeFotosFuerCapture(el, skala);
     const canvas = await html2canvas(el, {
       scale: skala,
       useCORS: true,
@@ -2188,8 +2156,6 @@ async function exportPDF() {
       windowHeight: Math.max(captureHoehe, 900),
       x: 0, y: 0, scrollX: 0, scrollY: 0
     });
-
-    await overlayPhotoNatif(canvas, el, skala);
 
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
@@ -2235,7 +2201,7 @@ async function exportPDF() {
     el.querySelectorAll('.pbc').forEach(x => x.style.display = '');
     // SVG-Icon-Farben zuruecksetzen (currentColor wieder aktiv fuer den Bildschirm)
     iconSvgs.forEach(svg => { svg.style.fill = svg.dataset.prevFill || ''; });
-    // Original-Fotoquelle wiederherstellen (Live-Vorschau bleibt unveraendert)
+    // Foto-Hintergruende wiederherstellen (Live-Vorschau bleibt unveraendert)
     fotoRestores.forEach(fn => fn());
     // Anzeige-Skalierung wiederherstellen (Mobil)
     el.style.transform = prevTransform;
