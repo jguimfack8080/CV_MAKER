@@ -491,30 +491,37 @@ html, body { height: 100%; font-family: 'Inter', system-ui, sans-serif; backgrou
   <div id="topbar">
     <span class="logo">CV-Studio</span>
     <div class="sep"></div>
-    <label>Lebenslauf</label>
-    <select id="cv-select" onchange="switchToCv(this.value)" title="Lebenslauf auswaehlen"></select>
-    <button class="btn btn-ghost btn-sm" onclick="createNewCv()" title="Neuen Lebenslauf anlegen">+ Neu</button>
-    <button class="btn btn-ghost btn-sm" onclick="duplicateCurrentCv()" title="Aktuellen Lebenslauf duplizieren">Duplizieren</button>
-    <button class="btn btn-ghost btn-sm" onclick="renameCurrentCv()" title="Aktuellen Lebenslauf umbenennen">Umbenennen</button>
-    <button class="btn btn-danger btn-sm" onclick="deleteCurrentCv()" title="Aktuellen Lebenslauf loeschen">Loeschen</button>
-    <div class="sep"></div>
-    <label>Vorlage</label>
-    <select id="template-select" onchange="onTemplateChange(this.value)">
-      <option value="minimal">Minimal</option>
-      <option value="sidebar">Sidebar-Akzent</option>
-      <option value="dach">Klassisch DACH</option>
-      <option value="header">Kreativ Header</option>
-      <option value="compact">Kompakt Zeitachse</option>
-      <option value="exec">Executive</option>
-      <option value="twocol">Zweispaltig</option>
-      <option value="lineleft">Seitenlinie</option>
-      <option value="card">Profilkarte</option>
-      <option value="plain">Schlicht ATS</option>
-      <option value="profil">Profil Klassisch</option>
+    <label data-i18n="ui_lang">Sprache</label>
+    <select id="lang-select" onchange="setLang(this.value)" title="Sprache / Language / Langue">
+      <option value="de">Deutsch</option>
+      <option value="en">English</option>
+      <option value="fr">Francais</option>
     </select>
-    <label>Schrift</label>
+    <div class="sep"></div>
+    <label data-i18n="ui_lebenslauf">Lebenslauf</label>
+    <select id="cv-select" onchange="switchToCv(this.value)" data-i18n-title="title_select_cv" title="Lebenslauf auswaehlen"></select>
+    <button class="btn btn-ghost btn-sm" onclick="createNewCv()" data-i18n-title="title_new_cv" title="Neuen Lebenslauf anlegen" data-i18n="ui_neu">+ Neu</button>
+    <button class="btn btn-ghost btn-sm" onclick="duplicateCurrentCv()" data-i18n-title="title_dup_cv" title="Aktuellen Lebenslauf duplizieren" data-i18n="ui_duplizieren">Duplizieren</button>
+    <button class="btn btn-ghost btn-sm" onclick="renameCurrentCv()" data-i18n-title="title_rename_cv" title="Aktuellen Lebenslauf umbenennen" data-i18n="ui_umbenennen">Umbenennen</button>
+    <button class="btn btn-danger btn-sm" onclick="deleteCurrentCv()" data-i18n-title="title_delete_cv" title="Aktuellen Lebenslauf loeschen" data-i18n="ui_loeschen">Loeschen</button>
+    <div class="sep"></div>
+    <label data-i18n="ui_vorlage">Vorlage</label>
+    <select id="template-select" onchange="onTemplateChange(this.value)">
+      <option value="minimal" data-i18n="tpl_minimal">Minimal</option>
+      <option value="sidebar" data-i18n="tpl_sidebar">Sidebar-Akzent</option>
+      <option value="dach" data-i18n="tpl_dach">Klassisch DACH</option>
+      <option value="header" data-i18n="tpl_header">Kreativ Header</option>
+      <option value="compact" data-i18n="tpl_compact">Kompakt Zeitachse</option>
+      <option value="exec" data-i18n="tpl_exec">Executive</option>
+      <option value="twocol" data-i18n="tpl_twocol">Zweispaltig</option>
+      <option value="lineleft" data-i18n="tpl_lineleft">Seitenlinie</option>
+      <option value="card" data-i18n="tpl_card">Profilkarte</option>
+      <option value="plain" data-i18n="tpl_plain">Schlicht ATS</option>
+      <option value="profil" data-i18n="tpl_profil">Profil Klassisch</option>
+    </select>
+    <label data-i18n="ui_schrift">Schrift</label>
     <select id="font-select" onchange="onFontChange(this.value)">
-      <option value="inter">Inter (Standard)</option>
+      <option value="inter">Inter</option>
       <option value="roboto">Roboto</option>
       <option value="opensans">Open Sans</option>
       <option value="montserrat">Montserrat</option>
@@ -526,45 +533,45 @@ html, body { height: 100%; font-family: 'Inter', system-ui, sans-serif; backgrou
       <option value="times">Times New Roman</option>
       <option value="garamond">EB Garamond</option>
     </select>
-    <label>Textfarbe</label>
-    <input type="color" id="textcolor-input" title="Textfarbe waehlen" oninput="onTextColorChange(this.value)" style="width:30px;height:26px;padding:1px;border:1px solid var(--c-border);border-radius:var(--radius);background:white;cursor:pointer;">
-    <button class="btn btn-ghost btn-sm" onclick="onTextColorChange('#1a1a1a')" title="Auf Schwarz zuruecksetzen">Schwarz</button>
+    <label data-i18n="ui_textfarbe">Textfarbe</label>
+    <input type="color" id="textcolor-input" data-i18n-title="title_textcolor" title="Textfarbe waehlen" oninput="onTextColorChange(this.value)" style="width:30px;height:26px;padding:1px;border:1px solid var(--c-border);border-radius:var(--radius);background:white;cursor:pointer;">
+    <button class="btn btn-ghost btn-sm" onclick="onTextColorChange('#1a1a1a')" data-i18n-title="title_reset_black" title="Auf Schwarz zuruecksetzen" data-i18n="ui_schwarz">Schwarz</button>
     <div class="sep"></div>
-    <button class="btn btn-ghost" onclick="importJSON()">JSON importieren</button>
-    <button class="btn btn-ghost" onclick="exportJSON()">JSON exportieren</button>
+    <button class="btn btn-ghost" onclick="importJSON()" data-i18n="ui_json_import">JSON importieren</button>
+    <button class="btn btn-ghost" onclick="exportJSON()" data-i18n="ui_json_export">JSON exportieren</button>
     <input type="file" id="json-file-input" accept=".json" class="hidden" onchange="onJSONFileSelected(event)">
     <div class="sep"></div>
-    <button class="btn btn-primary" id="pdf-btn" onclick="exportPDF()">PDF exportieren</button>
+    <button class="btn btn-primary" id="pdf-btn" onclick="exportPDF()" data-i18n="ui_pdf_export">PDF exportieren</button>
     <div class="sep"></div>
-    <a href="wiki.html" target="_blank" rel="noopener" class="btn btn-ghost btn-sm" title="Ausfuehrliche Anleitung oeffnen">Hilfe &amp; Anleitung</a>
+    <a href="wiki.html" target="_blank" rel="noopener" class="btn btn-ghost btn-sm" data-i18n-title="title_help" title="Ausfuehrliche Anleitung oeffnen" data-i18n="ui_help">Hilfe &amp; Anleitung</a>
     <div class="spacer"></div>
-    <span class="autosave-indicator" id="save-indicator">Gespeichert</span>
+    <span class="autosave-indicator" id="save-indicator" data-i18n="ui_saved">Gespeichert</span>
   </div>
 
   <!-- Mobile-Umschalter: nur auf kleinen Bildschirmen sichtbar (siehe Media Query).
        Erlaubt das Wechseln zwischen Bearbeiten und Vorschau, da beide Bereiche
        auf schmalen Geraeten nicht nebeneinander passen. -->
   <div id="mobile-switch">
-    <button class="mob-tab active" data-view="edit" onclick="setMobileView('edit')">Bearbeiten</button>
-    <button class="mob-tab" data-view="preview" onclick="setMobileView('preview')">Vorschau</button>
+    <button class="mob-tab active" data-view="edit" onclick="setMobileView('edit')" data-i18n="mob_edit">Bearbeiten</button>
+    <button class="mob-tab" data-view="preview" onclick="setMobileView('preview')" data-i18n="mob_preview">Vorschau</button>
   </div>
 
   <div class="workspace">
     <div id="editor-panel">
       <div id="editor-tabs">
-        <div class="etab active" onclick="showTab('personal')">Persoenlich</div>
-        <div class="etab" onclick="showTab('skills')">Skills</div>
-        <div class="etab" onclick="showTab('experience')">Erfahrung</div>
-        <div class="etab" onclick="showTab('education')">Bildung</div>
-        <div class="etab" onclick="showTab('projects')">Projekte</div>
-        <div class="etab" onclick="showTab('languages')">Sprachen</div>
-        <div class="etab" onclick="showTab('interests')">Sonstiges</div>
+        <div class="etab active" onclick="showTab('personal')" data-i18n="tab_personal">${t('cv_personal')}</div>
+        <div class="etab" onclick="showTab('skills')" data-i18n="tab_skills">${t('cv_skills_short')}</div>
+        <div class="etab" onclick="showTab('experience')" data-i18n="tab_experience">Erfahrung</div>
+        <div class="etab" onclick="showTab('education')" data-i18n="tab_education">Bildung</div>
+        <div class="etab" onclick="showTab('projects')" data-i18n="tab_projects">${t('cv_projects')}</div>
+        <div class="etab" onclick="showTab('languages')" data-i18n="tab_languages">${t('cv_languages')}</div>
+        <div class="etab" onclick="showTab('interests')" data-i18n="tab_other">${t('cv_other')}</div>
       </div>
       <div id="editor-body"></div>
     </div>
 
     <div id="preview-panel">
-      <div id="preview-bar"><span>A4 Live-Vorschau - Aenderungen erscheinen sofort</span></div>
+      <div id="preview-bar"><span data-i18n="preview_bar">A4 Live-Vorschau - Aenderungen erscheinen sofort</span></div>
       <div id="preview-scroller">
         <!-- preview-fit faltet die skalierte Vorschau auf ihre sichtbare Groesse
              zusammen (kein horizontales Scrollen auf kleinen Bildschirmen).
@@ -593,6 +600,187 @@ const FONTS = {
   garamond:   "'EB Garamond', Garamond, serif"
 };
 
+// ====== INTERNATIONALISIERUNG (FR / EN / DE) ======
+// Vollstaendiges Woerterbuch fuer die Oberflaeche UND die auf dem Lebenslauf
+// generierten Beschriftungen. Alles bleibt in dieser einen index.html (Cloudflare
+// Pages liest nur die Datei im Stammverzeichnis - kein Build, keine Abhaengigkeit).
+const I18N = {
+  de: {
+    ui_lebenslauf:"Lebenslauf", ui_neu:"+ Neu", ui_duplizieren:"Duplizieren", ui_umbenennen:"Umbenennen",
+    ui_loeschen:"Loeschen", ui_vorlage:"Vorlage", ui_schrift:"Schrift", ui_textfarbe:"Textfarbe",
+    ui_schwarz:"Schwarz", ui_json_import:"JSON importieren", ui_json_export:"JSON exportieren",
+    ui_pdf_export:"PDF exportieren", ui_help:"Hilfe & Anleitung", ui_saved:"Gespeichert",
+    ui_saving:"Speichern...", ui_lang:"Sprache",
+    mob_edit:"Bearbeiten", mob_preview:"Vorschau",
+    preview_bar:"A4 Live-Vorschau - Aenderungen erscheinen sofort",
+    title_select_cv:"Lebenslauf auswaehlen", title_new_cv:"Neuen Lebenslauf anlegen",
+    title_dup_cv:"Aktuellen Lebenslauf duplizieren", title_rename_cv:"Aktuellen Lebenslauf umbenennen",
+    title_delete_cv:"Aktuellen Lebenslauf loeschen", title_textcolor:"Textfarbe waehlen",
+    title_reset_black:"Auf Schwarz zuruecksetzen", title_help:"Ausfuehrliche Anleitung oeffnen",
+    tab_personal:"Persoenlich", tab_skills:"Skills", tab_experience:"Erfahrung", tab_education:"Bildung",
+    tab_projects:"Projekte", tab_languages:"Sprachen", tab_other:"Sonstiges",
+    tpl_minimal:"Minimal", tpl_sidebar:"Sidebar-Akzent", tpl_dach:"Klassisch DACH", tpl_header:"Kreativ Header",
+    tpl_compact:"Kompakt Zeitachse", tpl_exec:"Executive", tpl_twocol:"Zweispaltig", tpl_lineleft:"Seitenlinie",
+    tpl_card:"Profilkarte", tpl_plain:"Schlicht ATS", tpl_profil:"Profil Klassisch",
+    ed_personal_data:"Persoenliche Daten", ed_upload_photo:"Foto hochladen", ed_choose_photo:"Foto waehlen",
+    ed_remove:"Entfernen", ed_photo_shape:"Foto-Darstellung", ed_round:"Rund", ed_square:"Eckig",
+    ed_photo_zoom:"Foto-Zoom", ed_photo_posy:"Foto-Position vertikal", ed_name:"Name",
+    ed_jobtitle:"Berufsbezeichnung / Profil", ed_address:"Adresse", ed_email:"E-Mail", ed_phone:"Telefon",
+    ed_website:"Portfolio / Website", ed_birthdate:"Geburtsdatum", ed_birthplace:"Geburtsort",
+    ed_nationality:"Staatsbuergerschaft", ed_marital:"Familienstand", ed_skill_matrix:"Skill-Matrix",
+    ed_skills_unit:"Skills", ed_edit:"Bearbeiten", ed_category:"Kategorie",
+    ed_skills_hint:"SKILLS (Bewertung optional, fuer Vorlage \"Profil Klassisch\")",
+    ed_rate_none:"ohne", ed_rate_stars:"Sterne", ed_add_skill_ph:"Skill hinzufuegen...",
+    ed_add_category:"+ Kategorie hinzufuegen", ed_new_category:"Neue Kategorie", ed_new_position:"Neue Stelle",
+    ed_to_connector:"bis", ed_position:"Position", ed_company:"Unternehmen", ed_location:"Ort",
+    ed_from:"Von", ed_until:"Bis", ed_tasks:"AUFGABEN", ed_add_point:"+ Punkt",
+    ed_add_entry:"+ Eintrag hinzufuegen", ed_experience_title:"Berufserfahrung", ed_education_title:"Ausbildung",
+    ed_projects_title:"Projekte", ed_new_entry:"Neuer Eintrag", ed_degree:"Abschluss",
+    ed_institution:"Institution", ed_notes:"Anmerkungen", ed_new_project:"Neues Projekt",
+    ed_project_title:"Projekttitel", ed_project_type:"Art / Kontext", ed_project_link:"Projekt-Link (optional)",
+    ed_project_link_ph:"z. B. github.com/... oder demo.example.com", ed_tech_stack:"TECH-STACK",
+    ed_tech_ph:"Technologie...", ed_results:"ERGEBNISSE", ed_lang_name_ph:"Sprache", ed_lang_level_ph:"Niveau",
+    ed_add_language:"+ Sprache hinzufuegen", ed_interests_other:"Interessen & Sonstiges", ed_add_simple_entry:"+ Eintrag",
+    cv_skills:"Berufliche Kenntnisse", cv_experience:"Beruflicher Werdegang", cv_education:"Ausbildung",
+    cv_projects:"Projekte", cv_languages:"Sprachen", cv_interests_other:"Interessen & Sonstiges",
+    cv_interests:"Interessen", cv_contact:"Kontakt", cv_personal:"Persoenlich", cv_personal_data:"Persoenliche Daten",
+    cv_skills_short:"Skills", cv_other:"Sonstiges",
+    cv_lbl_address:"Anschrift", cv_lbl_birthdate:"Geburtsdatum", cv_lbl_birthplace:"Geburtsort",
+    cv_lbl_nationality:"Staatsbuergerschaft", cv_lbl_nationality_short:"Staatsb.: ", cv_lbl_marital:"Familienstand",
+    cv_in:"in", cv_born:"geb.",
+    prompt_new_name:"Name des neuen Lebenslaufs:", default_cv_name:"Lebenslauf", prompt_rename:"Lebenslauf umbenennen:",
+    confirm_delete:"Lebenslauf \"{name}\" wirklich loeschen? Dies kann nicht rueckgaengig gemacht werden.",
+    this_cv:"diesen Lebenslauf", my_cv:"Mein Lebenslauf", pdf_wait:"Bitte warten...",
+    pdf_error:"PDF-Exportfehler: ", file_cv:"Lebenslauf"
+  },
+  en: {
+    ui_lebenslauf:"CV", ui_neu:"+ New", ui_duplizieren:"Duplicate", ui_umbenennen:"Rename",
+    ui_loeschen:"Delete", ui_vorlage:"Template", ui_schrift:"Font", ui_textfarbe:"Text color",
+    ui_schwarz:"Black", ui_json_import:"Import JSON", ui_json_export:"Export JSON",
+    ui_pdf_export:"Export PDF", ui_help:"Help & Guide", ui_saved:"Saved",
+    ui_saving:"Saving...", ui_lang:"Language",
+    mob_edit:"Edit", mob_preview:"Preview",
+    preview_bar:"A4 live preview - changes appear instantly",
+    title_select_cv:"Select CV", title_new_cv:"Create new CV",
+    title_dup_cv:"Duplicate current CV", title_rename_cv:"Rename current CV",
+    title_delete_cv:"Delete current CV", title_textcolor:"Choose text color",
+    title_reset_black:"Reset to black", title_help:"Open the detailed guide",
+    tab_personal:"Personal", tab_skills:"Skills", tab_experience:"Experience", tab_education:"Education",
+    tab_projects:"Projects", tab_languages:"Languages", tab_other:"Other",
+    tpl_minimal:"Minimal", tpl_sidebar:"Sidebar Accent", tpl_dach:"Classic DACH", tpl_header:"Creative Header",
+    tpl_compact:"Compact Timeline", tpl_exec:"Executive", tpl_twocol:"Two-Column", tpl_lineleft:"Side Line",
+    tpl_card:"Profile Card", tpl_plain:"Plain ATS", tpl_profil:"Classic Profile",
+    ed_personal_data:"Personal Data", ed_upload_photo:"Upload photo", ed_choose_photo:"Choose photo",
+    ed_remove:"Remove", ed_photo_shape:"Photo shape", ed_round:"Round", ed_square:"Square",
+    ed_photo_zoom:"Photo zoom", ed_photo_posy:"Photo vertical position", ed_name:"Name",
+    ed_jobtitle:"Job title / Profile", ed_address:"Address", ed_email:"Email", ed_phone:"Phone",
+    ed_website:"Portfolio / Website", ed_birthdate:"Date of birth", ed_birthplace:"Place of birth",
+    ed_nationality:"Nationality", ed_marital:"Marital status", ed_skill_matrix:"Skill Matrix",
+    ed_skills_unit:"Skills", ed_edit:"Edit", ed_category:"Category",
+    ed_skills_hint:"SKILLS (rating optional, for the \"Classic Profile\" template)",
+    ed_rate_none:"none", ed_rate_stars:"stars", ed_add_skill_ph:"Add skill...",
+    ed_add_category:"+ Add category", ed_new_category:"New category", ed_new_position:"New position",
+    ed_to_connector:"to", ed_position:"Position", ed_company:"Company", ed_location:"Location",
+    ed_from:"From", ed_until:"To", ed_tasks:"TASKS", ed_add_point:"+ Point",
+    ed_add_entry:"+ Add entry", ed_experience_title:"Work Experience", ed_education_title:"Education",
+    ed_projects_title:"Projects", ed_new_entry:"New entry", ed_degree:"Degree",
+    ed_institution:"Institution", ed_notes:"Notes", ed_new_project:"New project",
+    ed_project_title:"Project title", ed_project_type:"Type / Context", ed_project_link:"Project link (optional)",
+    ed_project_link_ph:"e.g. github.com/... or demo.example.com", ed_tech_stack:"TECH STACK",
+    ed_tech_ph:"Technology...", ed_results:"RESULTS", ed_lang_name_ph:"Language", ed_lang_level_ph:"Level",
+    ed_add_language:"+ Add language", ed_interests_other:"Interests & Other", ed_add_simple_entry:"+ Entry",
+    cv_skills:"Professional Skills", cv_experience:"Professional Experience", cv_education:"Education",
+    cv_projects:"Projects", cv_languages:"Languages", cv_interests_other:"Interests & Other",
+    cv_interests:"Interests", cv_contact:"Contact", cv_personal:"Personal", cv_personal_data:"Personal Data",
+    cv_skills_short:"Skills", cv_other:"Other",
+    cv_lbl_address:"Address", cv_lbl_birthdate:"Date of birth", cv_lbl_birthplace:"Place of birth",
+    cv_lbl_nationality:"Nationality", cv_lbl_nationality_short:"Nat.: ", cv_lbl_marital:"Marital status",
+    cv_in:"in", cv_born:"born",
+    prompt_new_name:"Name of the new CV:", default_cv_name:"CV", prompt_rename:"Rename CV:",
+    confirm_delete:"Really delete CV \"{name}\"? This cannot be undone.",
+    this_cv:"this CV", my_cv:"My CV", pdf_wait:"Please wait...",
+    pdf_error:"PDF export error: ", file_cv:"CV"
+  },
+  fr: {
+    ui_lebenslauf:"CV", ui_neu:"+ Nouveau", ui_duplizieren:"Dupliquer", ui_umbenennen:"Renommer",
+    ui_loeschen:"Supprimer", ui_vorlage:"Modele", ui_schrift:"Police", ui_textfarbe:"Couleur du texte",
+    ui_schwarz:"Noir", ui_json_import:"Importer JSON", ui_json_export:"Exporter JSON",
+    ui_pdf_export:"Exporter PDF", ui_help:"Aide & Guide", ui_saved:"Enregistre",
+    ui_saving:"Enregistrement...", ui_lang:"Langue",
+    mob_edit:"Editer", mob_preview:"Apercu",
+    preview_bar:"Apercu A4 en direct - les modifications apparaissent aussitot",
+    title_select_cv:"Choisir le CV", title_new_cv:"Creer un nouveau CV",
+    title_dup_cv:"Dupliquer le CV actuel", title_rename_cv:"Renommer le CV actuel",
+    title_delete_cv:"Supprimer le CV actuel", title_textcolor:"Choisir la couleur du texte",
+    title_reset_black:"Remettre en noir", title_help:"Ouvrir le guide detaille",
+    tab_personal:"Personnel", tab_skills:"Competences", tab_experience:"Experience", tab_education:"Formation",
+    tab_projects:"Projets", tab_languages:"Langues", tab_other:"Divers",
+    tpl_minimal:"Minimal", tpl_sidebar:"Accent lateral", tpl_dach:"Classique DACH", tpl_header:"En-tete creatif",
+    tpl_compact:"Chronologie compacte", tpl_exec:"Executive", tpl_twocol:"Deux colonnes", tpl_lineleft:"Ligne laterale",
+    tpl_card:"Carte profil", tpl_plain:"ATS sobre", tpl_profil:"Profil classique",
+    ed_personal_data:"Donnees personnelles", ed_upload_photo:"Televerser une photo", ed_choose_photo:"Choisir une photo",
+    ed_remove:"Retirer", ed_photo_shape:"Forme de la photo", ed_round:"Rond", ed_square:"Carre",
+    ed_photo_zoom:"Zoom photo", ed_photo_posy:"Position verticale de la photo", ed_name:"Nom",
+    ed_jobtitle:"Intitule / Profil", ed_address:"Adresse", ed_email:"E-mail", ed_phone:"Telephone",
+    ed_website:"Portfolio / Site web", ed_birthdate:"Date de naissance", ed_birthplace:"Lieu de naissance",
+    ed_nationality:"Nationalite", ed_marital:"Situation familiale", ed_skill_matrix:"Matrice de competences",
+    ed_skills_unit:"competences", ed_edit:"Modifier", ed_category:"Categorie",
+    ed_skills_hint:"COMPETENCES (note facultative, pour le modele \"Profil classique\")",
+    ed_rate_none:"aucune", ed_rate_stars:"etoiles", ed_add_skill_ph:"Ajouter une competence...",
+    ed_add_category:"+ Ajouter une categorie", ed_new_category:"Nouvelle categorie", ed_new_position:"Nouveau poste",
+    ed_to_connector:"a", ed_position:"Poste", ed_company:"Entreprise", ed_location:"Lieu",
+    ed_from:"De", ed_until:"A", ed_tasks:"MISSIONS", ed_add_point:"+ Point",
+    ed_add_entry:"+ Ajouter une entree", ed_experience_title:"Experience professionnelle", ed_education_title:"Formation",
+    ed_projects_title:"Projets", ed_new_entry:"Nouvelle entree", ed_degree:"Diplome",
+    ed_institution:"Etablissement", ed_notes:"Remarques", ed_new_project:"Nouveau projet",
+    ed_project_title:"Titre du projet", ed_project_type:"Type / Contexte", ed_project_link:"Lien du projet (optionnel)",
+    ed_project_link_ph:"ex. github.com/... ou demo.example.com", ed_tech_stack:"STACK TECHNIQUE",
+    ed_tech_ph:"Technologie...", ed_results:"RESULTATS", ed_lang_name_ph:"Langue", ed_lang_level_ph:"Niveau",
+    ed_add_language:"+ Ajouter une langue", ed_interests_other:"Centres d'interet & divers", ed_add_simple_entry:"+ Entree",
+    cv_skills:"Competences professionnelles", cv_experience:"Parcours professionnel", cv_education:"Formation",
+    cv_projects:"Projets", cv_languages:"Langues", cv_interests_other:"Centres d'interet & divers",
+    cv_interests:"Centres d'interet", cv_contact:"Contact", cv_personal:"Personnel", cv_personal_data:"Donnees personnelles",
+    cv_skills_short:"Competences", cv_other:"Divers",
+    cv_lbl_address:"Adresse", cv_lbl_birthdate:"Date de naissance", cv_lbl_birthplace:"Lieu de naissance",
+    cv_lbl_nationality:"Nationalite", cv_lbl_nationality_short:"Nat. : ", cv_lbl_marital:"Situation familiale",
+    cv_in:"a", cv_born:"Ne",
+    prompt_new_name:"Nom du nouveau CV :", default_cv_name:"CV", prompt_rename:"Renommer le CV :",
+    confirm_delete:"Supprimer vraiment le CV \"{name}\" ? Cette action est irreversible.",
+    this_cv:"ce CV", my_cv:"Mon CV", pdf_wait:"Veuillez patienter...",
+    pdf_error:"Erreur d'export PDF : ", file_cv:"CV"
+  }
+};
+// Startsprache: gespeicherte Wahl des Nutzers hat Vorrang; sonst die Sprache des
+// Browsers (de/en/fr), falls unterstuetzt; sonst Deutsch als Standard.
+let appLang = (function(){
+  try { const s = localStorage.getItem('cvstudio_lang'); if (s && (s==='de'||s==='en'||s==='fr')) return s; } catch(e){}
+  const nav = ((navigator.language || navigator.userLanguage || 'de') + '').slice(0,2).toLowerCase();
+  return (nav==='de'||nav==='en'||nav==='fr') ? nav : 'de';
+})();
+// Uebersetzung nachschlagen (Fallback: Deutsch, dann der Schluessel selbst).
+function t(key) {
+  const d = I18N[appLang] || I18N.de;
+  return (d[key] != null) ? d[key] : (I18N.de[key] != null ? I18N.de[key] : key);
+}
+// Statische Beschriftungen/Tooltips im HTML (data-i18n / data-i18n-title) setzen.
+function applyStaticI18n() {
+  document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.getAttribute('data-i18n')); });
+  document.querySelectorAll('[data-i18n-title]').forEach(el => { el.title = t(el.getAttribute('data-i18n-title')); });
+}
+// Sprache wechseln: alles neu rendern (Oberflaeche + Lebenslauf-Beschriftungen).
+function setLang(lang) {
+  if (!I18N[lang]) return;
+  appLang = lang;
+  try { localStorage.setItem('cvstudio_lang', lang); } catch (e) {}
+  document.documentElement.lang = lang;
+  applyStaticI18n();
+  renderEditor();
+  renderPreview();
+  renderCvBar();
+  const ls = document.getElementById('lang-select');
+  if (ls && ls.value !== lang) ls.value = lang;
+}
+
 // ====== ZUSTAND (Mehrfach-Lebenslauf) ======
 // Die Daten- und Geschaeftslogik liegt in cv-core.js (Store, Models, Library).
 // Hier wird nur der UI-nahe Zustand gehalten: aktiver CV im Speicher + aktiver Reiter.
@@ -608,7 +796,7 @@ function initLibrary() {
   // Bei komplett leerem Speicher wird der neutrale Demo-Lebenslauf geladen
   // (window.CV_DEMO aus default-cv.js). Vorhandene Daten bleiben unberuehrt.
   const seed = (typeof window !== 'undefined' && window.CV_DEMO) ? window.CV_DEMO : null;
-  currentCvId = library.ensureAtLeastOne('Mein Lebenslauf', seed);
+  currentCvId = library.ensureAtLeastOne(t('my_cv'), seed);
   const active = library.loadActive();
   currentCvId = active.id;
   cvData = active.data;
@@ -630,11 +818,11 @@ function switchToCv(id) {
 // Speichert den aktiven Lebenslauf (verzoegert) und aktualisiert die Vorschau.
 function saveToStorage() {
   const ind = document.getElementById('save-indicator');
-  if (ind) { ind.textContent = 'Speichert...'; ind.className = 'autosave-indicator saving'; }
+  if (ind) { ind.textContent = t('ui_saving'); ind.className = 'autosave-indicator saving'; }
   if (saveTimer) clearTimeout(saveTimer);
   saveTimer = setTimeout(() => {
     if (currentCvId) library.save(currentCvId, cvData);
-    if (ind) { ind.textContent = 'Gespeichert'; ind.className = 'autosave-indicator'; }
+    if (ind) { ind.textContent = t('ui_saved'); ind.className = 'autosave-indicator'; }
     renderCvBar(); // aktualisiert ggf. den angezeigten Namen/Datum
   }, 600);
 }
@@ -642,7 +830,7 @@ function markDirty() { saveToStorage(); renderPreview(); }
 
 // ====== CV-VERWALTUNG (UI-Aktionen ueber die Geschaeftslogik) ======
 function createNewCv() {
-  const name = (prompt('Name des neuen Lebenslaufs:', 'Lebenslauf ' + (library.count() + 1)) || '').trim();
+  const name = (prompt(t('prompt_new_name'), t('default_cv_name') + ' ' + (library.count() + 1)) || '').trim();
   if (name === '') return; // Abbruch
   const id = library.create(name);
   switchToCv(id);
@@ -655,18 +843,18 @@ function duplicateCurrentCv() {
 function renameCurrentCv() {
   if (!currentCvId) return;
   const aktuell = library.getName(currentCvId) || '';
-  const name = (prompt('Lebenslauf umbenennen:', aktuell) || '').trim();
+  const name = (prompt(t('prompt_rename'), aktuell) || '').trim();
   if (name === '' || name === aktuell) return;
   library.rename(currentCvId, name);
   renderCvBar();
 }
 function deleteCurrentCv() {
   if (!currentCvId) return;
-  const name = library.getName(currentCvId) || 'diesen Lebenslauf';
-  if (!confirm('Lebenslauf "' + name + '" wirklich loeschen? Dies kann nicht rueckgaengig gemacht werden.')) return;
+  const name = library.getName(currentCvId) || t('this_cv');
+  if (!confirm(t('confirm_delete').replace('{name}', name))) return;
   library.remove(currentCvId);
   // Nach dem Loeschen sicherstellen, dass mindestens ein CV existiert
-  currentCvId = library.ensureAtLeastOne('Mein Lebenslauf');
+  currentCvId = library.ensureAtLeastOne(t('my_cv'));
   switchToCv(currentCvId);
 }
 
@@ -698,9 +886,9 @@ function renderEditor() {
   switch(currentTab) {
     case 'personal':   body.innerHTML = renderPersonalEditor(); bindPersonal(); break;
     case 'skills':     body.innerHTML = renderSkillsEditor(); bindDragList('skills'); break;
-    case 'experience': body.innerHTML = renderListEditor('experience','Berufserfahrung',renderExpCard); bindDragList('experience'); break;
-    case 'education':  body.innerHTML = renderListEditor('education','Ausbildung',renderEduCard); bindDragList('education'); break;
-    case 'projects':   body.innerHTML = renderListEditor('projects','Projekte',renderProjectCard); bindDragList('projects'); break;
+    case 'experience': body.innerHTML = renderListEditor('experience',t('ed_experience_title'),renderExpCard); bindDragList('experience'); break;
+    case 'education':  body.innerHTML = renderListEditor('education',t('ed_education_title'),renderEduCard); bindDragList('education'); break;
+    case 'projects':   body.innerHTML = renderListEditor('projects',t('ed_projects_title'),renderProjectCard); bindDragList('projects'); break;
     case 'languages':  body.innerHTML = renderLanguagesEditor(); bindDragList('languages'); break;
     case 'interests':  body.innerHTML = renderInterestsEditor(); bindDragList('interests'); break;
   }
@@ -711,39 +899,39 @@ function renderPersonalEditor() {
   const p = cvData.personal;
   const photoHtml = p.photo
     ? `<img src="${p.photo}" class="photo-preview">`
-    : `<div class="photo-placeholder" onclick="document.getElementById('photo-upload').click()">Foto hochladen</div>`;
+    : `<div class="photo-placeholder" onclick="document.getElementById('photo-upload').click()">${t('ed_upload_photo')}</div>`;
   return `
-    <div class="section-header"><span class="section-title">Persoenliche Daten</span></div>
+    <div class="section-header"><span class="section-title">${t('ed_personal_data')}</span></div>
     ${photoHtml}
     <div style="text-align:center;margin-bottom:10px;">
-      <button class="btn btn-ghost btn-sm" onclick="document.getElementById('photo-upload').click()">Foto waehlen</button>
-      ${p.photo ? `<button class="btn btn-ghost btn-sm" onclick="removePhoto()">Entfernen</button>` : ''}
+      <button class="btn btn-ghost btn-sm" onclick="document.getElementById('photo-upload').click()">${t('ed_choose_photo')}</button>
+      ${p.photo ? `<button class="btn btn-ghost btn-sm" onclick="removePhoto()">${t('ed_remove')}</button>` : ''}
     </div>
     <input type="file" id="photo-upload" accept="image/*" class="hidden" onchange="onPhotoUpload(event)">
-    <div class="field"><label>Foto-Darstellung</label>
+    <div class="field"><label>${t('ed_photo_shape')}</label>
       <select id="p-photoshape">
-        <option value="circle" ${p.photoShape==='circle'?'selected':''}>Rund</option>
-        <option value="square" ${p.photoShape==='square'?'selected':''}>Eckig</option>
+        <option value="circle" ${p.photoShape==='circle'?'selected':''}>${t('ed_round')}</option>
+        <option value="square" ${p.photoShape==='square'?'selected':''}>${t('ed_square')}</option>
       </select>
     </div>
     ${p.photo ? `
-    <div class="field"><label>Foto-Zoom (${Math.round((p.photoZoom||1)*100)} %)</label>
+    <div class="field"><label>${t('ed_photo_zoom')} (${Math.round((p.photoZoom||1)*100)} %)</label>
       <input type="range" min="100" max="250" step="1" value="${Math.round((p.photoZoom||1)*100)}" style="width:100%" oninput="setPhotoZoom(this.value)"></div>
-    <div class="field"><label>Foto-Position vertikal (${p.photoPosY!=null?p.photoPosY:50} %)</label>
+    <div class="field"><label>${t('ed_photo_posy')} (${p.photoPosY!=null?p.photoPosY:50} %)</label>
       <input type="range" min="0" max="100" step="1" value="${p.photoPosY!=null?p.photoPosY:50}" style="width:100%" oninput="setPhotoPosY(this.value)"></div>
     ` : ''}
-    <div class="field"><label>Name</label><input type="text" id="p-name" value="${esc(p.name)}"></div>
-    <div class="field"><label>Berufsbezeichnung / Profil</label><input type="text" id="p-jobtitle" value="${esc(p.jobtitle)}"></div>
-    <div class="field"><label>Adresse</label><input type="text" id="p-address" value="${esc(p.address)}"></div>
-    <div class="field"><label>E-Mail</label><input type="email" id="p-email" value="${esc(p.email)}"></div>
-    <div class="field"><label>Telefon</label><input type="tel" id="p-phone" value="${esc(p.phone)}"></div>
+    <div class="field"><label>${t('ed_name')}</label><input type="text" id="p-name" value="${esc(p.name)}"></div>
+    <div class="field"><label>${t('ed_jobtitle')}</label><input type="text" id="p-jobtitle" value="${esc(p.jobtitle)}"></div>
+    <div class="field"><label>${t('ed_address')}</label><input type="text" id="p-address" value="${esc(p.address)}"></div>
+    <div class="field"><label>${t('ed_email')}</label><input type="email" id="p-email" value="${esc(p.email)}"></div>
+    <div class="field"><label>${t('ed_phone')}</label><input type="tel" id="p-phone" value="${esc(p.phone)}"></div>
     <div class="field"><label>LinkedIn</label><input type="text" id="p-linkedin" value="${esc(p.linkedin)}"></div>
     <div class="field"><label>GitHub</label><input type="text" id="p-github" value="${esc(p.github||'')}"></div>
-    <div class="field"><label>Portfolio / Website</label><input type="text" id="p-website" value="${esc(p.website||'')}"></div>
-    <div class="field"><label>Geburtsdatum</label><input type="text" id="p-birthdate" value="${esc(p.birthdate)}"></div>
-    <div class="field"><label>Geburtsort</label><input type="text" id="p-birthplace" value="${esc(p.birthplace)}"></div>
-    <div class="field"><label>Staatsbuergerschaft</label><input type="text" id="p-nationality" value="${esc(p.nationality)}"></div>
-    <div class="field"><label>Familienstand</label><input type="text" id="p-marital" value="${esc(p.marital)}"></div>
+    <div class="field"><label>${t('ed_website')}</label><input type="text" id="p-website" value="${esc(p.website||'')}"></div>
+    <div class="field"><label>${t('ed_birthdate')}</label><input type="text" id="p-birthdate" value="${esc(p.birthdate)}"></div>
+    <div class="field"><label>${t('ed_birthplace')}</label><input type="text" id="p-birthplace" value="${esc(p.birthplace)}"></div>
+    <div class="field"><label>${t('ed_nationality')}</label><input type="text" id="p-nationality" value="${esc(p.nationality)}"></div>
+    <div class="field"><label>${t('ed_marital')}</label><input type="text" id="p-marital" value="${esc(p.marital)}"></div>
   `;
 }
 function bindPersonal() {
@@ -783,44 +971,44 @@ function setPhotoPosY(v) { cvData.personal.photoPosY = parseInt(v); if (isNaN(cv
 // -- KENNTNISSE --
 function renderSkillsEditor() {
   return `
-    <div class="section-header"><span class="section-title">Skill-Matrix</span></div>
+    <div class="section-header"><span class="section-title">${t('ed_skill_matrix')}</span></div>
     <div id="skills-list">
       ${cvData.skills.map((cat,i) => `
         <div class="card" data-list="skills" data-id="${cat.id}" draggable="true">
           <div class="card-header">
             <span class="drag-handle">&#8942;</span>
-            <div style="flex:1;margin-left:6px;"><div class="card-title">${esc(cat.category)}</div><div class="card-sub">${cat.items.length} Skills</div></div>
+            <div style="flex:1;margin-left:6px;"><div class="card-title">${esc(cat.category)}</div><div class="card-sub">${cat.items.length} ${t('ed_skills_unit')}</div></div>
             <div class="card-actions">
-              <button class="btn btn-ghost btn-sm" onclick="toggleCard('sk-body-${i}')">Bearbeiten</button>
+              <button class="btn btn-ghost btn-sm" onclick="toggleCard('sk-body-${i}')">${t('ed_edit')}</button>
               <button class="btn btn-danger btn-sm" onclick="removeSkillCat('${cat.id}')">x</button>
             </div>
           </div>
           <div class="card-body" id="sk-body-${i}">
-            <div class="field"><label>Kategorie</label><input type="text" value="${esc(cat.category)}" onchange="updateSkillCat('${cat.id}','category',this.value)"></div>
-            <label style="font-size:11px;font-weight:600;color:var(--c-muted);margin-bottom:4px;display:block;">SKILLS (Bewertung optional, fuer Vorlage "Profil Klassisch")</label>
+            <div class="field"><label>${t('ed_category')}</label><input type="text" value="${esc(cat.category)}" onchange="updateSkillCat('${cat.id}','category',this.value)"></div>
+            <label style="font-size:11px;font-weight:600;color:var(--c-muted);margin-bottom:4px;display:block;">${t('ed_skills_hint')}</label>
             <div>${cat.items.map(it=>{
               const lvl=(cat.ratings&&cat.ratings[it])||0;
               return `<div class="skill-edit-row">
                 <span class="skill-edit-name">${esc(it)}</span>
                 <select class="skill-edit-rate" onchange="setSkillRating('${cat.id}','${escAttr(it)}',this.value)">
-                  ${[0,1,2,3,4,5].map(n=>`<option value="${n}" ${n===lvl?'selected':''}>${n===0?'ohne':n+' Sterne'}</option>`).join('')}
+                  ${[0,1,2,3,4,5].map(n=>`<option value="${n}" ${n===lvl?'selected':''}>${n===0?t('ed_rate_none'):n+' '+t('ed_rate_stars')}</option>`).join('')}
                 </select>
                 <span class="tag-rm" onclick="removeSkillTag('${cat.id}','${escAttr(it)}')">x</span>
               </div>`;
             }).join('')}</div>
             <div class="tag-input-wrap" style="margin-top:8px;">
-              <input type="text" id="sk-inp-${cat.id}" placeholder="Skill hinzufuegen..." style="flex:1;padding:6px 9px;border:1px solid var(--c-border);border-radius:var(--radius);font-size:12px;" onkeydown="if(event.key==='Enter'){event.preventDefault();addSkillTag('${cat.id}')}">
+              <input type="text" id="sk-inp-${cat.id}" placeholder="${t('ed_add_skill_ph')}" style="flex:1;padding:6px 9px;border:1px solid var(--c-border);border-radius:var(--radius);font-size:12px;" onkeydown="if(event.key==='Enter'){event.preventDefault();addSkillTag('${cat.id}')}">
               <button class="btn btn-primary btn-sm" onclick="addSkillTag('${cat.id}')">+</button>
             </div>
           </div>
         </div>`).join('')}
     </div>
-    <button class="add-section-btn" onclick="addSkillCat()">+ Kategorie hinzufuegen</button>`;
+    <button class="add-section-btn" onclick="addSkillCat()">${t('ed_add_category')}</button>`;
 }
 function toggleCard(id) { const el=document.getElementById(id); if(el) el.classList.toggle('open'); }
 function updateSkillCat(id,f,v) { const c=cvData.skills.find(x=>x.id===id); if(c){c[f]=v;markDirty();} }
 function removeSkillCat(id) { cvData.skills=cvData.skills.filter(c=>c.id!==id); markDirty(); renderEditor(); }
-function addSkillCat() { cvData.skills.push({id:uid(),category:'Neue Kategorie',items:[],ratings:{}}); markDirty(); renderEditor(); }
+function addSkillCat() { cvData.skills.push({id:uid(),category:t('ed_new_category'),items:[],ratings:{}}); markDirty(); renderEditor(); }
 function addSkillTag(catId) {
   const inp=document.getElementById('sk-inp-'+catId); const v=inp.value.trim(); if(!v) return;
   const cat=cvData.skills.find(c=>c.id===catId);
@@ -843,29 +1031,29 @@ function renderListEditor(listKey,title,cardFn) {
   const items=cvData[listKey];
   return `<div class="section-header"><span class="section-title">${title}</span></div>
     <div id="${listKey}-list">${items.map((it,i)=>cardFn(it,i)).join('')}</div>
-    <button class="add-section-btn" onclick="addListItem('${listKey}')">+ Eintrag hinzufuegen</button>`;
+    <button class="add-section-btn" onclick="addListItem('${listKey}')">${t('ed_add_entry')}</button>`;
 }
 function renderExpCard(item,i) {
   return `<div class="card" data-list="experience" data-id="${item.id}" draggable="true">
     <div class="card-header">
       <span class="drag-handle">&#8942;</span>
-      <div style="flex:1;margin-left:6px;"><div class="card-title">${esc(item.title)||'Neue Stelle'}</div><div class="card-sub">${esc(item.company)} - ${esc(item.from)} bis ${esc(item.to)}</div></div>
+      <div style="flex:1;margin-left:6px;"><div class="card-title">${esc(item.title)||t('ed_new_position')}</div><div class="card-sub">${esc(item.company)} - ${esc(item.from)} ${t('ed_to_connector')} ${esc(item.to)}</div></div>
       <div class="card-actions">
-        <button class="btn btn-ghost btn-sm" onclick="toggleCard('ex-body-${i}')">Bearbeiten</button>
+        <button class="btn btn-ghost btn-sm" onclick="toggleCard('ex-body-${i}')">${t('ed_edit')}</button>
         <button class="btn btn-danger btn-sm" onclick="removeListItem('experience','${item.id}')">x</button>
       </div>
     </div>
     <div class="card-body" id="ex-body-${i}">
-      <div class="field"><label>Position</label><input type="text" value="${esc(item.title)}" onchange="updateListItem('experience','${item.id}','title',this.value)"></div>
-      <div class="field"><label>Unternehmen</label><input type="text" value="${esc(item.company)}" onchange="updateListItem('experience','${item.id}','company',this.value)"></div>
-      <div class="field"><label>Ort</label><input type="text" value="${esc(item.location)}" onchange="updateListItem('experience','${item.id}','location',this.value)"></div>
+      <div class="field"><label>${t('ed_position')}</label><input type="text" value="${esc(item.title)}" onchange="updateListItem('experience','${item.id}','title',this.value)"></div>
+      <div class="field"><label>${t('ed_company')}</label><input type="text" value="${esc(item.company)}" onchange="updateListItem('experience','${item.id}','company',this.value)"></div>
+      <div class="field"><label>${t('ed_location')}</label><input type="text" value="${esc(item.location)}" onchange="updateListItem('experience','${item.id}','location',this.value)"></div>
       <div style="display:flex;gap:8px">
-        <div class="field" style="flex:1"><label>Von</label><input type="text" value="${esc(item.from)}" onchange="updateListItem('experience','${item.id}','from',this.value)"></div>
-        <div class="field" style="flex:1"><label>Bis</label><input type="text" value="${esc(item.to)}" onchange="updateListItem('experience','${item.id}','to',this.value)"></div>
+        <div class="field" style="flex:1"><label>${t('ed_from')}</label><input type="text" value="${esc(item.from)}" onchange="updateListItem('experience','${item.id}','from',this.value)"></div>
+        <div class="field" style="flex:1"><label>${t('ed_until')}</label><input type="text" value="${esc(item.to)}" onchange="updateListItem('experience','${item.id}','to',this.value)"></div>
       </div>
-      <label style="font-size:11px;font-weight:600;color:var(--c-muted);display:block;margin-bottom:5px;">AUFGABEN</label>
+      <label style="font-size:11px;font-weight:600;color:var(--c-muted);display:block;margin-bottom:5px;">${t('ed_tasks')}</label>
       <ul class="bullet-list">${(item.bullets||[]).map((b,bi)=>`<li class="bullet-item"><textarea onchange="updateBullet('experience','${item.id}',${bi},this.value)">${esc(b)}</textarea><span class="bullet-rm" onclick="removeBullet('experience','${item.id}',${bi})">-</span></li>`).join('')}</ul>
-      <button class="add-section-btn" style="margin-top:5px" onclick="addBullet('experience','${item.id}')">+ Punkt</button>
+      <button class="add-section-btn" style="margin-top:5px" onclick="addBullet('experience','${item.id}')">${t('ed_add_point')}</button>
     </div>
   </div>`;
 }
@@ -873,21 +1061,21 @@ function renderEduCard(item,i) {
   return `<div class="card" data-list="education" data-id="${item.id}" draggable="true">
     <div class="card-header">
       <span class="drag-handle">&#8942;</span>
-      <div style="flex:1;margin-left:6px;"><div class="card-title">${esc(item.degree)||'Neuer Eintrag'}</div><div class="card-sub">${esc(item.institution)}</div></div>
+      <div style="flex:1;margin-left:6px;"><div class="card-title">${esc(item.degree)||t('ed_new_entry')}</div><div class="card-sub">${esc(item.institution)}</div></div>
       <div class="card-actions">
-        <button class="btn btn-ghost btn-sm" onclick="toggleCard('edu-body-${i}')">Bearbeiten</button>
+        <button class="btn btn-ghost btn-sm" onclick="toggleCard('edu-body-${i}')">${t('ed_edit')}</button>
         <button class="btn btn-danger btn-sm" onclick="removeListItem('education','${item.id}')">x</button>
       </div>
     </div>
     <div class="card-body" id="edu-body-${i}">
-      <div class="field"><label>Abschluss</label><input type="text" value="${esc(item.degree)}" onchange="updateListItem('education','${item.id}','degree',this.value)"></div>
-      <div class="field"><label>Institution</label><input type="text" value="${esc(item.institution)}" onchange="updateListItem('education','${item.id}','institution',this.value)"></div>
-      <div class="field"><label>Ort</label><input type="text" value="${esc(item.location)}" onchange="updateListItem('education','${item.id}','location',this.value)"></div>
+      <div class="field"><label>${t('ed_degree')}</label><input type="text" value="${esc(item.degree)}" onchange="updateListItem('education','${item.id}','degree',this.value)"></div>
+      <div class="field"><label>${t('ed_institution')}</label><input type="text" value="${esc(item.institution)}" onchange="updateListItem('education','${item.id}','institution',this.value)"></div>
+      <div class="field"><label>${t('ed_location')}</label><input type="text" value="${esc(item.location)}" onchange="updateListItem('education','${item.id}','location',this.value)"></div>
       <div style="display:flex;gap:8px">
-        <div class="field" style="flex:1"><label>Von</label><input type="text" value="${esc(item.from)}" onchange="updateListItem('education','${item.id}','from',this.value)"></div>
-        <div class="field" style="flex:1"><label>Bis</label><input type="text" value="${esc(item.to)}" onchange="updateListItem('education','${item.id}','to',this.value)"></div>
+        <div class="field" style="flex:1"><label>${t('ed_from')}</label><input type="text" value="${esc(item.from)}" onchange="updateListItem('education','${item.id}','from',this.value)"></div>
+        <div class="field" style="flex:1"><label>${t('ed_until')}</label><input type="text" value="${esc(item.to)}" onchange="updateListItem('education','${item.id}','to',this.value)"></div>
       </div>
-      <div class="field"><label>Anmerkungen</label><input type="text" value="${esc(item.notes||'')}" onchange="updateListItem('education','${item.id}','notes',this.value)"></div>
+      <div class="field"><label>${t('ed_notes')}</label><input type="text" value="${esc(item.notes||'')}" onchange="updateListItem('education','${item.id}','notes',this.value)"></div>
     </div>
   </div>`;
 }
@@ -896,50 +1084,50 @@ function renderProjectCard(item,i) {
   return `<div class="card" data-list="projects" data-id="${item.id}" draggable="true">
     <div class="card-header">
       <span class="drag-handle">&#8942;</span>
-      <div style="flex:1;margin-left:6px;"><div class="card-title">${esc(item.title)||'Neues Projekt'}</div><div class="card-sub">${esc(item.type)}</div></div>
+      <div style="flex:1;margin-left:6px;"><div class="card-title">${esc(item.title)||t('ed_new_project')}</div><div class="card-sub">${esc(item.type)}</div></div>
       <div class="card-actions">
-        <button class="btn btn-ghost btn-sm" onclick="toggleCard('pr-body-${i}')">Bearbeiten</button>
+        <button class="btn btn-ghost btn-sm" onclick="toggleCard('pr-body-${i}')">${t('ed_edit')}</button>
         <button class="btn btn-danger btn-sm" onclick="removeListItem('projects','${item.id}')">x</button>
       </div>
     </div>
     <div class="card-body" id="pr-body-${i}">
-      <div class="field"><label>Projekttitel</label><input type="text" value="${esc(item.title)}" onchange="updateListItem('projects','${item.id}','title',this.value)"></div>
-      <div class="field"><label>Art / Kontext</label><input type="text" value="${esc(item.type)}" onchange="updateListItem('projects','${item.id}','type',this.value)"></div>
-      <div class="field"><label>Projekt-Link (optional)</label><input type="text" value="${esc(item.link||'')}" placeholder="z. B. github.com/... oder demo.example.com" onchange="updateListItem('projects','${item.id}','link',this.value)"></div>
+      <div class="field"><label>${t('ed_project_title')}</label><input type="text" value="${esc(item.title)}" onchange="updateListItem('projects','${item.id}','title',this.value)"></div>
+      <div class="field"><label>${t('ed_project_type')}</label><input type="text" value="${esc(item.type)}" onchange="updateListItem('projects','${item.id}','type',this.value)"></div>
+      <div class="field"><label>${t('ed_project_link')}</label><input type="text" value="${esc(item.link||'')}" placeholder="${t('ed_project_link_ph')}" onchange="updateListItem('projects','${item.id}','link',this.value)"></div>
       <div style="display:flex;gap:8px">
-        <div class="field" style="flex:1"><label>Von</label><input type="text" value="${esc(item.from)}" onchange="updateListItem('projects','${item.id}','from',this.value)"></div>
-        <div class="field" style="flex:1"><label>Bis</label><input type="text" value="${esc(item.to)}" onchange="updateListItem('projects','${item.id}','to',this.value)"></div>
+        <div class="field" style="flex:1"><label>${t('ed_from')}</label><input type="text" value="${esc(item.from)}" onchange="updateListItem('projects','${item.id}','from',this.value)"></div>
+        <div class="field" style="flex:1"><label>${t('ed_until')}</label><input type="text" value="${esc(item.to)}" onchange="updateListItem('projects','${item.id}','to',this.value)"></div>
       </div>
-      <label style="font-size:11px;font-weight:600;color:var(--c-muted);display:block;margin-bottom:4px;">TECH-STACK</label>
+      <label style="font-size:11px;font-weight:600;color:var(--c-muted);display:block;margin-bottom:4px;">${t('ed_tech_stack')}</label>
       <div class="tags-list">${stack.map(s=>`<span class="tag">${esc(s)}<span class="tag-rm" onclick="removeProjStack('${item.id}','${escAttr(s)}')">x</span></span>`).join('')}</div>
       <div class="tag-input-wrap" style="margin-top:6px">
-        <input type="text" id="st-inp-${item.id}" placeholder="Technologie..." style="flex:1;padding:6px 9px;border:1px solid var(--c-border);border-radius:var(--radius);font-size:12px;" onkeydown="if(event.key==='Enter'){event.preventDefault();addProjStack('${item.id}')}">
+        <input type="text" id="st-inp-${item.id}" placeholder="${t('ed_tech_ph')}" style="flex:1;padding:6px 9px;border:1px solid var(--c-border);border-radius:var(--radius);font-size:12px;" onkeydown="if(event.key==='Enter'){event.preventDefault();addProjStack('${item.id}')}">
         <button class="btn btn-primary btn-sm" onclick="addProjStack('${item.id}')">+</button>
       </div>
-      <label style="font-size:11px;font-weight:600;color:var(--c-muted);display:block;margin:9px 0 5px;">ERGEBNISSE</label>
+      <label style="font-size:11px;font-weight:600;color:var(--c-muted);display:block;margin:9px 0 5px;">${t('ed_results')}</label>
       <ul class="bullet-list">${bullets.map((b,bi)=>`<li class="bullet-item"><textarea onchange="updateBullet('projects','${item.id}',${bi},this.value)">${esc(b)}</textarea><span class="bullet-rm" onclick="removeBullet('projects','${item.id}',${bi})">-</span></li>`).join('')}</ul>
-      <button class="add-section-btn" style="margin-top:5px" onclick="addBullet('projects','${item.id}')">+ Punkt</button>
+      <button class="add-section-btn" style="margin-top:5px" onclick="addBullet('projects','${item.id}')">${t('ed_add_point')}</button>
     </div>
   </div>`;
 }
 function renderLanguagesEditor() {
-  return `<div class="section-header"><span class="section-title">Sprachen</span></div>
+  return `<div class="section-header"><span class="section-title">${t('tab_languages')}</span></div>
     <div id="languages-list">
       ${cvData.languages.map(l=>`<div class="card" data-list="languages" data-id="${l.id}" draggable="true">
         <div class="card-header">
           <span class="drag-handle">&#8942;</span>
           <div style="flex:1;margin-left:6px;display:flex;gap:6px">
-            <input type="text" value="${esc(l.name)}" placeholder="Sprache" style="flex:1;padding:6px;border:1px solid var(--c-border);border-radius:4px;font-size:12px" onchange="updateListItem('languages','${l.id}','name',this.value)">
-            <input type="text" value="${esc(l.level)}" placeholder="Niveau" style="width:75px;padding:6px;border:1px solid var(--c-border);border-radius:4px;font-size:12px" onchange="updateListItem('languages','${l.id}','level',this.value)">
+            <input type="text" value="${esc(l.name)}" placeholder="${t('ed_lang_name_ph')}" style="flex:1;padding:6px;border:1px solid var(--c-border);border-radius:4px;font-size:12px" onchange="updateListItem('languages','${l.id}','name',this.value)">
+            <input type="text" value="${esc(l.level)}" placeholder="${t('ed_lang_level_ph')}" style="width:75px;padding:6px;border:1px solid var(--c-border);border-radius:4px;font-size:12px" onchange="updateListItem('languages','${l.id}','level',this.value)">
           </div>
           <button class="btn btn-danger btn-sm" style="margin-left:5px" onclick="removeListItem('languages','${l.id}')">x</button>
         </div>
       </div>`).join('')}
     </div>
-    <button class="add-section-btn" onclick="addListItem('languages')">+ Sprache hinzufuegen</button>`;
+    <button class="add-section-btn" onclick="addListItem('languages')">${t('ed_add_language')}</button>`;
 }
 function renderInterestsEditor() {
-  return `<div class="section-header"><span class="section-title">Interessen & Sonstiges</span></div>
+  return `<div class="section-header"><span class="section-title">${t('ed_interests_other')}</span></div>
     <div id="interests-list">
       ${cvData.interests.map(it=>`<div class="card" data-list="interests" data-id="${it.id}" draggable="true">
         <div class="card-header">
@@ -949,7 +1137,7 @@ function renderInterestsEditor() {
         </div>
       </div>`).join('')}
     </div>
-    <button class="add-section-btn" onclick="addListItem('interests')">+ Eintrag</button>`;
+    <button class="add-section-btn" onclick="addListItem('interests')">${t('ed_add_simple_entry')}</button>`;
 }
 
 // ====== LISTEN-HILFSFUNKTIONEN ======
@@ -1117,16 +1305,16 @@ function buildMinimal() {
       ${p.linkedin?`<span>${iconLink(p.linkedin,SVG_LINKEDIN,'LinkedIn')}</span>`:''}
       ${p.github?`<span>${iconLink(p.github,SVG_GITHUB,'GitHub')}</span>`:''}
       ${p.website?`<span>${portfolioLink(p.website)}</span>`:''}
-      ${p.birthdate?`<span>geb. ${esc(p.birthdate)}${p.birthplace?' in '+esc(p.birthplace):''}</span>`:''}
+      ${p.birthdate?`<span>${t('cv_born')} ${esc(p.birthdate)}${p.birthplace?' '+t('cv_in')+' '+esc(p.birthplace):''}</span>`:''}
       ${p.nationality?`<span>${esc(p.nationality)}</span>`:''}
       ${p.marital?`<span>${esc(p.marital)}</span>`:''}
     </div>
-    <div class="cv-section"><div class="cv-section-title">Berufliche Kenntnisse</div><div class="skill-grid">${skillsHtml}</div></div>
-    <div class="cv-section"><div class="cv-section-title">Beruflicher Werdegang</div>${expHtml}</div>
-    <div class="cv-section"><div class="cv-section-title">Ausbildung</div>${eduHtml}</div>
-    <div class="cv-section"><div class="cv-section-title">Projekte</div>${projHtml}</div>
-    <div class="cv-section"><div class="cv-section-title">Sprachen</div>${langHtml}</div>
-    ${intHtml?`<div class="cv-section"><div class="cv-section-title">Interessen & Sonstiges</div><div style="font-size:10px">${intHtml}</div></div>`:''}
+    <div class="cv-section"><div class="cv-section-title">${t('cv_skills')}</div><div class="skill-grid">${skillsHtml}</div></div>
+    <div class="cv-section"><div class="cv-section-title">${t('cv_experience')}</div>${expHtml}</div>
+    <div class="cv-section"><div class="cv-section-title">${t('cv_education')}</div>${eduHtml}</div>
+    <div class="cv-section"><div class="cv-section-title">${t('cv_projects')}</div>${projHtml}</div>
+    <div class="cv-section"><div class="cv-section-title">${t('cv_languages')}</div>${langHtml}</div>
+    ${intHtml?`<div class="cv-section"><div class="cv-section-title">${t('cv_interests_other')}</div><div style="font-size:10px">${intHtml}</div></div>`:''}
   </div>`;
 }
 
@@ -1164,27 +1352,27 @@ function buildSidebar() {
       <div class="cv-name">${esc(p.name)}</div>
       <div class="cv-jobtitle">${esc(p.jobtitle)}</div>
       <div class="left-section">
-        <div class="left-section-title">Kontakt</div>
+        <div class="left-section-title">${t('cv_contact')}</div>
         ${p.email?`<div class="contact-item"><span class="contact-label">E-Mail</span>${lnk('mailto:'+p.email,esc(p.email))}</div>`:''}
         ${p.phone?`<div class="contact-item"><span class="contact-label">Telefon</span>${esc(p.phone)}</div>`:''}
-        ${p.address?`<div class="contact-item"><span class="contact-label">Anschrift</span>${esc(p.address)}</div>`:''}
+        ${p.address?`<div class="contact-item"><span class="contact-label">${t('cv_lbl_address')}</span>${esc(p.address)}</div>`:''}
         ${(p.linkedin||p.github)?`<div class="contact-item" style="display:flex;gap:12px;align-items:center;margin-top:2px">${p.linkedin?iconLink(p.linkedin,SVG_LINKEDIN,'LinkedIn'):''}${p.github?iconLink(p.github,SVG_GITHUB,'GitHub'):''}</div>`:''}
         ${p.website?`<div class="contact-item" style="margin-top:6px">${portfolioLink(p.website)}</div>`:''}
       </div>
       <div class="left-section">
-        <div class="left-section-title">Persoenlich</div>
-        ${p.birthdate?`<div class="contact-item"><span class="contact-label">Geburtsdatum</span>${esc(p.birthdate)}${p.birthplace?' in '+esc(p.birthplace):''}</div>`:''}
-        ${p.nationality?`<div class="contact-item"><span class="contact-label">Staatsbuergerschaft</span>${esc(p.nationality)}</div>`:''}
-        ${p.marital?`<div class="contact-item"><span class="contact-label">Familienstand</span>${esc(p.marital)}</div>`:''}
+        <div class="left-section-title">${t('cv_personal')}</div>
+        ${p.birthdate?`<div class="contact-item"><span class="contact-label">${t('cv_lbl_birthdate')}</span>${esc(p.birthdate)}${p.birthplace?' '+t('cv_in')+' '+esc(p.birthplace):''}</div>`:''}
+        ${p.nationality?`<div class="contact-item"><span class="contact-label">${t('cv_lbl_nationality')}</span>${esc(p.nationality)}</div>`:''}
+        ${p.marital?`<div class="contact-item"><span class="contact-label">${t('cv_lbl_marital')}</span>${esc(p.marital)}</div>`:''}
       </div>
-      <div class="left-section"><div class="left-section-title">Skills</div>${leftSkills}</div>
-      <div class="left-section"><div class="left-section-title">Sprachen</div>${leftLangs}</div>
-      ${intHtml?`<div class="left-section"><div class="left-section-title">Interessen</div><div style="font-size:9.5px;color:#cbd5e1">${intHtml}</div></div>`:''}
+      <div class="left-section"><div class="left-section-title">${t('cv_skills_short')}</div>${leftSkills}</div>
+      <div class="left-section"><div class="left-section-title">${t('cv_languages')}</div>${leftLangs}</div>
+      ${intHtml?`<div class="left-section"><div class="left-section-title">${t('cv_interests')}</div><div style="font-size:9.5px;color:#cbd5e1">${intHtml}</div></div>`:''}
     </div>
     <div class="cv-right">
-      <div class="cv-section"><div class="cv-section-title">Beruflicher Werdegang</div>${expHtml}</div>
-      <div class="cv-section"><div class="cv-section-title">Ausbildung</div>${eduHtml}</div>
-      <div class="cv-section"><div class="cv-section-title">Projekte</div>${projHtml}</div>
+      <div class="cv-section"><div class="cv-section-title">${t('cv_experience')}</div>${expHtml}</div>
+      <div class="cv-section"><div class="cv-section-title">${t('cv_education')}</div>${eduHtml}</div>
+      <div class="cv-section"><div class="cv-section-title">${t('cv_projects')}</div>${projHtml}</div>
     </div>
   </div>`;
 }
@@ -1227,18 +1415,18 @@ function buildDach() {
           ${p.phone?esc(p.phone)+'<br>':''}
           ${(p.linkedin||p.github)?`<span style="display:inline-flex;gap:10px;align-items:center;vertical-align:middle">${p.linkedin?iconLink(p.linkedin,SVG_LINKEDIN,'LinkedIn'):''}${p.github?iconLink(p.github,SVG_GITHUB,'GitHub'):''}</span><br>`:''}
           ${p.website?portfolioLink(p.website)+'<br>':''}
-          ${p.birthdate?'geb. '+esc(p.birthdate)+(p.birthplace?' in '+esc(p.birthplace):'')+(p.nationality?' - '+esc(p.nationality):''):''}
+          ${p.birthdate?t('cv_born')+' '+esc(p.birthdate)+(p.birthplace?' '+t('cv_in')+' '+esc(p.birthplace):'')+(p.nationality?' - '+esc(p.nationality):''):''}
         </div>
       </div>
       ${photo}
     </div>
     <hr class="cv-rule">
-    ${sec('Kenntnisse',skillsHtml)}
-    ${sec('Beruflicher Werdegang',expHtml)}
-    ${sec('Ausbildung',eduHtml)}
-    ${sec('Projekte',projHtml)}
-    ${sec('Sprachen',langHtml)}
-    ${intHtml?sec('Sonstiges',`<div style="font-size:10px">${intHtml}</div>`):''}
+    ${sec(t('cv_skills'),skillsHtml)}
+    ${sec(t('cv_experience'),expHtml)}
+    ${sec(t('cv_education'),eduHtml)}
+    ${sec(t('cv_projects'),projHtml)}
+    ${sec(t('cv_languages'),langHtml)}
+    ${intHtml?sec(t('cv_other'),`<div style="font-size:10px">${intHtml}</div>`):''}
   </div>`;
 }
 
@@ -1252,9 +1440,9 @@ function buildHeader() {
     </div>`).join('');
   const langs = cvData.languages.map(l=>`<div class="lang-item">${esc(l.name)} <span class="lang-level">(${esc(l.level)})</span></div>`).join('');
   const persInfo = [
-    p.birthdate?`<div class="pers-item"><span class="pers-label">Geburtsdatum</span>${esc(p.birthdate)}${p.birthplace?' in '+esc(p.birthplace):''}</div>`:'',
-    p.nationality?`<div class="pers-item"><span class="pers-label">Staatsbuergerschaft</span>${esc(p.nationality)}</div>`:'',
-    p.marital?`<div class="pers-item"><span class="pers-label">Familienstand</span>${esc(p.marital)}</div>`:'',
+    p.birthdate?`<div class="pers-item"><span class="pers-label">${t('cv_lbl_birthdate')}</span>${esc(p.birthdate)}${p.birthplace?' '+t('cv_in')+' '+esc(p.birthplace):''}</div>`:'',
+    p.nationality?`<div class="pers-item"><span class="pers-label">${t('cv_lbl_nationality')}</span>${esc(p.nationality)}</div>`:'',
+    p.marital?`<div class="pers-item"><span class="pers-label">${t('cv_lbl_marital')}</span>${esc(p.marital)}</div>`:'',
   ].filter(Boolean).join('');
   const intHtml = cvData.interests.map(i=>esc(i.text)).filter(Boolean).join(' - ');
   const expHtml = cvData.experience.map(e=>`
@@ -1293,15 +1481,15 @@ function buildHeader() {
     </div>
     <div class="cv-body">
       <div class="cv-col-left">
-        <div class="col-section"><div class="col-section-title">Skills</div>${leftSkills}</div>
-        <div class="col-section"><div class="col-section-title">Sprachen</div>${langs}</div>
-        ${persInfo?`<div class="col-section"><div class="col-section-title">Persoenlich</div>${persInfo}</div>`:''}
-        ${intHtml?`<div class="col-section"><div class="col-section-title">Sonstiges</div><div style="font-size:9.5px;color:var(--cv-ink)">${intHtml}</div></div>`:''}
+        <div class="col-section"><div class="col-section-title">${t('cv_skills_short')}</div>${leftSkills}</div>
+        <div class="col-section"><div class="col-section-title">${t('cv_languages')}</div>${langs}</div>
+        ${persInfo?`<div class="col-section"><div class="col-section-title">${t('cv_personal')}</div>${persInfo}</div>`:''}
+        ${intHtml?`<div class="col-section"><div class="col-section-title">${t('cv_other')}</div><div style="font-size:9.5px;color:var(--cv-ink)">${intHtml}</div></div>`:''}
       </div>
       <div class="cv-col-right">
-        <div class="cv-section"><div class="cv-section-title">Beruflicher Werdegang</div>${expHtml}</div>
-        <div class="cv-section"><div class="cv-section-title">Ausbildung</div>${eduHtml}</div>
-        <div class="cv-section"><div class="cv-section-title">Projekte</div>${projHtml}</div>
+        <div class="cv-section"><div class="cv-section-title">${t('cv_experience')}</div>${expHtml}</div>
+        <div class="cv-section"><div class="cv-section-title">${t('cv_education')}</div>${eduHtml}</div>
+        <div class="cv-section"><div class="cv-section-title">${t('cv_projects')}</div>${projHtml}</div>
       </div>
     </div>
   </div>`;
@@ -1344,20 +1532,20 @@ function buildCompact() {
             ${p.github?iconLink(p.github,SVG_GITHUB,'GitHub'):''}
             ${p.website?portfolioLink(p.website):''}
             ${p.address?`<span>${esc(p.address)}</span>`:''}
-            ${p.birthdate?`<span>geb. ${esc(p.birthdate)}</span>`:''}
+            ${p.birthdate?`<span>${t('cv_born')} ${esc(p.birthdate)}</span>`:''}
             ${p.nationality?`<span>${esc(p.nationality)}</span>`:''}
           </div>
         </div>
         ${photo}
       </div>
     </div>
-    <div class="cv-section"><div class="cv-section-title">Berufliche Kenntnisse</div>${skillsHtml}</div>
-    <div class="cv-section"><div class="cv-section-title">Beruflicher Werdegang</div><div class="cv-timeline">${expHtml}</div></div>
-    <div class="cv-section"><div class="cv-section-title">Ausbildung</div><div class="cv-timeline">${eduHtml}</div></div>
-    <div class="cv-section"><div class="cv-section-title">Projekte</div><div class="cv-timeline">${projHtml}</div></div>
+    <div class="cv-section"><div class="cv-section-title">${t('cv_skills')}</div>${skillsHtml}</div>
+    <div class="cv-section"><div class="cv-section-title">${t('cv_experience')}</div><div class="cv-timeline">${expHtml}</div></div>
+    <div class="cv-section"><div class="cv-section-title">${t('cv_education')}</div><div class="cv-timeline">${eduHtml}</div></div>
+    <div class="cv-section"><div class="cv-section-title">${t('cv_projects')}</div><div class="cv-timeline">${projHtml}</div></div>
     <div style="display:flex;gap:24px">
-      <div style="flex:1"><div class="cv-section"><div class="cv-section-title">Sprachen</div>${langHtml}</div></div>
-      ${intHtml?`<div style="flex:1"><div class="cv-section"><div class="cv-section-title">Sonstiges</div><div style="font-size:10px">${intHtml}</div></div></div>`:''}
+      <div style="flex:1"><div class="cv-section"><div class="cv-section-title">${t('cv_languages')}</div>${langHtml}</div></div>
+      ${intHtml?`<div style="flex:1"><div class="cv-section"><div class="cv-section-title">${t('cv_other')}</div><div style="font-size:10px">${intHtml}</div></div></div>`:''}
     </div>
   </div>`;
 }
@@ -1404,16 +1592,16 @@ function buildExec() {
       </div>
     </div>
     <hr class="cv-rule-double">
-    <div class="cv-section"><div class="cv-section-title">Berufliche Kenntnisse</div>${skillsHtml}</div>
+    <div class="cv-section"><div class="cv-section-title">${t('cv_skills')}</div>${skillsHtml}</div>
     <hr class="cv-rule-thin">
-    <div class="cv-section"><div class="cv-section-title">Beruflicher Werdegang</div>${expHtml}</div>
+    <div class="cv-section"><div class="cv-section-title">${t('cv_experience')}</div>${expHtml}</div>
     <hr class="cv-rule-thin">
-    <div class="cv-section"><div class="cv-section-title">Ausbildung</div>${eduHtml}</div>
+    <div class="cv-section"><div class="cv-section-title">${t('cv_education')}</div>${eduHtml}</div>
     <hr class="cv-rule-thin">
-    <div class="cv-section"><div class="cv-section-title">Projekte</div>${projHtml}</div>
+    <div class="cv-section"><div class="cv-section-title">${t('cv_projects')}</div>${projHtml}</div>
     <hr class="cv-rule-thin">
-    <div class="cv-section"><div class="cv-section-title">Sprachen</div>${langHtml}</div>
-    ${intHtml?`<hr class="cv-rule-thin"><div class="cv-section"><div class="cv-section-title">Interessen & Sonstiges</div><div style="font-size:10px;text-align:center">${intHtml}</div></div>`:''}
+    <div class="cv-section"><div class="cv-section-title">${t('cv_languages')}</div>${langHtml}</div>
+    ${intHtml?`<hr class="cv-rule-thin"><div class="cv-section"><div class="cv-section-title">${t('cv_interests_other')}</div><div style="font-size:10px;text-align:center">${intHtml}</div></div>`:''}
   </div>`;
 }
 
@@ -1446,9 +1634,9 @@ function buildTwocol() {
       ${pr.stack&&pr.stack.length?`<div style="margin-top:4px">${pr.stack.map(s=>`<span class="tech-badge">${esc(s)}</span>`).join('')}</div>`:''}
     </div>`).join('');
   const persInfo = [
-    p.birthdate?`<div class="pers-item"><span class="pers-label">Geb.: </span>${esc(p.birthdate)}${p.birthplace?' in '+esc(p.birthplace):''}</div>`:'',
-    p.nationality?`<div class="pers-item"><span class="pers-label">Staatsb.: </span>${esc(p.nationality)}</div>`:'',
-    p.marital?`<div class="pers-item"><span class="pers-label">Familienstand: </span>${esc(p.marital)}</div>`:'',
+    p.birthdate?`<div class="pers-item"><span class="pers-label">${t('cv_born')}: </span>${esc(p.birthdate)}${p.birthplace?' '+t('cv_in')+' '+esc(p.birthplace):''}</div>`:'',
+    p.nationality?`<div class="pers-item"><span class="pers-label">${t('cv_lbl_nationality_short')}</span>${esc(p.nationality)}</div>`:'',
+    p.marital?`<div class="pers-item"><span class="pers-label">${t('cv_lbl_marital')}: </span>${esc(p.marital)}</div>`:'',
   ].filter(Boolean).join('');
   const intHtml = cvData.interests.map(i=>esc(i.text)).filter(Boolean).join(' - ');
   return `<div class="tpl-twocol">
@@ -1466,15 +1654,15 @@ function buildTwocol() {
     </div>
     <div class="cv-body">
       <div class="cv-col-left">
-        <div class="col-section"><div class="col-section-title">Skills</div>${leftSkills}</div>
-        <div class="col-section"><div class="col-section-title">Ausbildung</div>${eduHtml}</div>
-        <div class="col-section"><div class="col-section-title">Sprachen</div>${langs}</div>
-        ${persInfo?`<div class="col-section"><div class="col-section-title">Persoenlich</div>${persInfo}</div>`:''}
-        ${intHtml?`<div class="col-section"><div class="col-section-title">Sonstiges</div><div style="font-size:9.5px;color:var(--cv-ink)">${intHtml}</div></div>`:''}
+        <div class="col-section"><div class="col-section-title">${t('cv_skills_short')}</div>${leftSkills}</div>
+        <div class="col-section"><div class="col-section-title">${t('cv_education')}</div>${eduHtml}</div>
+        <div class="col-section"><div class="col-section-title">${t('cv_languages')}</div>${langs}</div>
+        ${persInfo?`<div class="col-section"><div class="col-section-title">${t('cv_personal')}</div>${persInfo}</div>`:''}
+        ${intHtml?`<div class="col-section"><div class="col-section-title">${t('cv_other')}</div><div style="font-size:9.5px;color:var(--cv-ink)">${intHtml}</div></div>`:''}
       </div>
       <div class="cv-col-right">
-        <div class="cv-section"><div class="cv-section-title">Beruflicher Werdegang</div>${expHtml}</div>
-        <div class="cv-section"><div class="cv-section-title">Projekte</div>${projHtml}</div>
+        <div class="cv-section"><div class="cv-section-title">${t('cv_experience')}</div>${expHtml}</div>
+        <div class="cv-section"><div class="cv-section-title">${t('cv_projects')}</div>${projHtml}</div>
       </div>
     </div>
   </div>`;
@@ -1518,15 +1706,15 @@ function buildLineleft() {
       ${p.linkedin?iconLink(p.linkedin,SVG_LINKEDIN,'LinkedIn'):''}
       ${p.github?iconLink(p.github,SVG_GITHUB,'GitHub'):''}
       ${p.website?portfolioLink(p.website):''}
-      ${p.birthdate?`<span>geb. ${esc(p.birthdate)}${p.birthplace?' in '+esc(p.birthplace):''}</span>`:''}
+      ${p.birthdate?`<span>${t('cv_born')} ${esc(p.birthdate)}${p.birthplace?' '+t('cv_in')+' '+esc(p.birthplace):''}</span>`:''}
       ${p.nationality?`<span>${esc(p.nationality)}</span>`:''}
     </div>
-    <div class="cv-section"><div class="cv-section-title">Berufliche Kenntnisse</div>${skillsHtml}</div>
-    <div class="cv-section"><div class="cv-section-title">Beruflicher Werdegang</div>${expHtml}</div>
-    <div class="cv-section"><div class="cv-section-title">Ausbildung</div>${eduHtml}</div>
-    <div class="cv-section"><div class="cv-section-title">Projekte</div>${projHtml}</div>
-    <div class="cv-section"><div class="cv-section-title">Sprachen</div>${langHtml}</div>
-    ${intHtml?`<div class="cv-section"><div class="cv-section-title">Interessen & Sonstiges</div><div style="font-size:10px">${intHtml}</div></div>`:''}
+    <div class="cv-section"><div class="cv-section-title">${t('cv_skills')}</div>${skillsHtml}</div>
+    <div class="cv-section"><div class="cv-section-title">${t('cv_experience')}</div>${expHtml}</div>
+    <div class="cv-section"><div class="cv-section-title">${t('cv_education')}</div>${eduHtml}</div>
+    <div class="cv-section"><div class="cv-section-title">${t('cv_projects')}</div>${projHtml}</div>
+    <div class="cv-section"><div class="cv-section-title">${t('cv_languages')}</div>${langHtml}</div>
+    ${intHtml?`<div class="cv-section"><div class="cv-section-title">${t('cv_interests_other')}</div><div style="font-size:10px">${intHtml}</div></div>`:''}
   </div>`;
 }
 
@@ -1574,12 +1762,12 @@ function buildCard() {
       </div>
     </div>
     <div class="cv-body">
-      <div class="cv-section"><div class="cv-section-title">Berufliche Kenntnisse</div>${skillsHtml}</div>
-      <div class="cv-section"><div class="cv-section-title">Beruflicher Werdegang</div>${expHtml}</div>
-      <div class="cv-section"><div class="cv-section-title">Ausbildung</div>${eduHtml}</div>
-      <div class="cv-section"><div class="cv-section-title">Projekte</div>${projHtml}</div>
-      <div class="cv-section"><div class="cv-section-title">Sprachen</div>${langHtml}</div>
-      ${intHtml?`<div class="cv-section"><div class="cv-section-title">Interessen & Sonstiges</div><div style="font-size:10px">${intHtml}</div></div>`:''}
+      <div class="cv-section"><div class="cv-section-title">${t('cv_skills')}</div>${skillsHtml}</div>
+      <div class="cv-section"><div class="cv-section-title">${t('cv_experience')}</div>${expHtml}</div>
+      <div class="cv-section"><div class="cv-section-title">${t('cv_education')}</div>${eduHtml}</div>
+      <div class="cv-section"><div class="cv-section-title">${t('cv_projects')}</div>${projHtml}</div>
+      <div class="cv-section"><div class="cv-section-title">${t('cv_languages')}</div>${langHtml}</div>
+      ${intHtml?`<div class="cv-section"><div class="cv-section-title">${t('cv_interests_other')}</div><div style="font-size:10px">${intHtml}</div></div>`:''}
     </div>
   </div>`;
 }
@@ -1623,16 +1811,16 @@ function buildPlain() {
       ${p.linkedin?iconLink(p.linkedin,SVG_LINKEDIN,'LinkedIn'):''}
       ${p.github?iconLink(p.github,SVG_GITHUB,'GitHub'):''}
       ${p.website?portfolioLink(p.website):''}
-      ${p.birthdate?`<span>geb. ${esc(p.birthdate)}${p.birthplace?' in '+esc(p.birthplace):''}${p.nationality?', '+esc(p.nationality):''}</span>`:''}
+      ${p.birthdate?`<span>${t('cv_born')} ${esc(p.birthdate)}${p.birthplace?' '+t('cv_in')+' '+esc(p.birthplace):''}${p.nationality?', '+esc(p.nationality):''}</span>`:''}
       ${p.marital?`<span>${esc(p.marital)}</span>`:''}
     </div>
     <hr class="cv-rule">
-    ${sec('Kenntnisse',skillsHtml)}
-    ${sec('Beruflicher Werdegang',expHtml)}
-    ${sec('Ausbildung',eduHtml)}
-    ${sec('Projekte',projHtml)}
-    ${sec('Sprachen',langHtml)}
-    ${intHtml?sec('Sonstiges',`<div style="font-size:10px">${intHtml}</div>`):''}
+    ${sec(t('cv_skills'),skillsHtml)}
+    ${sec(t('cv_experience'),expHtml)}
+    ${sec(t('cv_education'),eduHtml)}
+    ${sec(t('cv_projects'),projHtml)}
+    ${sec(t('cv_languages'),langHtml)}
+    ${intHtml?sec(t('cv_other'),`<div style="font-size:10px">${intHtml}</div>`):''}
   </div>`;
 }
 
@@ -1642,13 +1830,13 @@ function buildProfil() {
   const photo = p.photo ? photoBox(168, 200, 'border-radius:4px;display:block;margin:0 auto 16px;') : '';
   const dataItem = (label, val) => val ? `<div class="pf-data-item"><div class="pf-label">${label}</div><div class="pf-value">${val}</div></div>` : '';
   const persData = [
-    dataItem('Anschrift', esc(p.address)),
-    dataItem('E-Mail', p.email ? lnk('mailto:'+p.email, esc(p.email)) : ''),
-    dataItem('Telefon', esc(p.phone)),
-    dataItem('Geburtsdatum', esc(p.birthdate)),
-    dataItem('Geburtsort', esc(p.birthplace)),
-    dataItem('Staatsbuergerschaft', esc(p.nationality)),
-    dataItem('Familienstand', esc(p.marital)),
+    dataItem(t('cv_lbl_address'), esc(p.address)),
+    dataItem(t('ed_email'), p.email ? lnk('mailto:'+p.email, esc(p.email)) : ''),
+    dataItem(t('ed_phone'), esc(p.phone)),
+    dataItem(t('cv_lbl_birthdate'), esc(p.birthdate)),
+    dataItem(t('cv_lbl_birthplace'), esc(p.birthplace)),
+    dataItem(t('cv_lbl_nationality'), esc(p.nationality)),
+    dataItem(t('cv_lbl_marital'), esc(p.marital)),
     p.linkedin ? dataItem('LinkedIn', iconLink(p.linkedin, SVG_LINKEDIN, 'LinkedIn')) : '',
     p.github ? dataItem('GitHub', iconLink(p.github, SVG_GITHUB, 'GitHub')) : '',
     p.website ? dataItem('Portfolio', portfolioLink(p.website)) : ''
@@ -1682,15 +1870,15 @@ function buildProfil() {
       <div class="pf-name">${esc(p.name)}</div>
       ${photo}
       ${p.jobtitle ? `<div style="font-size:11px;color:var(--cv-ink);font-weight:600;margin-bottom:16px">${esc(p.jobtitle)}</div>` : ''}
-      <div class="pf-section"><div class="pf-section-title">Persoenliche Daten</div>${persData}</div>
+      <div class="pf-section"><div class="pf-section-title">${t('cv_personal_data')}</div>${persData}</div>
       ${knHtml}
-      ${langHtml ? `<div class="pf-section"><div class="pf-section-title">Sprachen</div>${langHtml}</div>` : ''}
-      ${intHtml ? `<div class="pf-section"><div class="pf-section-title">Interessen</div><div class="kn-items">${intHtml}</div></div>` : ''}
+      ${langHtml ? `<div class="pf-section"><div class="pf-section-title">${t('cv_languages')}</div>${langHtml}</div>` : ''}
+      ${intHtml ? `<div class="pf-section"><div class="pf-section-title">${t('cv_interests')}</div><div class="kn-items">${intHtml}</div></div>` : ''}
     </div>
     <div class="pf-right">
-      <div class="pf-section"><div class="pf-rsection-title">Beruflicher Werdegang</div>${expHtml}</div>
-      ${eduHtml ? `<div class="pf-section"><div class="pf-rsection-title">Ausbildung</div>${eduHtml}</div>` : ''}
-      ${projHtml ? `<div class="pf-section"><div class="pf-rsection-title">Projekte</div>${projHtml}</div>` : ''}
+      <div class="pf-section"><div class="pf-rsection-title">${t('cv_experience')}</div>${expHtml}</div>
+      ${eduHtml ? `<div class="pf-section"><div class="pf-rsection-title">${t('cv_education')}</div>${eduHtml}</div>` : ''}
+      ${projHtml ? `<div class="pf-section"><div class="pf-rsection-title">${t('cv_projects')}</div>${projHtml}</div>` : ''}
     </div>
   </div>`;
 }
@@ -2103,7 +2291,7 @@ async function schaerfeFotosFuerCapture(el, skala) {
 async function exportPDF() {
   const btn = document.getElementById('pdf-btn');
   const origText = btn.textContent;
-  btn.textContent = 'Bitte warten...'; btn.disabled = true;
+  btn.textContent = t('pdf_wait'); btn.disabled = true;
 
   const el = document.getElementById('cv-preview');
   // Eventuelle Anzeige-Skalierung (Mobil) zuruecksetzen: der Export rendert immer
@@ -2186,16 +2374,20 @@ async function exportPDF() {
       ctx.fillRect(0, 0, slice.width, slice.height);
       ctx.drawImage(canvas, 0, startPX, PAGE_W_PX, sliceH, 0, 0, PAGE_W_PX, sliceH);
 
-      pdf.addImage(slice.toDataURL('image/png'), 'PNG', 0, 0, PAGE_W_MM, sliceHeightMM);
+      // JPEG statt PNG: ein A4-Seitencanvas in hoher Aufloesung waere als PNG
+      // (verlustfrei) riesig (zweistellige MB). JPEG mit hoher Qualitaet komprimiert
+      // Foto/Flaechen massiv und sieht bei Text praktisch identisch aus -> die
+      // PDF-Datei schrumpft von zig MB auf wenige hundert KB.
+      pdf.addImage(slice.toDataURL('image/jpeg', 0.9), 'JPEG', 0, 0, PAGE_W_MM, sliceHeightMM, undefined, 'FAST');
     }
 
     // Klickbare Links als PDF-Annotationen hinzufuegen (an die Schnittpunkte angepasst)
     addClickableLinks(pdf, el, cuts, skala, pxPerMM);
 
-    const name = (cvData.personal.name || 'Lebenslauf').replace(/\s+/g, '_');
-    pdf.save(`${name}_Lebenslauf.pdf`);
+    const name = (cvData.personal.name || t('file_cv')).replace(/\s+/g, '_');
+    pdf.save(`${name}_${t('file_cv')}.pdf`);
   } catch(err) {
-    alert('PDF-Exportfehler: ' + err.message);
+    alert(t('pdf_error') + err.message);
   } finally {
     // Seitentrennlinien immer wiederherstellen, auch im Fehlerfall
     el.querySelectorAll('.pbc').forEach(x => x.style.display = '');
@@ -2221,6 +2413,12 @@ function uid() { return Math.random().toString(36).substr(2,8); }
 
 // ====== INITIALISIERUNG ======
 window.addEventListener('DOMContentLoaded', () => {
+  // Sprache anwenden: Sprachauswahl synchronisieren, statische Beschriftungen setzen
+  // und das <html lang>-Attribut aktualisieren (Browser-/gespeicherte Sprache).
+  document.documentElement.lang = appLang;
+  const langSel = document.getElementById('lang-select');
+  if (langSel) langSel.value = appLang;
+  applyStaticI18n();
   // Bibliothek aufbauen (vorhandene CVs / Migration / leerer CV) und aktiven CV laden
   initLibrary();
   const sel = document.getElementById('template-select');
