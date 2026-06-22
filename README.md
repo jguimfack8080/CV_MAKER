@@ -27,7 +27,7 @@ Dieses Projekt entstand aus einer konkreten Erfahrung: Jedes Mal, wenn ich meine
 - **Hohe Bildqualitaet**: das Profilfoto bleibt im PDF scharf (es wird vor dem Export passgenau in hoher Qualitaet vorgerendert)
 - **Kompakte PDF-Dateien**: die Seiten werden als hochwertiges JPEG eingebettet statt als verlustfreies PNG - dadurch faellt die Dateigroesse von zweistelligen MB auf wenige hundert KB, ohne sichtbaren Qualitaetsverlust
 - **Integrierte Anleitung**: ausfuehrliche Hilfeseite (`wiki.html`), erreichbar ueber "Hilfe & Anleitung" in der oberen Leiste
-- **11 Vorlagen**: Minimal, Sidebar-Akzent, Klassisch DACH, Kreativ Header, Kompakt Zeitachse, Executive, Zweispaltig, Seitenlinie, Profilkarte, Schlicht ATS, Profil Klassisch
+- **12 Vorlagen**: Minimal, Sidebar-Akzent, Klassisch DACH, Kreativ Header, Kompakt Zeitachse, Executive, Zweispaltig, Seitenlinie, Profilkarte, Schlicht ATS, Profil Klassisch, Modern Tech
 - **11 Schriftarten**: Inter, Roboto, Open Sans, Montserrat, Lato, Arial, Helvetica Neue, Calibri, Georgia, Times New Roman, EB Garamond
 - **Auto-Speicherung**: Alle Daten werden automatisch im LocalStorage des Browsers gesichert (je Lebenslauf ein eigener Schluessel)
 - **Foto-Upload**: Profilfoto hochladen, runde oder eckige Darstellung waehlbar, mit Zoom und vertikaler Position einstellbar (Originaldatei bleibt unveraendert)
@@ -58,6 +58,7 @@ Dieses Projekt entstand aus einer konkreten Erfahrung: Jedes Mal, wenn ich meine
 | Profilkarte | Farbiger Profilkopf (Indigo), Foto integriert, klare Sektionen darunter |
 | Schlicht ATS | Schwarz-weiss, maximum ATS-Kompatibilitaet, tabellarisches Format |
 | Profil Klassisch | Helle Seitenleiste mit Foto und persoenlichen Daten, Werdegang rechts mit Datumsspalte und blauen Abschnitts-Markern |
+| Modern Tech | Foto-Kopf mit Kontakt-Icons, dunkles Kontaktband, zweispaltig: Werdegang/Ausbildung/Projekte auf einer Timeline links, Sprachen/Kenntnisse/Interessen rechts. Technik-Stack gut sichtbar - ideal fuer IT-/Engineering-Profile |
 
 ---
 

@@ -484,6 +484,46 @@ html, body { height: 100%; font-family: 'Inter', system-ui, sans-serif; backgrou
 .tpl-profil .cv-bullets { padding-left: 14px; margin-top: 3px; }
 .tpl-profil .cv-bullets li { font-size: 11.5px; color: var(--cv-ink); margin-bottom: 2px; }
 .tpl-profil .tech-badge { display: inline-block; background: #eff6ff; color: #1d4ed8; border-radius: 3px; padding: 2px 6px; font-size: 10px; font-weight: 500; margin: 3px 3px 0 0; }
+
+/* ====== TEMPLATE: MODERN (Foto-Kopf, dunkles Kontaktband, Zweispalter mit Timeline) ====== */
+.tpl-modern { font-family: inherit; color: var(--cv-ink); font-size: 12px; line-height: 1.5; }
+.tpl-modern .mod-head { display: flex; align-items: center; gap: 20px; padding: 26px 34px 18px; }
+.tpl-modern .mod-head-main { flex: 1; min-width: 0; }
+.tpl-modern .mod-name { font-size: 13px; color: #64748b; font-weight: 500; }
+.tpl-modern .mod-jobtitle { font-size: 22px; font-weight: 800; color: #1f2937; letter-spacing: -.3px; margin: 2px 0 0; line-height: 1.15; }
+.tpl-modern .mod-head-side { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; font-size: 11px; flex-shrink: 0; max-width: 210px; }
+.tpl-modern .mod-contact-line { display: inline-flex; align-items: center; gap: 7px; color: var(--cv-ink); text-decoration: none; word-break: break-word; }
+.tpl-modern .mod-contact-line .cv-icon { display: inline-flex; flex-shrink: 0; }
+.tpl-modern .mod-contact-line .cv-icon svg { width: 15px; height: 15px; fill: #3f4a5a; }
+.tpl-modern .mod-band { background: #3f4a5a; color: #e5e9f0; padding: 12px 34px; display: flex; flex-wrap: wrap; gap: 4px 40px; font-size: 11px; }
+.tpl-modern .mod-band a { color: #e5e9f0; text-decoration: none; }
+.tpl-modern .mod-body { display: flex; gap: 30px; padding: 22px 34px 30px; }
+.tpl-modern .mod-col-left { flex: 1.75; min-width: 0; }
+.tpl-modern .mod-col-right { flex: 1; min-width: 0; }
+.tpl-modern .mod-section { margin-bottom: 18px; }
+.tpl-modern .mod-sec-title { font-size: 14px; font-weight: 700; color: #3f4a5a; margin: 0 0 12px; }
+.tpl-modern .mod-tl-entry { position: relative; padding-left: 20px; margin-bottom: 14px; }
+.tpl-modern .mod-tl-entry::before { content: ''; position: absolute; left: 0; top: 3px; width: 9px; height: 9px; border: 2px solid #3f4a5a; border-radius: 50%; background: #fff; z-index: 1; }
+.tpl-modern .mod-tl-entry::after { content: ''; position: absolute; left: 4px; top: 15px; bottom: -14px; width: 1px; background: #cbd5e1; }
+.tpl-modern .mod-tl-entry:last-child::after { display: none; }
+.tpl-modern .mod-entry-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.tpl-modern .mod-entry-title { font-weight: 700; font-size: 12.5px; }
+.tpl-modern .mod-entry-date { font-size: 10.5px; font-style: italic; color: #64748b; white-space: nowrap; }
+.tpl-modern .mod-entry-sub { font-size: 11.5px; color: var(--cv-ink); margin: 1px 0 3px; }
+.tpl-modern .mod-entry-loc { font-style: italic; color: #64748b; }
+.tpl-modern .cv-bullets { padding-left: 15px; margin-top: 3px; }
+.tpl-modern .cv-bullets li { font-size: 11px; margin-bottom: 2px; color: var(--cv-ink); }
+.tpl-modern .mod-proj { margin-bottom: 11px; }
+.tpl-modern .mod-proj-title { font-weight: 700; font-size: 12px; }
+.tpl-modern .mod-proj-stack { font-size: 10.5px; font-style: italic; font-weight: 600; color: #475569; margin: 1px 0 2px; }
+.tpl-modern .mod-skill { margin-bottom: 10px; }
+.tpl-modern .mod-skill-cat { font-weight: 700; font-size: 11.5px; color: #1f2937; }
+.tpl-modern .mod-skill-items { font-size: 11px; color: var(--cv-ink); }
+.tpl-modern .mod-lang { margin-bottom: 8px; }
+.tpl-modern .mod-lang-name { font-weight: 700; font-size: 11.5px; }
+.tpl-modern .mod-lang-level { font-size: 11px; color: var(--cv-ink); }
+.tpl-modern .mod-int { font-weight: 600; font-size: 11.5px; margin-bottom: 7px; }
+.tpl-modern .tech-badge { display: inline-block; background: #eef2f7; color: #3f4a5a; border-radius: 3px; padding: 2px 6px; font-size: 10px; font-weight: 500; margin: 3px 3px 0 0; }
 </style>
 </head>
 <body>
@@ -518,6 +558,7 @@ html, body { height: 100%; font-family: 'Inter', system-ui, sans-serif; backgrou
       <option value="card" data-i18n="tpl_card">Profilkarte</option>
       <option value="plain" data-i18n="tpl_plain">Schlicht ATS</option>
       <option value="profil" data-i18n="tpl_profil">Profil Klassisch</option>
+      <option value="modern" data-i18n="tpl_modern">Modern Tech</option>
     </select>
     <label data-i18n="ui_schrift">Schrift</label>
     <select id="font-select" onchange="onFontChange(this.value)">
@@ -621,7 +662,7 @@ const I18N = {
     tab_projects:"Projekte", tab_languages:"Sprachen", tab_other:"Sonstiges",
     tpl_minimal:"Minimal", tpl_sidebar:"Sidebar-Akzent", tpl_dach:"Klassisch DACH", tpl_header:"Kreativ Header",
     tpl_compact:"Kompakt Zeitachse", tpl_exec:"Executive", tpl_twocol:"Zweispaltig", tpl_lineleft:"Seitenlinie",
-    tpl_card:"Profilkarte", tpl_plain:"Schlicht ATS", tpl_profil:"Profil Klassisch",
+    tpl_card:"Profilkarte", tpl_plain:"Schlicht ATS", tpl_profil:"Profil Klassisch", tpl_modern:"Modern Tech",
     ed_personal_data:"Persoenliche Daten", ed_upload_photo:"Foto hochladen", ed_choose_photo:"Foto waehlen",
     ed_remove:"Entfernen", ed_photo_shape:"Foto-Darstellung", ed_round:"Rund", ed_square:"Eckig",
     ed_photo_zoom:"Foto-Zoom", ed_photo_posy:"Foto-Position vertikal", ed_name:"Name",
@@ -669,7 +710,7 @@ const I18N = {
     tab_projects:"Projects", tab_languages:"Languages", tab_other:"Other",
     tpl_minimal:"Minimal", tpl_sidebar:"Sidebar Accent", tpl_dach:"Classic DACH", tpl_header:"Creative Header",
     tpl_compact:"Compact Timeline", tpl_exec:"Executive", tpl_twocol:"Two-Column", tpl_lineleft:"Side Line",
-    tpl_card:"Profile Card", tpl_plain:"Plain ATS", tpl_profil:"Classic Profile",
+    tpl_card:"Profile Card", tpl_plain:"Plain ATS", tpl_profil:"Classic Profile", tpl_modern:"Modern Tech",
     ed_personal_data:"Personal Data", ed_upload_photo:"Upload photo", ed_choose_photo:"Choose photo",
     ed_remove:"Remove", ed_photo_shape:"Photo shape", ed_round:"Round", ed_square:"Square",
     ed_photo_zoom:"Photo zoom", ed_photo_posy:"Photo vertical position", ed_name:"Name",
@@ -717,7 +758,7 @@ const I18N = {
     tab_projects:"Projets", tab_languages:"Langues", tab_other:"Divers",
     tpl_minimal:"Minimal", tpl_sidebar:"Accent lateral", tpl_dach:"Classique DACH", tpl_header:"En-tete creatif",
     tpl_compact:"Chronologie compacte", tpl_exec:"Executive", tpl_twocol:"Deux colonnes", tpl_lineleft:"Ligne laterale",
-    tpl_card:"Carte profil", tpl_plain:"ATS sobre", tpl_profil:"Profil classique",
+    tpl_card:"Carte profil", tpl_plain:"ATS sobre", tpl_profil:"Profil classique", tpl_modern:"Modern Tech",
     ed_personal_data:"Donnees personnelles", ed_upload_photo:"Televerser une photo", ed_choose_photo:"Choisir une photo",
     ed_remove:"Retirer", ed_photo_shape:"Forme de la photo", ed_round:"Rond", ed_square:"Carre",
     ed_photo_zoom:"Zoom photo", ed_photo_posy:"Position verticale de la photo", ed_name:"Nom",
@@ -1883,6 +1924,70 @@ function buildProfil() {
   </div>`;
 }
 
+// Vorlage MODERN: Foto-Kopf + dunkles Kontaktband, zweispaltig (Werdegang/Ausbildung/
+// Projekte links auf einer Timeline, Sprachen/Kenntnisse/Interessen rechts). Technik-
+// lastig: Skill-Kategorien werden rechts als kompakte, gut lesbare Listen dargestellt.
+function buildModern() {
+  const p = cvData.personal;
+  const photo = p.photo ? photoBox(88, 88, 'border-radius:6px;flex-shrink:0;') : '';
+  const sideLines = [
+    p.github ? `<a href="${fullUrl(p.github)}" class="cv-link mod-contact-line"><span class="cv-icon">${SVG_GITHUB}</span>${esc(p.github)}</a>` : '',
+    p.linkedin ? `<a href="${fullUrl(p.linkedin)}" class="cv-link mod-contact-line"><span class="cv-icon">${SVG_LINKEDIN}</span>${esc(p.linkedin)}</a>` : '',
+    p.website ? `<span class="mod-contact-line">${portfolioLink(p.website)}</span>` : ''
+  ].filter(Boolean).join('');
+  const band = [
+    p.email ? lnk('mailto:' + p.email, esc(p.email)) : '',
+    esc(p.address),
+    esc(p.phone),
+    p.birthdate ? `${t('cv_born')} ${esc(p.birthdate)}${p.birthplace ? ' ' + t('cv_in') + ' ' + esc(p.birthplace) : ''}` : '',
+    esc(p.nationality)
+  ].filter(Boolean).map(x => `<span>${x}</span>`).join('');
+
+  const dateRange = (f, to) => esc(f) + (to ? ' - ' + esc(to) : '');
+  const expHtml = cvData.experience.map(e => `<div class="mod-tl-entry">
+    <div class="mod-entry-head"><span class="mod-entry-title">${esc(e.title)}</span><span class="mod-entry-date">${dateRange(e.from, e.to)}</span></div>
+    <div class="mod-entry-sub">${esc(e.company)}${e.location ? ` <span class="mod-entry-loc">- ${esc(e.location)}</span>` : ''}</div>
+    ${e.bullets && e.bullets.length ? `<ul class="cv-bullets">${e.bullets.filter(b => b).map(b => `<li>${esc(b)}</li>`).join('')}</ul>` : ''}
+  </div>`).join('');
+  const eduHtml = cvData.education.map(ed => `<div class="mod-tl-entry">
+    <div class="mod-entry-head"><span class="mod-entry-title">${esc(ed.degree)}</span><span class="mod-entry-date">${dateRange(ed.from, ed.to)}</span></div>
+    <div class="mod-entry-sub">${esc(ed.institution)}${ed.location ? ` <span class="mod-entry-loc">- ${esc(ed.location)}</span>` : ''}</div>
+    ${ed.notes ? `<div class="mod-entry-sub" style="margin-top:2px">${esc(ed.notes)}</div>` : ''}
+  </div>`).join('');
+  const projHtml = cvData.projects.map(pr => `<div class="mod-proj">
+    <div class="mod-proj-title">${esc(pr.title)}${pr.link ? projectLink(pr.link) : ''}</div>
+    ${pr.stack && pr.stack.length ? `<div class="mod-proj-stack">${pr.stack.map(s => esc(s)).join(' · ')}</div>` : ''}
+    ${pr.bullets && pr.bullets.length ? `<ul class="cv-bullets">${pr.bullets.filter(b => b).map(b => `<li>${esc(b)}</li>`).join('')}</ul>` : ''}
+  </div>`).join('');
+  const langHtml = cvData.languages.map(l => `<div class="mod-lang"><span class="mod-lang-name">${esc(l.name)}</span><div class="mod-lang-level">${esc(l.level)}</div></div>`).join('');
+  const skillHtml = cvData.skills.map(c => `<div class="mod-skill"><div class="mod-skill-cat">${esc(c.category)}</div><div class="mod-skill-items">${c.items.map(i => esc(i)).join(', ')}</div></div>`).join('');
+  const intHtml = cvData.interests.map(i => esc(i.text)).filter(Boolean).map(x => `<div class="mod-int">${x}</div>`).join('');
+
+  return `<div class="tpl-modern">
+    <div class="mod-head">
+      ${photo}
+      <div class="mod-head-main">
+        <div class="mod-name">${esc(p.name)}</div>
+        <div class="mod-jobtitle">${esc(p.jobtitle)}</div>
+      </div>
+      ${sideLines ? `<div class="mod-head-side">${sideLines}</div>` : ''}
+    </div>
+    ${band ? `<div class="mod-band">${band}</div>` : ''}
+    <div class="mod-body">
+      <div class="mod-col-left">
+        ${expHtml ? `<div class="mod-section"><div class="mod-sec-title">${t('cv_experience')}</div>${expHtml}</div>` : ''}
+        ${eduHtml ? `<div class="mod-section"><div class="mod-sec-title">${t('cv_education')}</div>${eduHtml}</div>` : ''}
+        ${projHtml ? `<div class="mod-section"><div class="mod-sec-title">${t('cv_projects')}</div>${projHtml}</div>` : ''}
+      </div>
+      <div class="mod-col-right">
+        ${langHtml ? `<div class="mod-section"><div class="mod-sec-title">${t('cv_languages')}</div>${langHtml}</div>` : ''}
+        ${skillHtml ? `<div class="mod-section"><div class="mod-sec-title">${t('cv_skills')}</div>${skillHtml}</div>` : ''}
+        ${intHtml ? `<div class="mod-section"><div class="mod-sec-title">${t('cv_interests')}</div>${intHtml}</div>` : ''}
+      </div>
+    </div>
+  </div>`;
+}
+
 // ====== VORSCHAU RENDERN ======
 function renderPreview() {
   const tpl = cvData.template || 'minimal';
@@ -1891,7 +1996,7 @@ function renderPreview() {
     minimal: buildMinimal, sidebar: buildSidebar, dach: buildDach,
     header: buildHeader, compact: buildCompact, exec: buildExec,
     twocol: buildTwocol, lineleft: buildLineleft, card: buildCard, plain: buildPlain,
-    profil: buildProfil
+    profil: buildProfil, modern: buildModern
   };
   container.innerHTML = (builders[tpl] || buildMinimal)();
   const sel = document.getElementById('template-select');
@@ -2015,7 +2120,8 @@ const ZEILEN_SELEKTOR = [
   '.cv-tl-entry', '.cv-tl-title', '.cv-tl-sub',
   '.skill-cat', '.skill-row', '.lang-item', '.pers-item', '.contact-item',
   '.left-skill-cat', '.kn-row',
-  '.pf-title', '.pf-company', '.pf-rsection-title', '.pf-section-title', '.pf-data-item', '.pf-lang', '.pf-skill-row'
+  '.pf-title', '.pf-company', '.pf-rsection-title', '.pf-section-title', '.pf-data-item', '.pf-lang', '.pf-skill-row',
+  '.mod-sec-title', '.mod-entry-head', '.mod-entry-sub', '.mod-proj-title', '.mod-proj-stack', '.mod-skill', '.mod-lang', '.mod-int'
 ].join(', ');
 
 // Gilt fuer ALLE Vorlagen (auch mehrspaltige): jede Spalte ist ein eigener Fluss,
