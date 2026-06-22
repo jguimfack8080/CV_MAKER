@@ -119,21 +119,20 @@ html, body { height: 100%; font-family: 'Inter', system-ui, sans-serif; backgrou
 .cv-link { color: inherit; text-decoration: none; }
 
 /* ====== PORTFOLIO-HERVORHEBUNG ======
-   Gut sichtbare Pille, die sich ueber currentColor an jede Vorlage (heller oder
-   dunkler Hintergrund) anpasst und so immer auffaellt - ohne die einheitliche
-   visuelle Identitaet zu brechen. */
+   Minimalistisch und modern: kleines Globus-Icon + dezentes Label, ohne schwere
+   Pille. Passt sich ueber currentColor an jede Vorlage (hell/dunkel) an und bleibt
+   gut erkennbar - leicht, elegant, einheitlich in allen Vorlagen. */
 .cv-link.cv-portfolio {
-  display: inline-block;
-  font-weight: 700;
-  letter-spacing: .3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 600;
+  letter-spacing: .2px;
   text-decoration: none;
-  border: 1.4px solid currentColor;
-  border-radius: 999px;
-  padding: 0 9px;
-  line-height: 1.55;
   white-space: nowrap;
 }
-.cv-link.cv-portfolio::before { content: "\2197\00a0"; font-weight: 700; }
+.cv-link.cv-portfolio .cv-icon { display: inline-flex; }
+.cv-link.cv-portfolio .cv-icon svg { width: 1.05em; height: 1.05em; display: block; fill: currentColor; opacity: .92; }
 
 /* ====== KOMPAKTE SOCIAL-ICONS (LinkedIn / GitHub) ======
    Spart Platz: zeigt das Icon statt der langen URL. Passt sich ueber
@@ -162,23 +161,23 @@ html, body { height: 100%; font-family: 'Inter', system-ui, sans-serif; backgrou
 .tpl-minimal .cv-contact-bar { display: flex; flex-wrap: wrap; gap: 5px 18px; border-top: 1px solid #e4e7ec; border-bottom: 1px solid #e4e7ec; padding: 9px 0; margin-bottom: 26px; font-size: 11.5px; color: var(--cv-ink); }
 .tpl-minimal .cv-photo-wrap { float: right; margin: 0 0 10px 16px; }
 .tpl-minimal .cv-section { margin-bottom: 20px; }
-.tpl-minimal .cv-section-title { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #2563eb; margin-bottom: 9px; padding-bottom: 4px; border-bottom: 1px solid #bfdbfe; }
+.tpl-minimal .cv-section-title { font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: #2563eb; margin-bottom: 9px; padding-bottom: 4px; border-bottom: 1px solid #bfdbfe; }
 .tpl-minimal .cv-entry { margin-bottom: 13px; }
 .tpl-minimal .cv-entry-header { display: flex; justify-content: space-between; align-items: baseline; }
 .tpl-minimal .cv-entry-title { font-weight: 600; font-size: 12.5px; }
-.tpl-minimal .cv-entry-date { font-size: 10.5px; color: var(--cv-ink); white-space: nowrap; margin-left: 8px; }
+.tpl-minimal .cv-entry-date { font-size: 11.5px; color: var(--cv-ink); white-space: nowrap; margin-left: 8px; }
 .tpl-minimal .cv-entry-sub { font-size: 11.5px; color: #2563eb; font-weight: 500; margin-bottom: 3px; }
 .tpl-minimal .cv-bullets { padding-left: 13px; margin-top: 3px; }
 .tpl-minimal .cv-bullets li { margin-bottom: 2px; font-size: 11.5px; }
 .tpl-minimal .skill-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
-.tpl-minimal .skill-cat-name { font-size: 10.5px; font-weight: 600; color: var(--cv-ink); margin-bottom: 3px; }
+.tpl-minimal .skill-cat-name { font-size: 11.5px; font-weight: 600; color: var(--cv-ink); margin-bottom: 3px; }
 .tpl-minimal .skill-tags { display: flex; flex-wrap: wrap; gap: 3px; }
-.tpl-minimal .skill-tag { background: #f3f4f6; border-radius: 3px; padding: 2px 6px; font-size: 10px; color: var(--cv-ink); }
+.tpl-minimal .skill-tag { background: #f3f4f6; border-radius: 3px; padding: 2px 6px; font-size: 11px; color: var(--cv-ink); }
 .tpl-minimal .lang-row { display: flex; flex-wrap: wrap; gap: 4px 14px; }
 .tpl-minimal .lang-item { font-size: 11.5px; }
 .tpl-minimal .lang-level { color: var(--cv-ink); }
 .tpl-minimal .tech-stack { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 4px; }
-.tpl-minimal .tech-badge { background: #eff6ff; color: #1d4ed8; border-radius: 3px; padding: 2px 6px; font-size: 10px; font-weight: 500; }
+.tpl-minimal .tech-badge { background: #eff6ff; color: #1d4ed8; border-radius: 3px; padding: 2px 6px; font-size: 11px; font-weight: 500; }
 
 /* ====== TEMPLATE: SIDEBAR ====== */
 .tpl-sidebar { display: flex; min-height: 1123px; font-family: inherit; font-size: 12px; line-height: 1.5; }
@@ -187,24 +186,24 @@ html, body { height: 100%; font-family: 'Inter', system-ui, sans-serif; backgrou
 .tpl-sidebar .cv-name { font-size: 20px; font-weight: 700; text-align: center; color: #f1f5f9; margin-bottom: 3px; line-height: 1.25; }
 .tpl-sidebar .cv-jobtitle { font-size: 11.5px; color: #94a3b8; text-align: center; margin-bottom: 18px; }
 .tpl-sidebar .left-section { margin-bottom: 18px; }
-.tpl-sidebar .left-section-title { font-size: 9.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #64748b; margin-bottom: 7px; padding-bottom: 4px; border-bottom: 1px solid #334155; }
-.tpl-sidebar .contact-item { font-size: 10.5px; color: #cbd5e1; margin-bottom: 4px; word-break: break-word; }
-.tpl-sidebar .contact-label { color: #64748b; font-size: 9.5px; display: block; }
+.tpl-sidebar .left-section-title { font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: #64748b; margin-bottom: 7px; padding-bottom: 4px; border-bottom: 1px solid #334155; }
+.tpl-sidebar .contact-item { font-size: 11.5px; color: #cbd5e1; margin-bottom: 4px; word-break: break-word; }
+.tpl-sidebar .contact-label { color: #64748b; font-size: 11px; display: block; }
 .tpl-sidebar .left-skill-cat { margin-bottom: 9px; }
-.tpl-sidebar .left-skill-cat-name { font-size: 10px; font-weight: 600; color: #94a3b8; margin-bottom: 3px; }
-.tpl-sidebar .left-skill-tag { display: inline-block; background: #334155; color: #cbd5e1; border-radius: 3px; padding: 2px 5px; font-size: 9.5px; margin: 1px 1px 0 0; }
-.tpl-sidebar .lang-item { font-size: 10.5px; color: #cbd5e1; margin-bottom: 3px; }
-.tpl-sidebar .lang-level { color: #64748b; font-size: 9.5px; }
+.tpl-sidebar .left-skill-cat-name { font-size: 11px; font-weight: 600; color: #94a3b8; margin-bottom: 3px; }
+.tpl-sidebar .left-skill-tag { display: inline-block; background: #334155; color: #cbd5e1; border-radius: 3px; padding: 2px 5px; font-size: 11px; margin: 1px 1px 0 0; }
+.tpl-sidebar .lang-item { font-size: 11.5px; color: #cbd5e1; margin-bottom: 3px; }
+.tpl-sidebar .lang-level { color: #64748b; font-size: 11px; }
 .tpl-sidebar .cv-section { margin-bottom: 18px; }
-.tpl-sidebar .cv-section-title { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: #2563eb; margin-bottom: 9px; padding-bottom: 3px; border-bottom: 2px solid #bfdbfe; }
+.tpl-sidebar .cv-section-title { font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: #2563eb; margin-bottom: 9px; padding-bottom: 3px; border-bottom: 2px solid #bfdbfe; }
 .tpl-sidebar .cv-entry { margin-bottom: 12px; }
 .tpl-sidebar .cv-entry-header { display: flex; justify-content: space-between; align-items: baseline; }
 .tpl-sidebar .cv-entry-title { font-weight: 600; font-size: 12.5px; }
-.tpl-sidebar .cv-entry-date { font-size: 10.5px; color: var(--cv-ink); white-space: nowrap; margin-left: 8px; }
-.tpl-sidebar .cv-entry-sub { font-size: 10.5px; color: #2563eb; font-weight: 500; margin-bottom: 3px; }
+.tpl-sidebar .cv-entry-date { font-size: 11.5px; color: var(--cv-ink); white-space: nowrap; margin-left: 8px; }
+.tpl-sidebar .cv-entry-sub { font-size: 11.5px; color: #2563eb; font-weight: 500; margin-bottom: 3px; }
 .tpl-sidebar .cv-bullets { padding-left: 13px; margin-top: 3px; }
-.tpl-sidebar .cv-bullets li { margin-bottom: 2px; font-size: 10.5px; }
-.tpl-sidebar .tech-badge { display: inline-block; background: #eff6ff; color: #1d4ed8; border-radius: 3px; padding: 2px 6px; font-size: 10px; font-weight: 500; margin: 2px 2px 0 0; }
+.tpl-sidebar .cv-bullets li { margin-bottom: 2px; font-size: 11.5px; }
+.tpl-sidebar .tech-badge { display: inline-block; background: #eff6ff; color: #1d4ed8; border-radius: 3px; padding: 2px 6px; font-size: 11px; font-weight: 500; margin: 2px 2px 0 0; }
 
 /* ====== TEMPLATE: KLASSISCH DACH ====== */
 .tpl-dach { padding: 32px 40px; font-family: inherit; color: var(--cv-ink); font-size: 12px; line-height: 1.5; }
@@ -217,12 +216,12 @@ html, body { height: 100%; font-family: 'Inter', system-ui, sans-serif; backgrou
 .tpl-dach .cv-section { margin-bottom: 16px; }
 .tpl-dach .cv-section-layout { display: flex; gap: 14px; }
 .tpl-dach .cv-section-label { width: 126px; flex-shrink: 0; }
-.tpl-dach .cv-section-label h3 { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--cv-ink); }
+.tpl-dach .cv-section-label h3 { font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--cv-ink); }
 .tpl-dach .cv-section-content { flex: 1; border-left: 1px solid #e0e0e0; padding-left: 14px; }
 .tpl-dach .cv-entry { margin-bottom: 13px; }
 .tpl-dach .cv-entry-header { display: flex; justify-content: space-between; align-items: baseline; }
 .tpl-dach .cv-entry-title { font-weight: 700; font-size: 12.5px; }
-.tpl-dach .cv-entry-date { font-size: 10.5px; color: var(--cv-ink); white-space: nowrap; margin-left: 8px; }
+.tpl-dach .cv-entry-date { font-size: 11.5px; color: var(--cv-ink); white-space: nowrap; margin-left: 8px; }
 .tpl-dach .cv-entry-sub { font-size: 11.5px; color: var(--cv-ink); font-style: italic; margin-bottom: 3px; }
 .tpl-dach .cv-bullets { padding-left: 13px; margin-top: 3px; }
 .tpl-dach .cv-bullets li { margin-bottom: 2px; font-size: 11.5px; }
@@ -240,29 +239,29 @@ html, body { height: 100%; font-family: 'Inter', system-ui, sans-serif; backgrou
 .tpl-header .cv-head-info { flex: 1; }
 .tpl-header .cv-name { font-size: 30px; font-weight: 700; color: #f9fafb; margin-bottom: 4px; }
 .tpl-header .cv-jobtitle { font-size: 13px; color: #10b981; margin-bottom: 12px; font-weight: 500; }
-.tpl-header .cv-contact-bar { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 10.5px; color: #9ca3af; }
+.tpl-header .cv-contact-bar { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 11.5px; color: #9ca3af; }
 .tpl-header .cv-body { display: flex; gap: 0; }
 .tpl-header .cv-col-left { width: 240px; flex-shrink: 0; padding: 24px 22px 24px 40px; background: #f8fafc; border-right: 1px solid #e4e7ec; }
 .tpl-header .cv-col-right { flex: 1; padding: 24px 36px 24px 28px; }
 .tpl-header .col-section { margin-bottom: 20px; }
-.tpl-header .col-section-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: #10b981; margin-bottom: 8px; padding-bottom: 4px; border-bottom: 1px solid #d1fae5; }
+.tpl-header .col-section-title { font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: #10b981; margin-bottom: 8px; padding-bottom: 4px; border-bottom: 1px solid #d1fae5; }
 .tpl-header .cv-section { margin-bottom: 18px; }
-.tpl-header .cv-section-title { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .9px; color: #111827; margin-bottom: 9px; padding-bottom: 3px; border-bottom: 2px solid #10b981; }
+.tpl-header .cv-section-title { font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: #111827; margin-bottom: 9px; padding-bottom: 3px; border-bottom: 2px solid #10b981; }
 .tpl-header .cv-entry { margin-bottom: 12px; }
 .tpl-header .cv-entry-header { display: flex; justify-content: space-between; align-items: baseline; }
 .tpl-header .cv-entry-title { font-weight: 600; font-size: 12.5px; }
-.tpl-header .cv-entry-date { font-size: 10px; color: var(--cv-ink); white-space: nowrap; margin-left: 8px; }
-.tpl-header .cv-entry-sub { font-size: 10.5px; color: #10b981; font-weight: 600; margin-bottom: 3px; }
+.tpl-header .cv-entry-date { font-size: 11px; color: var(--cv-ink); white-space: nowrap; margin-left: 8px; }
+.tpl-header .cv-entry-sub { font-size: 11.5px; color: #10b981; font-weight: 600; margin-bottom: 3px; }
 .tpl-header .cv-bullets { padding-left: 13px; margin-top: 3px; }
-.tpl-header .cv-bullets li { margin-bottom: 2px; font-size: 10.5px; }
+.tpl-header .cv-bullets li { margin-bottom: 2px; font-size: 11.5px; }
 .tpl-header .left-skill-cat { margin-bottom: 10px; }
-.tpl-header .left-skill-cat-name { font-size: 10.5px; font-weight: 600; color: var(--cv-ink); margin-bottom: 4px; }
-.tpl-header .left-skill-tag { display: inline-block; background: #e5e7eb; color: var(--cv-ink); border-radius: 3px; padding: 2px 6px; font-size: 9.5px; margin: 2px 2px 0 0; }
-.tpl-header .lang-item { font-size: 10.5px; color: var(--cv-ink); margin-bottom: 4px; }
+.tpl-header .left-skill-cat-name { font-size: 11.5px; font-weight: 600; color: var(--cv-ink); margin-bottom: 4px; }
+.tpl-header .left-skill-tag { display: inline-block; background: #e5e7eb; color: var(--cv-ink); border-radius: 3px; padding: 2px 6px; font-size: 11px; margin: 2px 2px 0 0; }
+.tpl-header .lang-item { font-size: 11.5px; color: var(--cv-ink); margin-bottom: 4px; }
 .tpl-header .lang-level { color: var(--cv-ink); }
-.tpl-header .tech-badge { display: inline-block; background: #ecfdf5; color: #065f46; border-radius: 3px; padding: 2px 6px; font-size: 10px; font-weight: 500; margin: 2px 2px 0 0; }
-.tpl-header .pers-item { font-size: 10.5px; color: var(--cv-ink); margin-bottom: 4px; }
-.tpl-header .pers-label { color: var(--cv-ink); font-size: 9.5px; display: block; }
+.tpl-header .tech-badge { display: inline-block; background: #ecfdf5; color: #065f46; border-radius: 3px; padding: 2px 6px; font-size: 11px; font-weight: 500; margin: 2px 2px 0 0; }
+.tpl-header .pers-item { font-size: 11.5px; color: var(--cv-ink); margin-bottom: 4px; }
+.tpl-header .pers-label { color: var(--cv-ink); font-size: 11px; display: block; }
 
 /* ====== TEMPLATE: KOMPAKT ZEITACHSE ====== */
 .tpl-compact { font-family: inherit; color: var(--cv-ink); font-size: 12px; line-height: 1.5; padding: 30px 40px; }
@@ -271,27 +270,27 @@ html, body { height: 100%; font-family: 'Inter', system-ui, sans-serif; backgrou
 .tpl-compact .cv-header-text { flex: 1; }
 .tpl-compact .cv-name { font-size: 26px; font-weight: 700; letter-spacing: -.4px; }
 .tpl-compact .cv-jobtitle { font-size: 13px; color: #2563eb; font-weight: 500; margin: 3px 0 10px; }
-.tpl-compact .cv-contact-bar { display: flex; flex-wrap: wrap; gap: 3px 14px; font-size: 10.5px; color: var(--cv-ink); }
+.tpl-compact .cv-contact-bar { display: flex; flex-wrap: wrap; gap: 3px 14px; font-size: 11.5px; color: var(--cv-ink); }
 .tpl-compact .cv-section { margin-bottom: 16px; }
-.tpl-compact .cv-section-title { background: #2563eb; color: white; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 3px 10px; margin-bottom: 10px; }
+.tpl-compact .cv-section-title { background: #2563eb; color: white; font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; padding: 3px 10px; margin-bottom: 10px; }
 .tpl-compact .cv-timeline { }
 .tpl-compact .cv-tl-entry { display: flex; gap: 12px; margin-bottom: 11px; }
-.tpl-compact .cv-tl-date { width: 82px; flex-shrink: 0; font-size: 10px; color: var(--cv-ink); padding-top: 1px; text-align: right; }
+.tpl-compact .cv-tl-date { width: 82px; flex-shrink: 0; font-size: 11px; color: var(--cv-ink); padding-top: 1px; text-align: right; }
 .tpl-compact .cv-tl-dot { width: 6px; height: 6px; border-radius: 50%; background: #2563eb; margin-top: 4px; flex-shrink: 0; }
 .tpl-compact .cv-tl-line { width: 1px; background: #dbeafe; margin: 0 2px; }
 .tpl-compact .cv-tl-body { flex: 1; }
 .tpl-compact .cv-tl-title { font-weight: 600; font-size: 12.5px; }
-.tpl-compact .cv-tl-sub { font-size: 10.5px; color: #2563eb; margin-bottom: 3px; }
+.tpl-compact .cv-tl-sub { font-size: 11.5px; color: #2563eb; margin-bottom: 3px; }
 .tpl-compact .cv-bullets { padding-left: 12px; margin-top: 2px; }
-.tpl-compact .cv-bullets li { margin-bottom: 1.5px; font-size: 10.5px; }
+.tpl-compact .cv-bullets li { margin-bottom: 1.5px; font-size: 11.5px; }
 .tpl-compact .skill-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
-.tpl-compact .skill-cat-name { font-size: 10.5px; font-weight: 700; color: #1d4ed8; margin-bottom: 3px; }
+.tpl-compact .skill-cat-name { font-size: 11.5px; font-weight: 700; color: #1d4ed8; margin-bottom: 3px; }
 .tpl-compact .skill-tags { display: flex; flex-wrap: wrap; gap: 2px; }
-.tpl-compact .skill-tag { background: #eff6ff; border-radius: 3px; padding: 2px 6px; font-size: 10px; color: #1e40af; }
+.tpl-compact .skill-tag { background: #eff6ff; border-radius: 3px; padding: 2px 6px; font-size: 11px; color: #1e40af; }
 .tpl-compact .lang-row { display: flex; flex-wrap: wrap; gap: 4px 14px; }
 .tpl-compact .lang-item { font-size: 11.5px; }
 .tpl-compact .lang-level { color: var(--cv-ink); }
-.tpl-compact .tech-badge { display: inline-block; background: #eff6ff; color: #1d4ed8; border-radius: 3px; padding: 2px 6px; font-size: 10px; font-weight: 500; margin: 2px 2px 0 0; }
+.tpl-compact .tech-badge { display: inline-block; background: #eff6ff; color: #1d4ed8; border-radius: 3px; padding: 2px 6px; font-size: 11px; font-weight: 500; margin: 2px 2px 0 0; }
 .tpl-compact .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 
 /* ====== TEMPLATE: EXECUTIVE ====== */
@@ -303,14 +302,14 @@ html, body { height: 100%; font-family: 'Inter', system-ui, sans-serif; backgrou
 .tpl-exec .cv-rule-thin { border: none; border-top: 1px solid #d1d5db; margin: 10px 0 20px; }
 .tpl-exec .cv-rule-double { border: none; border-top: 3px double #1a1a1a; margin: 18px 0; }
 .tpl-exec .cv-section { margin-bottom: 20px; }
-.tpl-exec .cv-section-title { text-align: center; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--cv-ink); margin-bottom: 12px; position: relative; }
+.tpl-exec .cv-section-title { text-align: center; font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: var(--cv-ink); margin-bottom: 12px; position: relative; }
 .tpl-exec .cv-section-title::before, .tpl-exec .cv-section-title::after { content: ''; position: absolute; top: 50%; width: 30%; border-top: 1px solid #d1d5db; }
 .tpl-exec .cv-section-title::before { left: 0; }
 .tpl-exec .cv-section-title::after { right: 0; }
 .tpl-exec .cv-entry { margin-bottom: 14px; }
 .tpl-exec .cv-entry-header { display: flex; justify-content: space-between; align-items: baseline; }
 .tpl-exec .cv-entry-title { font-weight: 700; font-size: 12.5px; }
-.tpl-exec .cv-entry-date { font-size: 10.5px; color: var(--cv-ink); white-space: nowrap; margin-left: 8px; }
+.tpl-exec .cv-entry-date { font-size: 11.5px; color: var(--cv-ink); white-space: nowrap; margin-left: 8px; }
 .tpl-exec .cv-entry-sub { font-size: 11.5px; color: var(--cv-ink); font-style: italic; margin-bottom: 3px; }
 .tpl-exec .cv-bullets { padding-left: 14px; margin-top: 3px; }
 .tpl-exec .cv-bullets li { margin-bottom: 2px; font-size: 11.5px; }
@@ -356,32 +355,39 @@ html, body { height: 100%; font-family: 'Inter', system-ui, sans-serif; backgrou
 
 /* ====== TEMPLATE: ZWEISPALTIG ====== */
 .tpl-twocol { font-family: inherit; color: var(--cv-ink); font-size: 12px; line-height: 1.5; }
-.tpl-twocol .cv-head { background: #f0fdfa; padding: 24px 36px; border-bottom: 3px solid #0d9488; }
-.tpl-twocol .cv-name { font-size: 25px; font-weight: 700; color: #134e4a; letter-spacing: -.3px; margin-bottom: 3px; }
-.tpl-twocol .cv-jobtitle { font-size: 13px; color: #0d9488; font-weight: 500; margin: 3px 0 9px; }
-.tpl-twocol .cv-contact-bar { display: flex; flex-wrap: wrap; gap: 3px 16px; font-size: 10.5px; color: var(--cv-ink); }
+.tpl-twocol .cv-head { background: #f4f6f8; padding: 24px 36px; border-bottom: 2px solid #3f4a5a; }
+.tpl-twocol .cv-name { font-size: 25px; font-weight: 700; color: var(--cv-ink); letter-spacing: -.3px; margin-bottom: 3px; }
+.tpl-twocol .cv-jobtitle { font-size: 13px; color: var(--cv-ink); font-weight: 500; margin: 3px 0 9px; }
+.tpl-twocol .cv-contact-bar { display: flex; flex-wrap: wrap; gap: 3px 16px; font-size: 11.5px; color: var(--cv-ink); }
 .tpl-twocol .cv-body { display: flex; }
 .tpl-twocol .cv-col-left { width: 265px; flex-shrink: 0; padding: 20px 16px 20px 36px; border-right: 1px solid #d1d5db; background: #f9fafb; }
 .tpl-twocol .cv-col-right { flex: 1; padding: 20px 36px 20px 18px; }
 .tpl-twocol .col-section { margin-bottom: 15px; }
-.tpl-twocol .col-section-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: #0d9488; margin-bottom: 7px; padding-bottom: 3px; border-bottom: 2px solid #99f6e4; }
+.tpl-twocol .col-section-title { font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: var(--cv-ink); margin-bottom: 7px; padding-bottom: 3px; border-bottom: 1.5px solid #3f4a5a; }
 .tpl-twocol .cv-section { margin-bottom: 15px; }
-.tpl-twocol .cv-section-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; color: #0d9488; margin-bottom: 8px; padding-bottom: 3px; border-bottom: 2px solid #99f6e4; }
+.tpl-twocol .cv-section-title { font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: var(--cv-ink); margin-bottom: 8px; padding-bottom: 3px; border-bottom: 1.5px solid #3f4a5a; }
 .tpl-twocol .cv-entry { margin-bottom: 11px; }
-.tpl-twocol .cv-entry-header { display: flex; justify-content: space-between; align-items: baseline; }
+.tpl-twocol .cv-entry-header { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
 .tpl-twocol .cv-entry-title { font-weight: 600; font-size: 12.5px; }
-.tpl-twocol .cv-entry-date { font-size: 10px; color: var(--cv-ink); white-space: nowrap; margin-left: 8px; }
-.tpl-twocol .cv-entry-sub { font-size: 10.5px; color: #0d9488; font-weight: 500; margin-bottom: 3px; }
+.tpl-twocol .cv-entry-date { font-size: 11px; color: var(--cv-ink); white-space: nowrap; margin-left: 8px; }
+/* Linke (schmale) Spalte: Datum rechts oben gefloatet, der Titel fliesst darum
+   herum - die erste Zeile steht neben dem Datum, lange deutsche Komposita rutschen
+   in VOLLER Breite in die naechste Zeile. So kein Wortumbruch mitten im Wort und
+   kein Ueberlappen. Die breite rechte Spalte behaelt Titel/Datum nebeneinander. */
+.tpl-twocol .cv-col-left .cv-entry-header { display: block; overflow: hidden; }
+.tpl-twocol .cv-col-left .cv-entry-date { float: right; margin-left: 10px; }
+.tpl-twocol .cv-col-left .cv-entry-title { display: block; overflow-wrap: break-word; }
+.tpl-twocol .cv-entry-sub { font-size: 11.5px; color: var(--cv-ink); font-weight: 500; margin-bottom: 3px; }
 .tpl-twocol .cv-bullets { padding-left: 12px; margin-top: 3px; }
-.tpl-twocol .cv-bullets li { margin-bottom: 2px; font-size: 10.5px; }
+.tpl-twocol .cv-bullets li { margin-bottom: 2px; font-size: 11.5px; }
 .tpl-twocol .skill-cat { margin-bottom: 8px; }
-.tpl-twocol .skill-cat-name { font-size: 10.5px; font-weight: 600; color: var(--cv-ink); margin-bottom: 3px; }
-.tpl-twocol .skill-tag { display: inline-block; background: #f0fdfa; color: #0f766e; border: 1px solid #99f6e4; border-radius: 3px; padding: 2px 5px; font-size: 9.5px; margin: 1px 1px 0 0; }
-.tpl-twocol .lang-item { font-size: 10.5px; color: var(--cv-ink); margin-bottom: 3px; }
+.tpl-twocol .skill-cat-name { font-size: 11.5px; font-weight: 600; color: var(--cv-ink); margin-bottom: 3px; }
+.tpl-twocol .skill-tag { display: inline-block; background: #f3f4f6; color: var(--cv-ink); border: 1px solid #e5e7eb; border-radius: 3px; padding: 2px 5px; font-size: 11px; margin: 1px 1px 0 0; }
+.tpl-twocol .lang-item { font-size: 11.5px; color: var(--cv-ink); margin-bottom: 3px; }
 .tpl-twocol .lang-level { color: var(--cv-ink); }
-.tpl-twocol .tech-badge { display: inline-block; background: #f0fdfa; color: #0f766e; border-radius: 3px; padding: 2px 5px; font-size: 9.5px; font-weight: 500; margin: 2px 2px 0 0; }
-.tpl-twocol .pers-item { font-size: 10.5px; color: var(--cv-ink); margin-bottom: 3px; }
-.tpl-twocol .pers-label { color: var(--cv-ink); font-size: 9.5px; }
+.tpl-twocol .tech-badge { display: inline-block; background: #f3f4f6; color: var(--cv-ink); border-radius: 3px; padding: 2px 5px; font-size: 11px; font-weight: 500; margin: 2px 2px 0 0; }
+.tpl-twocol .pers-item { font-size: 11.5px; color: var(--cv-ink); margin-bottom: 3px; }
+.tpl-twocol .pers-label { color: var(--cv-ink); font-size: 11px; }
 
 /* ====== TEMPLATE: SEITENLINIE ====== */
 .tpl-lineleft { padding: 32px 42px; font-family: inherit; color: var(--cv-ink); font-size: 12px; line-height: 1.5; }
@@ -390,22 +396,22 @@ html, body { height: 100%; font-family: 'Inter', system-ui, sans-serif; backgrou
 .tpl-lineleft .cv-contact-bar { display: flex; flex-wrap: wrap; gap: 4px 18px; font-size: 11.5px; color: var(--cv-ink); margin-bottom: 22px; padding-bottom: 10px; border-bottom: 1px solid #e5e7eb; }
 .tpl-lineleft .cv-photo-wrap { float: right; margin: 0 0 10px 20px; }
 .tpl-lineleft .cv-section { margin-bottom: 18px; padding-left: 14px; border-left: 3px solid #3b82f6; }
-.tpl-lineleft .cv-section-title { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #1e40af; margin-bottom: 9px; }
+.tpl-lineleft .cv-section-title { font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: #1e40af; margin-bottom: 9px; }
 .tpl-lineleft .cv-entry { margin-bottom: 12px; }
 .tpl-lineleft .cv-entry-header { display: flex; justify-content: space-between; align-items: baseline; }
 .tpl-lineleft .cv-entry-title { font-weight: 600; font-size: 12.5px; }
-.tpl-lineleft .cv-entry-date { font-size: 10px; color: #fff; white-space: nowrap; margin-left: 8px; background: #3b82f6; padding: 1px 7px; border-radius: 2px; }
+.tpl-lineleft .cv-entry-date { font-size: 11px; color: #fff; white-space: nowrap; margin-left: 8px; background: #3b82f6; padding: 1px 7px; border-radius: 2px; }
 .tpl-lineleft .cv-entry-sub { font-size: 11.5px; color: #3b82f6; font-weight: 500; margin-bottom: 3px; }
 .tpl-lineleft .cv-bullets { padding-left: 12px; margin-top: 3px; }
 .tpl-lineleft .cv-bullets li { margin-bottom: 2px; font-size: 11.5px; }
 .tpl-lineleft .skill-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
-.tpl-lineleft .skill-cat-name { font-size: 10.5px; font-weight: 600; color: #1e40af; margin-bottom: 3px; }
+.tpl-lineleft .skill-cat-name { font-size: 11.5px; font-weight: 600; color: #1e40af; margin-bottom: 3px; }
 .tpl-lineleft .skill-tags { display: flex; flex-wrap: wrap; gap: 3px; }
-.tpl-lineleft .skill-tag { background: #eff6ff; border-radius: 3px; padding: 2px 7px; font-size: 10px; color: #1d4ed8; }
+.tpl-lineleft .skill-tag { background: #eff6ff; border-radius: 3px; padding: 2px 7px; font-size: 11px; color: #1d4ed8; }
 .tpl-lineleft .lang-row { display: flex; flex-wrap: wrap; gap: 4px 16px; }
 .tpl-lineleft .lang-item { font-size: 11.5px; }
 .tpl-lineleft .lang-level { color: var(--cv-ink); }
-.tpl-lineleft .tech-badge { display: inline-block; background: #eff6ff; color: #1d4ed8; border-radius: 3px; padding: 2px 6px; font-size: 10px; font-weight: 500; margin: 2px 2px 0 0; }
+.tpl-lineleft .tech-badge { display: inline-block; background: #eff6ff; color: #1d4ed8; border-radius: 3px; padding: 2px 6px; font-size: 11px; font-weight: 500; margin: 2px 2px 0 0; }
 
 /* ====== TEMPLATE: PROFILKARTE ====== */
 .tpl-card { font-family: inherit; color: var(--cv-ink); font-size: 12px; line-height: 1.5; }
@@ -413,41 +419,41 @@ html, body { height: 100%; font-family: 'Inter', system-ui, sans-serif; backgrou
 .tpl-card .cv-head-text { flex: 1; }
 .tpl-card .cv-name { font-size: 27px; font-weight: 700; color: #fff; letter-spacing: -.3px; margin-bottom: 4px; }
 .tpl-card .cv-jobtitle { font-size: 12.5px; color: #c4b5fd; margin-bottom: 12px; font-weight: 500; }
-.tpl-card .cv-contact-bar { display: flex; flex-wrap: wrap; gap: 3px 16px; font-size: 10.5px; color: #e0e7ff; }
+.tpl-card .cv-contact-bar { display: flex; flex-wrap: wrap; gap: 3px 16px; font-size: 11.5px; color: #e0e7ff; }
 .tpl-card .cv-body { padding: 24px 36px; }
 .tpl-card .cv-section { margin-bottom: 16px; }
-.tpl-card .cv-section-title { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .9px; color: #4338ca; margin-bottom: 9px; padding-bottom: 4px; border-bottom: 2px solid #e0e7ff; }
+.tpl-card .cv-section-title { font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: #4338ca; margin-bottom: 9px; padding-bottom: 4px; border-bottom: 2px solid #e0e7ff; }
 .tpl-card .cv-entry { margin-bottom: 12px; }
 .tpl-card .cv-entry-header { display: flex; justify-content: space-between; align-items: baseline; }
 .tpl-card .cv-entry-title { font-weight: 600; font-size: 12.5px; }
-.tpl-card .cv-entry-date { font-size: 10px; color: var(--cv-ink); white-space: nowrap; margin-left: 8px; }
-.tpl-card .cv-entry-sub { font-size: 10.5px; color: #4338ca; font-weight: 500; margin-bottom: 3px; }
+.tpl-card .cv-entry-date { font-size: 11px; color: var(--cv-ink); white-space: nowrap; margin-left: 8px; }
+.tpl-card .cv-entry-sub { font-size: 11.5px; color: #4338ca; font-weight: 500; margin-bottom: 3px; }
 .tpl-card .cv-bullets { padding-left: 12px; margin-top: 3px; }
-.tpl-card .cv-bullets li { margin-bottom: 2px; font-size: 10.5px; }
+.tpl-card .cv-bullets li { margin-bottom: 2px; font-size: 11.5px; }
 .tpl-card .skill-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
-.tpl-card .skill-cat-name { font-size: 10.5px; font-weight: 600; color: #4338ca; margin-bottom: 3px; }
-.tpl-card .skill-tag { display: inline-block; background: #eef2ff; color: #4338ca; border-radius: 3px; padding: 2px 5px; font-size: 9.5px; margin: 1px 1px 0 0; }
+.tpl-card .skill-cat-name { font-size: 11.5px; font-weight: 600; color: #4338ca; margin-bottom: 3px; }
+.tpl-card .skill-tag { display: inline-block; background: #eef2ff; color: #4338ca; border-radius: 3px; padding: 2px 5px; font-size: 11px; margin: 1px 1px 0 0; }
 .tpl-card .lang-row { display: flex; flex-wrap: wrap; gap: 4px 16px; }
 .tpl-card .lang-item { font-size: 11.5px; }
 .tpl-card .lang-level { color: var(--cv-ink); }
-.tpl-card .tech-badge { display: inline-block; background: #eef2ff; color: #4338ca; border-radius: 3px; padding: 2px 6px; font-size: 10px; font-weight: 500; margin: 2px 2px 0 0; }
+.tpl-card .tech-badge { display: inline-block; background: #eef2ff; color: #4338ca; border-radius: 3px; padding: 2px 6px; font-size: 11px; font-weight: 500; margin: 2px 2px 0 0; }
 
 /* ====== TEMPLATE: SCHLICHT ATS ====== */
 .tpl-plain { padding: 32px 44px; font-family: inherit; color: var(--cv-ink); font-size: 12px; line-height: 1.55; }
 .tpl-plain .cv-name { font-size: 23px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 2px; }
 .tpl-plain .cv-jobtitle { font-size: 12.5px; color: var(--cv-ink); margin-bottom: 8px; }
 .tpl-plain .cv-rule { border: none; border-top: 1.5px solid #000; margin: 8px 0 12px; }
-.tpl-plain .cv-contact-bar { display: flex; flex-wrap: wrap; gap: 2px 18px; font-size: 10.5px; color: var(--cv-ink); margin-bottom: 16px; }
+.tpl-plain .cv-contact-bar { display: flex; flex-wrap: wrap; gap: 2px 18px; font-size: 11.5px; color: var(--cv-ink); margin-bottom: 16px; }
 .tpl-plain .cv-photo-wrap { float: right; margin: 0 0 8px 16px; }
 .tpl-plain .cv-section { margin-bottom: 14px; }
 .tpl-plain .cv-section-layout { display: flex; gap: 14px; }
 .tpl-plain .cv-section-label { width: 128px; flex-shrink: 0; }
-.tpl-plain .cv-section-label h3 { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--cv-ink); border-bottom: 1px solid #000; padding-bottom: 2px; margin-top: 2px; }
+.tpl-plain .cv-section-label h3 { font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: var(--cv-ink); border-bottom: 1px solid #000; padding-bottom: 2px; margin-top: 2px; }
 .tpl-plain .cv-section-content { flex: 1; }
 .tpl-plain .cv-entry { margin-bottom: 11px; }
 .tpl-plain .cv-entry-header { display: flex; justify-content: space-between; align-items: baseline; }
 .tpl-plain .cv-entry-title { font-weight: 700; font-size: 12px; }
-.tpl-plain .cv-entry-date { font-size: 10.5px; color: var(--cv-ink); white-space: nowrap; margin-left: 8px; }
+.tpl-plain .cv-entry-date { font-size: 11.5px; color: var(--cv-ink); white-space: nowrap; margin-left: 8px; }
 .tpl-plain .cv-entry-sub { font-size: 11.5px; color: var(--cv-ink); margin-bottom: 3px; }
 .tpl-plain .cv-bullets { padding-left: 13px; margin-top: 3px; }
 .tpl-plain .cv-bullets li { margin-bottom: 2px; font-size: 11.5px; }
@@ -466,6 +472,8 @@ html, body { height: 100%; font-family: 'Inter', system-ui, sans-serif; backgrou
 .tpl-profil .pf-section { margin-bottom: 18px; }
 .tpl-profil .pf-section-title { font-size: 14px; font-weight: 700; color: #1d4ed8; margin-bottom: 9px; padding-bottom: 5px; border-bottom: 1px solid #c7d2fe; }
 .tpl-profil .pf-data-item { margin-bottom: 8px; }
+.tpl-profil .pf-social { display: flex; align-items: center; gap: 14px; margin-top: 12px; }
+.tpl-profil .pf-social .cv-icon svg { width: 17px; height: 17px; fill: currentColor; }
 .tpl-profil .pf-label { font-size: 10.5px; font-weight: 700; color: var(--cv-ink); }
 .tpl-profil .pf-value { font-size: 10.5px; color: var(--cv-ink); word-break: break-word; }
 .tpl-profil .kn-items { font-size: 10.5px; color: var(--cv-ink); }
@@ -491,11 +499,11 @@ html, body { height: 100%; font-family: 'Inter', system-ui, sans-serif; backgrou
 .tpl-modern .mod-head-main { flex: 1; min-width: 0; }
 .tpl-modern .mod-name { font-size: 13px; color: #64748b; font-weight: 500; }
 .tpl-modern .mod-jobtitle { font-size: 22px; font-weight: 800; color: #1f2937; letter-spacing: -.3px; margin: 2px 0 0; line-height: 1.15; }
-.tpl-modern .mod-head-side { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; font-size: 11px; flex-shrink: 0; max-width: 210px; }
+.tpl-modern .mod-head-side { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; font-size: 11.5px; flex-shrink: 0; max-width: 210px; }
 .tpl-modern .mod-contact-line { display: inline-flex; align-items: center; gap: 7px; color: var(--cv-ink); text-decoration: none; word-break: break-word; }
 .tpl-modern .mod-contact-line .cv-icon { display: inline-flex; flex-shrink: 0; }
 .tpl-modern .mod-contact-line .cv-icon svg { width: 15px; height: 15px; fill: #3f4a5a; }
-.tpl-modern .mod-band { background: #3f4a5a; color: #e5e9f0; padding: 12px 34px; display: flex; flex-wrap: wrap; gap: 4px 40px; font-size: 11px; }
+.tpl-modern .mod-band { background: #3f4a5a; color: #e5e9f0; padding: 12px 34px; display: flex; flex-wrap: wrap; gap: 4px 40px; font-size: 11.5px; }
 .tpl-modern .mod-band a { color: #e5e9f0; text-decoration: none; }
 .tpl-modern .mod-body { display: flex; gap: 30px; padding: 22px 34px 30px; }
 .tpl-modern .mod-col-left { flex: 1.75; min-width: 0; }
@@ -508,22 +516,22 @@ html, body { height: 100%; font-family: 'Inter', system-ui, sans-serif; backgrou
 .tpl-modern .mod-tl-entry:last-child::after { display: none; }
 .tpl-modern .mod-entry-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
 .tpl-modern .mod-entry-title { font-weight: 700; font-size: 12.5px; }
-.tpl-modern .mod-entry-date { font-size: 10.5px; font-style: italic; color: #64748b; white-space: nowrap; }
+.tpl-modern .mod-entry-date { font-size: 11.5px; font-style: italic; color: #64748b; white-space: nowrap; }
 .tpl-modern .mod-entry-sub { font-size: 11.5px; color: var(--cv-ink); margin: 1px 0 3px; }
 .tpl-modern .mod-entry-loc { font-style: italic; color: #64748b; }
 .tpl-modern .cv-bullets { padding-left: 15px; margin-top: 3px; }
-.tpl-modern .cv-bullets li { font-size: 11px; margin-bottom: 2px; color: var(--cv-ink); }
+.tpl-modern .cv-bullets li { font-size: 11.5px; margin-bottom: 2px; color: var(--cv-ink); }
 .tpl-modern .mod-proj { margin-bottom: 11px; }
 .tpl-modern .mod-proj-title { font-weight: 700; font-size: 12px; }
-.tpl-modern .mod-proj-stack { font-size: 10.5px; font-style: italic; font-weight: 600; color: #475569; margin: 1px 0 2px; }
+.tpl-modern .mod-proj-stack { font-size: 11.5px; font-style: italic; font-weight: 600; color: #475569; margin: 1px 0 2px; }
 .tpl-modern .mod-skill { margin-bottom: 10px; }
 .tpl-modern .mod-skill-cat { font-weight: 700; font-size: 11.5px; color: #1f2937; }
-.tpl-modern .mod-skill-items { font-size: 11px; color: var(--cv-ink); }
+.tpl-modern .mod-skill-items { font-size: 11.5px; color: var(--cv-ink); }
 .tpl-modern .mod-lang { margin-bottom: 8px; }
 .tpl-modern .mod-lang-name { font-weight: 700; font-size: 11.5px; }
-.tpl-modern .mod-lang-level { font-size: 11px; color: var(--cv-ink); }
+.tpl-modern .mod-lang-level { font-size: 11.5px; color: var(--cv-ink); }
 .tpl-modern .mod-int { font-weight: 600; font-size: 11.5px; margin-bottom: 7px; }
-.tpl-modern .tech-badge { display: inline-block; background: #eef2f7; color: #3f4a5a; border-radius: 3px; padding: 2px 6px; font-size: 10px; font-weight: 500; margin: 3px 3px 0 0; }
+.tpl-modern .tech-badge { display: inline-block; background: #eef2f7; color: #3f4a5a; border-radius: 3px; padding: 2px 6px; font-size: 11px; font-weight: 500; margin: 3px 3px 0 0; }
 </style>
 </head>
 <body>
@@ -1275,14 +1283,16 @@ function lnk(href, text) {
   return `<a href="${href}" class="cv-link">${text}</a>`;
 }
 
-// Hebt das Portfolio hervor: kompakte, gut sichtbare "Portfolio"-Pille statt
-// einer langen, unauffaelligen URL. Reduziert die Textmenge und faellt sofort auf.
-// Der eigentliche Link bleibt im href erhalten (auch im PDF anklickbar).
+// Portfolio-Hinweis: minimalistisches Globus-Icon + dezentes Label statt einer
+// schweren Pille. Wirkt leicht und modern, passt sich ueber currentColor an jede
+// Vorlage an (hell/dunkel) und bleibt im PDF anklickbar.
 function portfolioLink(url, label) {
-  return `<a href="${fullUrl(url)}" class="cv-link cv-portfolio">${label || 'Portfolio'}</a>`;
+  return `<a href="${fullUrl(url)}" class="cv-link cv-portfolio"><span class="cv-icon">${SVG_GLOBE}</span><span class="cv-portfolio-label">${label || 'Portfolio'}</span></a>`;
 }
 
 // Markensymbole als Inline-SVG (kompakt, kein externes Bild noetig).
+// Minimalistisches Globus-/Web-Icon fuer das Portfolio (gut erkennbar, leicht).
+const SVG_GLOBE = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm6.92 6h-2.95a15.65 15.65 0 0 0-1.38-3.56A8.03 8.03 0 0 1 18.92 8zM12 4.04c.83 1.2 1.48 2.53 1.91 3.96h-3.82c.43-1.43 1.08-2.76 1.91-3.96zM4.26 14a7.96 7.96 0 0 1 0-4h3.38c-.08.66-.14 1.32-.14 2 0 .68.06 1.34.14 2H4.26zm.81 2h2.95c.32 1.25.78 2.45 1.38 3.56A7.99 7.99 0 0 1 5.07 16zm2.95-8H5.07a7.99 7.99 0 0 1 4.33-3.56A15.65 15.65 0 0 0 8.02 8zM12 19.96c-.83-1.2-1.48-2.53-1.91-3.96h3.82A13.7 13.7 0 0 1 12 19.96zM14.34 14H9.66c-.09-.66-.16-1.32-.16-2 0-.68.07-1.35.16-2h4.68c.09.65.16 1.32.16 2 0 .68-.07 1.34-.16 2zm.25 5.56c.6-1.11 1.06-2.31 1.38-3.56h2.95a8.03 8.03 0 0 1-4.33 3.56zM16.36 14c.08-.66.14-1.32.14-2 0-.68-.06-1.34-.14-2h3.38a7.96 7.96 0 0 1 0 4h-3.38z"/></svg>';
 const SVG_LINKEDIN = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.27c-.97 0-1.75-.79-1.75-1.76s.78-1.75 1.75-1.75 1.75.79 1.75 1.75-.78 1.76-1.75 1.76zm13.5 12.27h-3v-5.6c0-3.37-4-3.12-4 0v5.6h-3v-11h3v1.76c1.39-2.58 7-2.77 7 2.47v6.77z"/></svg>';
 const SVG_GITHUB = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5c-6.63 0-12 5.37-12 12 0 5.3 3.44 9.8 8.21 11.39.6.11.82-.26.82-.58 0-.29-.01-1.05-.02-2.06-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.21.09 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.31 3.5 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.34-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23.96-.27 1.98-.4 3-.41 1.02.01 2.04.14 3 .41 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.25 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.62-5.49 5.92.43.37.82 1.1.82 2.22 0 1.61-.02 2.9-.02 3.29 0 .32.22.7.83.58a12 12 0 0 0 8.2-11.39c0-6.63-5.37-12-12-12z"/></svg>';
 
@@ -1318,7 +1328,7 @@ function buildMinimal() {
     <div class="cv-entry">
       <div class="cv-entry-header"><span class="cv-entry-title">${esc(e.title)}</span><span class="cv-entry-date">${esc(e.from)} - ${esc(e.to)}</span></div>
       <div class="cv-entry-sub">${esc(e.company)}${e.location?', '+esc(e.location):''}</div>
-      ${e.bullets&&e.bullets.length?`<ul class="cv-bullets">${e.bullets.filter(b=>b).map(b=>`<li>${esc(b)}</li>`).join('')}</ul>`:''}
+      ${e.bullets&&e.bullets.length?`<ul class="cv-bullets">${e.bullets.filter(b=>b).map(b=>`<li>${fmt(b)}</li>`).join('')}</ul>`:''}
     </div>`).join('');
   const eduHtml = cvData.education.map(e=>`
     <div class="cv-entry">
@@ -1330,7 +1340,7 @@ function buildMinimal() {
     <div class="cv-entry">
       <div class="cv-entry-header"><span class="cv-entry-title">${esc(pr.title)}</span><span class="cv-entry-date">${esc(pr.from)} - ${esc(pr.to)}</span></div>
       <div class="cv-entry-sub">${esc(pr.type)}${pr.link?projectLink(pr.link):''}</div>
-      ${pr.bullets&&pr.bullets.length?`<ul class="cv-bullets">${pr.bullets.filter(b=>b).map(b=>`<li>${esc(b)}</li>`).join('')}</ul>`:''}
+      ${pr.bullets&&pr.bullets.length?`<ul class="cv-bullets">${pr.bullets.filter(b=>b).map(b=>`<li>${fmt(b)}</li>`).join('')}</ul>`:''}
       ${pr.stack&&pr.stack.length?`<div class="tech-stack">${pr.stack.map(s=>`<span class="tech-badge">${esc(s)}</span>`).join('')}</div>`:''}
     </div>`).join('');
   const langHtml = `<div class="lang-row">${cvData.languages.map(l=>`<span class="lang-item">${esc(l.name)} <span class="lang-level">(${esc(l.level)})</span></span>`).join('')}</div>`;
@@ -1372,7 +1382,7 @@ function buildSidebar() {
     <div class="cv-entry">
       <div class="cv-entry-header"><span class="cv-entry-title">${esc(e.title)}</span><span class="cv-entry-date">${esc(e.from)} - ${esc(e.to)}</span></div>
       <div class="cv-entry-sub">${esc(e.company)}${e.location?', '+esc(e.location):''}</div>
-      ${e.bullets&&e.bullets.length?`<ul class="cv-bullets">${e.bullets.filter(b=>b).map(b=>`<li>${esc(b)}</li>`).join('')}</ul>`:''}
+      ${e.bullets&&e.bullets.length?`<ul class="cv-bullets">${e.bullets.filter(b=>b).map(b=>`<li>${fmt(b)}</li>`).join('')}</ul>`:''}
     </div>`).join('');
   const eduHtml = cvData.education.map(e=>`
     <div class="cv-entry">
@@ -1383,7 +1393,7 @@ function buildSidebar() {
     <div class="cv-entry">
       <div class="cv-entry-header"><span class="cv-entry-title">${esc(pr.title)}</span><span class="cv-entry-date">${esc(pr.from)} - ${esc(pr.to)}</span></div>
       <div class="cv-entry-sub">${esc(pr.type)}${pr.link?projectLink(pr.link):''}</div>
-      ${pr.bullets&&pr.bullets.length?`<ul class="cv-bullets">${pr.bullets.filter(b=>b).map(b=>`<li>${esc(b)}</li>`).join('')}</ul>`:''}
+      ${pr.bullets&&pr.bullets.length?`<ul class="cv-bullets">${pr.bullets.filter(b=>b).map(b=>`<li>${fmt(b)}</li>`).join('')}</ul>`:''}
       ${pr.stack&&pr.stack.length?`<div style="margin-top:4px">${pr.stack.map(s=>`<span class="tech-badge">${esc(s)}</span>`).join('')}</div>`:''}
     </div>`).join('');
   const intHtml = cvData.interests.map(i=>esc(i.text)).filter(Boolean).join(' - ');
@@ -1397,8 +1407,7 @@ function buildSidebar() {
         ${p.email?`<div class="contact-item"><span class="contact-label">E-Mail</span>${lnk('mailto:'+p.email,esc(p.email))}</div>`:''}
         ${p.phone?`<div class="contact-item"><span class="contact-label">Telefon</span>${esc(p.phone)}</div>`:''}
         ${p.address?`<div class="contact-item"><span class="contact-label">${t('cv_lbl_address')}</span>${esc(p.address)}</div>`:''}
-        ${(p.linkedin||p.github)?`<div class="contact-item" style="display:flex;gap:12px;align-items:center;margin-top:2px">${p.linkedin?iconLink(p.linkedin,SVG_LINKEDIN,'LinkedIn'):''}${p.github?iconLink(p.github,SVG_GITHUB,'GitHub'):''}</div>`:''}
-        ${p.website?`<div class="contact-item" style="margin-top:6px">${portfolioLink(p.website)}</div>`:''}
+        ${(p.linkedin||p.github||p.website)?`<div class="contact-item" style="display:flex;gap:13px;align-items:center;margin-top:7px">${p.linkedin?iconLink(p.linkedin,SVG_LINKEDIN,'LinkedIn'):''}${p.github?iconLink(p.github,SVG_GITHUB,'GitHub'):''}${p.website?portfolioLink(p.website):''}</div>`:''}
       </div>
       <div class="left-section">
         <div class="left-section-title">${t('cv_personal')}</div>
@@ -1427,7 +1436,7 @@ function buildDach() {
     <div class="cv-entry">
       <div class="cv-entry-header"><span class="cv-entry-title">${esc(e.title)}</span><span class="cv-entry-date">${esc(e.from)} - ${esc(e.to)}</span></div>
       <div class="cv-entry-sub">${esc(e.company)}${e.location?', '+esc(e.location):''}</div>
-      ${e.bullets&&e.bullets.length?`<ul class="cv-bullets">${e.bullets.filter(b=>b).map(b=>`<li>${esc(b)}</li>`).join('')}</ul>`:''}
+      ${e.bullets&&e.bullets.length?`<ul class="cv-bullets">${e.bullets.filter(b=>b).map(b=>`<li>${fmt(b)}</li>`).join('')}</ul>`:''}
     </div>`).join('');
   const eduHtml = cvData.education.map(e=>`
     <div class="cv-entry">
@@ -1439,7 +1448,7 @@ function buildDach() {
     <div class="cv-entry">
       <div class="cv-entry-header"><span class="cv-entry-title">${esc(pr.title)}</span><span class="cv-entry-date">${esc(pr.from)} - ${esc(pr.to)}</span></div>
       <div class="cv-entry-sub">${esc(pr.type)}${pr.link?projectLink(pr.link):''}</div>
-      ${pr.bullets&&pr.bullets.length?`<ul class="cv-bullets">${pr.bullets.filter(b=>b).map(b=>`<li>${esc(b)}</li>`).join('')}</ul>`:''}
+      ${pr.bullets&&pr.bullets.length?`<ul class="cv-bullets">${pr.bullets.filter(b=>b).map(b=>`<li>${fmt(b)}</li>`).join('')}</ul>`:''}
       ${pr.stack&&pr.stack.length?`<div class="tech-stack">Tech-Stack: ${pr.stack.join(' - ')}</div>`:''}
     </div>`).join('');
   const langHtml = `<div class="lang-row">${cvData.languages.map(l=>`<span class="lang-item">${esc(l.name)} <span class="lang-level">(${esc(l.level)})</span></span>`).join('')}</div>`;
@@ -1454,8 +1463,7 @@ function buildDach() {
           ${p.address?esc(p.address)+'<br>':''}
           ${p.email?lnk('mailto:'+p.email,esc(p.email))+'<br>':''}
           ${p.phone?esc(p.phone)+'<br>':''}
-          ${(p.linkedin||p.github)?`<span style="display:inline-flex;gap:10px;align-items:center;vertical-align:middle">${p.linkedin?iconLink(p.linkedin,SVG_LINKEDIN,'LinkedIn'):''}${p.github?iconLink(p.github,SVG_GITHUB,'GitHub'):''}</span><br>`:''}
-          ${p.website?portfolioLink(p.website)+'<br>':''}
+          ${(p.linkedin||p.github||p.website)?`<span style="display:inline-flex;gap:12px;align-items:center;vertical-align:middle">${p.linkedin?iconLink(p.linkedin,SVG_LINKEDIN,'LinkedIn'):''}${p.github?iconLink(p.github,SVG_GITHUB,'GitHub'):''}${p.website?portfolioLink(p.website):''}</span><br>`:''}
           ${p.birthdate?t('cv_born')+' '+esc(p.birthdate)+(p.birthplace?' '+t('cv_in')+' '+esc(p.birthplace):'')+(p.nationality?' - '+esc(p.nationality):''):''}
         </div>
       </div>
@@ -1490,13 +1498,13 @@ function buildHeader() {
     <div class="cv-entry">
       <div class="cv-entry-header"><span class="cv-entry-title">${esc(e.title)}</span><span class="cv-entry-date">${esc(e.from)} - ${esc(e.to)}</span></div>
       <div class="cv-entry-sub">${esc(e.company)}${e.location?', '+esc(e.location):''}</div>
-      ${e.bullets&&e.bullets.length?`<ul class="cv-bullets">${e.bullets.filter(b=>b).map(b=>`<li>${esc(b)}</li>`).join('')}</ul>`:''}
+      ${e.bullets&&e.bullets.length?`<ul class="cv-bullets">${e.bullets.filter(b=>b).map(b=>`<li>${fmt(b)}</li>`).join('')}</ul>`:''}
     </div>`).join('');
   const projHtml = cvData.projects.map(pr=>`
     <div class="cv-entry">
       <div class="cv-entry-header"><span class="cv-entry-title">${esc(pr.title)}</span><span class="cv-entry-date">${esc(pr.from)} - ${esc(pr.to)}</span></div>
       <div class="cv-entry-sub">${esc(pr.type)}${pr.link?projectLink(pr.link):''}</div>
-      ${pr.bullets&&pr.bullets.length?`<ul class="cv-bullets">${pr.bullets.filter(b=>b).map(b=>`<li>${esc(b)}</li>`).join('')}</ul>`:''}
+      ${pr.bullets&&pr.bullets.length?`<ul class="cv-bullets">${pr.bullets.filter(b=>b).map(b=>`<li>${fmt(b)}</li>`).join('')}</ul>`:''}
       ${pr.stack&&pr.stack.length?`<div style="margin-top:4px">${pr.stack.map(s=>`<span class="tech-badge">${esc(s)}</span>`).join('')}</div>`:''}
     </div>`).join('');
   const eduHtml = cvData.education.map(e=>`
@@ -1553,7 +1561,7 @@ function buildCompact() {
       <div class="cv-tl-body">
         <div class="cv-tl-title">${title}</div>
         ${sub?`<div class="cv-tl-sub">${sub}</div>`:''}
-        ${bullets&&bullets.length?`<ul class="cv-bullets">${bullets.filter(b=>b).map(b=>`<li>${esc(b)}</li>`).join('')}</ul>`:''}
+        ${bullets&&bullets.length?`<ul class="cv-bullets">${bullets.filter(b=>b).map(b=>`<li>${fmt(b)}</li>`).join('')}</ul>`:''}
         ${stack&&stack.length?`<div style="margin-top:3px">${stack.map(s=>`<span class="tech-badge">${esc(s)}</span>`).join('')}</div>`:''}
       </div>
     </div>`;
@@ -1600,7 +1608,7 @@ function buildExec() {
     <div class="cv-entry">
       <div class="cv-entry-header"><span class="cv-entry-title">${esc(e.title)}</span><span class="cv-entry-date">${esc(e.from)} - ${esc(e.to)}</span></div>
       <div class="cv-entry-sub">${esc(e.company)}${e.location?', '+esc(e.location):''}</div>
-      ${e.bullets&&e.bullets.length?`<ul class="cv-bullets">${e.bullets.filter(b=>b).map(b=>`<li>${esc(b)}</li>`).join('')}</ul>`:''}
+      ${e.bullets&&e.bullets.length?`<ul class="cv-bullets">${e.bullets.filter(b=>b).map(b=>`<li>${fmt(b)}</li>`).join('')}</ul>`:''}
     </div>`).join('');
   const eduHtml = cvData.education.map(e=>`
     <div class="cv-entry">
@@ -1611,7 +1619,7 @@ function buildExec() {
     <div class="cv-entry">
       <div class="cv-entry-header"><span class="cv-entry-title">${esc(pr.title)}</span><span class="cv-entry-date">${esc(pr.from)} - ${esc(pr.to)}</span></div>
       <div class="cv-entry-sub">${esc(pr.type)}${pr.link?projectLink(pr.link):''}</div>
-      ${pr.bullets&&pr.bullets.length?`<ul class="cv-bullets">${pr.bullets.filter(b=>b).map(b=>`<li>${esc(b)}</li>`).join('')}</ul>`:''}
+      ${pr.bullets&&pr.bullets.length?`<ul class="cv-bullets">${pr.bullets.filter(b=>b).map(b=>`<li>${fmt(b)}</li>`).join('')}</ul>`:''}
       ${pr.stack&&pr.stack.length?`<div class="tech-stack">${pr.stack.join(' - ')}</div>`:''}
     </div>`).join('');
   const langHtml = `<div class="lang-row">${cvData.languages.map(l=>`<span class="lang-item">${esc(l.name)} <span class="lang-level">(${esc(l.level)})</span></span>`).join('')}</div>`;
@@ -1657,7 +1665,7 @@ function buildTwocol() {
   const langs = cvData.languages.map(l=>`<div class="lang-item">${esc(l.name)} <span class="lang-level">(${esc(l.level)})</span></div>`).join('');
   const eduHtml = cvData.education.map(e=>`
     <div class="cv-entry">
-      <div class="cv-entry-header"><span class="cv-entry-title">${esc(e.degree)}</span><span class="cv-entry-date">${esc(e.from)} - ${esc(e.to)}</span></div>
+      <div class="cv-entry-header"><span class="cv-entry-date">${esc(e.from)} - ${esc(e.to)}</span><span class="cv-entry-title">${esc(e.degree)}</span></div>
       <div class="cv-entry-sub">${esc(e.institution)}${e.location?', '+esc(e.location):''}</div>
       ${e.notes?`<div style="font-size:9px;color:var(--cv-ink)">${esc(e.notes)}</div>`:''}
     </div>`).join('');
@@ -1665,13 +1673,13 @@ function buildTwocol() {
     <div class="cv-entry">
       <div class="cv-entry-header"><span class="cv-entry-title">${esc(e.title)}</span><span class="cv-entry-date">${esc(e.from)} - ${esc(e.to)}</span></div>
       <div class="cv-entry-sub">${esc(e.company)}${e.location?', '+esc(e.location):''}</div>
-      ${e.bullets&&e.bullets.length?`<ul class="cv-bullets">${e.bullets.filter(b=>b).map(b=>`<li>${esc(b)}</li>`).join('')}</ul>`:''}
+      ${e.bullets&&e.bullets.length?`<ul class="cv-bullets">${e.bullets.filter(b=>b).map(b=>`<li>${fmt(b)}</li>`).join('')}</ul>`:''}
     </div>`).join('');
   const projHtml = cvData.projects.map(pr=>`
     <div class="cv-entry">
       <div class="cv-entry-header"><span class="cv-entry-title">${esc(pr.title)}</span><span class="cv-entry-date">${esc(pr.from)} - ${esc(pr.to)}</span></div>
       <div class="cv-entry-sub">${esc(pr.type)}${pr.link?projectLink(pr.link):''}</div>
-      ${pr.bullets&&pr.bullets.length?`<ul class="cv-bullets">${pr.bullets.filter(b=>b).map(b=>`<li>${esc(b)}</li>`).join('')}</ul>`:''}
+      ${pr.bullets&&pr.bullets.length?`<ul class="cv-bullets">${pr.bullets.filter(b=>b).map(b=>`<li>${fmt(b)}</li>`).join('')}</ul>`:''}
       ${pr.stack&&pr.stack.length?`<div style="margin-top:4px">${pr.stack.map(s=>`<span class="tech-badge">${esc(s)}</span>`).join('')}</div>`:''}
     </div>`).join('');
   const persInfo = [
@@ -1720,7 +1728,7 @@ function buildLineleft() {
     <div class="cv-entry">
       <div class="cv-entry-header"><span class="cv-entry-title">${esc(e.title)}</span><span class="cv-entry-date">${esc(e.from)} - ${esc(e.to)}</span></div>
       <div class="cv-entry-sub">${esc(e.company)}${e.location?', '+esc(e.location):''}</div>
-      ${e.bullets&&e.bullets.length?`<ul class="cv-bullets">${e.bullets.filter(b=>b).map(b=>`<li>${esc(b)}</li>`).join('')}</ul>`:''}
+      ${e.bullets&&e.bullets.length?`<ul class="cv-bullets">${e.bullets.filter(b=>b).map(b=>`<li>${fmt(b)}</li>`).join('')}</ul>`:''}
     </div>`).join('');
   const eduHtml = cvData.education.map(e=>`
     <div class="cv-entry">
@@ -1731,7 +1739,7 @@ function buildLineleft() {
     <div class="cv-entry">
       <div class="cv-entry-header"><span class="cv-entry-title">${esc(pr.title)}</span><span class="cv-entry-date">${esc(pr.from)} - ${esc(pr.to)}</span></div>
       <div class="cv-entry-sub">${esc(pr.type)}${pr.link?projectLink(pr.link):''}</div>
-      ${pr.bullets&&pr.bullets.length?`<ul class="cv-bullets">${pr.bullets.filter(b=>b).map(b=>`<li>${esc(b)}</li>`).join('')}</ul>`:''}
+      ${pr.bullets&&pr.bullets.length?`<ul class="cv-bullets">${pr.bullets.filter(b=>b).map(b=>`<li>${fmt(b)}</li>`).join('')}</ul>`:''}
       ${pr.stack&&pr.stack.length?`<div style="margin-top:4px">${pr.stack.map(s=>`<span class="tech-badge">${esc(s)}</span>`).join('')}</div>`:''}
     </div>`).join('');
   const langHtml = `<div class="lang-row">${cvData.languages.map(l=>`<span class="lang-item">${esc(l.name)} <span class="lang-level">(${esc(l.level)})</span></span>`).join('')}</div>`;
@@ -1767,13 +1775,13 @@ function buildCard() {
     <div class="cv-entry">
       <div class="cv-entry-header"><span class="cv-entry-title">${esc(e.title)}</span><span class="cv-entry-date">${esc(e.from)} - ${esc(e.to)}</span></div>
       <div class="cv-entry-sub">${esc(e.company)}${e.location?', '+esc(e.location):''}</div>
-      ${e.bullets&&e.bullets.length?`<ul class="cv-bullets">${e.bullets.filter(b=>b).map(b=>`<li>${esc(b)}</li>`).join('')}</ul>`:''}
+      ${e.bullets&&e.bullets.length?`<ul class="cv-bullets">${e.bullets.filter(b=>b).map(b=>`<li>${fmt(b)}</li>`).join('')}</ul>`:''}
     </div>`).join('');
   const projHtml = cvData.projects.map(pr=>`
     <div class="cv-entry">
       <div class="cv-entry-header"><span class="cv-entry-title">${esc(pr.title)}</span><span class="cv-entry-date">${esc(pr.from)} - ${esc(pr.to)}</span></div>
       <div class="cv-entry-sub">${esc(pr.type)}${pr.link?projectLink(pr.link):''}</div>
-      ${pr.bullets&&pr.bullets.length?`<ul class="cv-bullets">${pr.bullets.filter(b=>b).map(b=>`<li>${esc(b)}</li>`).join('')}</ul>`:''}
+      ${pr.bullets&&pr.bullets.length?`<ul class="cv-bullets">${pr.bullets.filter(b=>b).map(b=>`<li>${fmt(b)}</li>`).join('')}</ul>`:''}
       ${pr.stack&&pr.stack.length?`<div style="margin-top:4px">${pr.stack.map(s=>`<span class="tech-badge">${esc(s)}</span>`).join('')}</div>`:''}
     </div>`).join('');
   const eduHtml = cvData.education.map(e=>`
@@ -1824,7 +1832,7 @@ function buildPlain() {
     <div class="cv-entry">
       <div class="cv-entry-header"><span class="cv-entry-title">${esc(e.title)}</span><span class="cv-entry-date">${esc(e.from)} - ${esc(e.to)}</span></div>
       <div class="cv-entry-sub">${esc(e.company)}${e.location?', '+esc(e.location):''}</div>
-      ${e.bullets&&e.bullets.length?`<ul class="cv-bullets">${e.bullets.filter(b=>b).map(b=>`<li>${esc(b)}</li>`).join('')}</ul>`:''}
+      ${e.bullets&&e.bullets.length?`<ul class="cv-bullets">${e.bullets.filter(b=>b).map(b=>`<li>${fmt(b)}</li>`).join('')}</ul>`:''}
     </div>`).join('');
   const eduHtml = cvData.education.map(e=>`
     <div class="cv-entry">
@@ -1836,7 +1844,7 @@ function buildPlain() {
     <div class="cv-entry">
       <div class="cv-entry-header"><span class="cv-entry-title">${esc(pr.title)}</span><span class="cv-entry-date">${esc(pr.from)} - ${esc(pr.to)}</span></div>
       <div class="cv-entry-sub">${esc(pr.type)}${pr.link?projectLink(pr.link):''}</div>
-      ${pr.bullets&&pr.bullets.length?`<ul class="cv-bullets">${pr.bullets.filter(b=>b).map(b=>`<li>${esc(b)}</li>`).join('')}</ul>`:''}
+      ${pr.bullets&&pr.bullets.length?`<ul class="cv-bullets">${pr.bullets.filter(b=>b).map(b=>`<li>${fmt(b)}</li>`).join('')}</ul>`:''}
       ${pr.stack&&pr.stack.length?`<div class="tech-stack">Stack: ${pr.stack.join(', ')}</div>`:''}
     </div>`).join('');
   const langHtml = `<div class="lang-row">${cvData.languages.map(l=>`<span class="lang-item">${esc(l.name)} (${esc(l.level)})</span>`).join('')}</div>`;
@@ -1877,11 +1885,17 @@ function buildProfil() {
     dataItem(t('cv_lbl_birthdate'), esc(p.birthdate)),
     dataItem(t('cv_lbl_birthplace'), esc(p.birthplace)),
     dataItem(t('cv_lbl_nationality'), esc(p.nationality)),
-    dataItem(t('cv_lbl_marital'), esc(p.marital)),
-    p.linkedin ? dataItem('LinkedIn', iconLink(p.linkedin, SVG_LINKEDIN, 'LinkedIn')) : '',
-    p.github ? dataItem('GitHub', iconLink(p.github, SVG_GITHUB, 'GitHub')) : '',
-    p.website ? dataItem('Portfolio', portfolioLink(p.website)) : ''
-  ].join('');
+    dataItem(t('cv_lbl_marital'), esc(p.marital))
+  ].join('') + (() => {
+    // LinkedIn, GitHub und Portfolio gemeinsam in EINER ausgerichteten Icon-Reihe
+    // (statt untereinander) - sauber, modern und einheitlich.
+    const social = [
+      p.linkedin ? iconLink(p.linkedin, SVG_LINKEDIN, 'LinkedIn') : '',
+      p.github ? iconLink(p.github, SVG_GITHUB, 'GitHub') : '',
+      p.website ? portfolioLink(p.website) : ''
+    ].filter(Boolean).join('');
+    return social ? `<div class="pf-social">${social}</div>` : '';
+  })();
   const knHtml = cvData.skills.map(c => `
     <div class="pf-section">
       <div class="pf-section-title">${esc(c.category)}</div>
@@ -1899,7 +1913,7 @@ function buildProfil() {
         <div class="pf-title">${title}</div>
         ${company ? `<div class="pf-company">${company}</div>` : ''}
         ${desc ? `<div class="pf-desc">${desc}</div>` : ''}
-        ${bullets && bullets.length ? `<ul class="cv-bullets">${bullets.filter(b=>b).map(b=>`<li>${esc(b)}</li>`).join('')}</ul>` : ''}
+        ${bullets && bullets.length ? `<ul class="cv-bullets">${bullets.filter(b=>b).map(b=>`<li>${fmt(b)}</li>`).join('')}</ul>` : ''}
         ${stack && stack.length ? `<div>${stack.map(s=>`<span class="tech-badge">${esc(s)}</span>`).join('')}</div>` : ''}
       </div>
     </div>`;
@@ -1947,7 +1961,7 @@ function buildModern() {
   const expHtml = cvData.experience.map(e => `<div class="mod-tl-entry">
     <div class="mod-entry-head"><span class="mod-entry-title">${esc(e.title)}</span><span class="mod-entry-date">${dateRange(e.from, e.to)}</span></div>
     <div class="mod-entry-sub">${esc(e.company)}${e.location ? ` <span class="mod-entry-loc">- ${esc(e.location)}</span>` : ''}</div>
-    ${e.bullets && e.bullets.length ? `<ul class="cv-bullets">${e.bullets.filter(b => b).map(b => `<li>${esc(b)}</li>`).join('')}</ul>` : ''}
+    ${e.bullets && e.bullets.length ? `<ul class="cv-bullets">${e.bullets.filter(b => b).map(b => `<li>${fmt(b)}</li>`).join('')}</ul>` : ''}
   </div>`).join('');
   const eduHtml = cvData.education.map(ed => `<div class="mod-tl-entry">
     <div class="mod-entry-head"><span class="mod-entry-title">${esc(ed.degree)}</span><span class="mod-entry-date">${dateRange(ed.from, ed.to)}</span></div>
@@ -1957,7 +1971,7 @@ function buildModern() {
   const projHtml = cvData.projects.map(pr => `<div class="mod-proj">
     <div class="mod-proj-title">${esc(pr.title)}${pr.link ? projectLink(pr.link) : ''}</div>
     ${pr.stack && pr.stack.length ? `<div class="mod-proj-stack">${pr.stack.map(s => esc(s)).join(' · ')}</div>` : ''}
-    ${pr.bullets && pr.bullets.length ? `<ul class="cv-bullets">${pr.bullets.filter(b => b).map(b => `<li>${esc(b)}</li>`).join('')}</ul>` : ''}
+    ${pr.bullets && pr.bullets.length ? `<ul class="cv-bullets">${pr.bullets.filter(b => b).map(b => `<li>${fmt(b)}</li>`).join('')}</ul>` : ''}
   </div>`).join('');
   const langHtml = cvData.languages.map(l => `<div class="mod-lang"><span class="mod-lang-name">${esc(l.name)}</span><div class="mod-lang-level">${esc(l.level)}</div></div>`).join('');
   const skillHtml = cvData.skills.map(c => `<div class="mod-skill"><div class="mod-skill-cat">${esc(c.category)}</div><div class="mod-skill-items">${c.items.map(i => esc(i)).join(', ')}</div></div>`).join('');
@@ -2515,6 +2529,13 @@ function esc(str) {
   return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 function escAttr(str) { return (str||'').replace(/'/g,"\\'"); }
+// Wie esc(), wandelt zusaetzlich **Text** in <strong>Text</strong> um. Damit lassen
+// sich technische Begriffe in Stichpunkten gezielt fett hervorheben. Sicher: erst
+// wird vollstaendig escaped (kein HTML aus den Daten), dann nur die eigene
+// **...**-Syntax in <strong> ueberfuehrt.
+function fmt(str) {
+  return esc(str).replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+}
 function uid() { return Math.random().toString(36).substr(2,8); }
 
 // ====== INITIALISIERUNG ======
