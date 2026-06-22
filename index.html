@@ -2339,6 +2339,61 @@ function addClickableLinks(pdf, previewEl, cuts, skala, pxPerMM) {
   if (seiten > 0) pdf.setPage(seiten);
 }
 
+// Legt eine UNSICHTBARE, aber markier- und kopierbare Textebene ueber das Bild.
+// Das PDF zeigt weiterhin das pixelgenaue html2canvas-Bild; zusaetzlich wird der
+// echte Text (in Lesereihenfolge, an der passenden Position) als unsichtbarer Text
+// hinterlegt - wie bei einem durchsuchbaren Scan-PDF. So bleibt das Design exakt,
+// und der Text laesst sich markieren, kopieren und durchsuchen.
+function addTextLayer(pdf, previewEl, cuts, skala, pxPerMM) {
+  const mmPerPxLive = 210 / previewEl.offsetWidth;
+  const containerRect = previewEl.getBoundingClientRect();
+  const seitenAnzahl = pdf.internal.getNumberOfPages();
+  pdf.setFont('helvetica', 'normal');
+  const walker = document.createTreeWalker(previewEl, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      if (!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+      const pe = node.parentElement;
+      if (!pe || pe.classList.contains('pbc')) return NodeFilter.FILTER_REJECT;
+      const cs = getComputedStyle(pe);
+      if (cs.visibility === 'hidden' || cs.display === 'none' || parseFloat(cs.opacity) === 0) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+  const range = document.createRange();
+  let node;
+  while ((node = walker.nextNode())) {
+    const pe = node.parentElement;
+    const cs = getComputedStyle(pe);
+    const fontPx = parseFloat(cs.fontSize) || 11;
+    const fontPt = fontPx * mmPerPxLive * 72 / 25.4;
+    range.selectNodeContents(node);
+    const rects = range.getClientRects();
+    if (!rects.length) continue;
+    const r = rects[0];
+    if (r.width <= 0 || r.height <= 0) continue;
+    const text = node.nodeValue.replace(/\s+/g, ' ').trim();
+    if (!text) continue;
+    const relTop = r.top - containerRect.top;
+    const relLeft = r.left - containerRect.left;
+    const baselineCss = relTop + fontPx * 0.8;     // Grundlinie ~ 0.8em unter der Oberkante
+    const yCanvas = baselineCss * skala;
+    let seite = 0;
+    for (let i = 0; i < cuts.length - 1; i++) {
+      if (yCanvas >= cuts[i] && yCanvas < cuts[i + 1]) { seite = i; break; }
+      if (i === cuts.length - 2) seite = i;
+    }
+    if (seite < 0 || seite >= seitenAnzahl) continue;
+    const x = relLeft * mmPerPxLive;
+    const y = (yCanvas - cuts[seite]) / pxPerMM;
+    const maxWidth = Math.max(20, 210 - x - 3);
+    pdf.setPage(seite + 1);
+    pdf.setFontSize(fontPt);
+    try { pdf.text(text, x, y, { renderingMode: 'invisible', maxWidth, lineHeightFactor: 1.15 }); }
+    catch (e) { try { pdf.text(text, x, y, { renderingMode: 'invisible' }); } catch (e2) {} }
+  }
+  if (seitenAnzahl > 0) pdf.setPage(seitenAnzahl);
+}
+
 // ====== PDF-EXPORT ======
 // Ersetzt vor dem html2canvas-Capture den Foto-Hintergrund durch eine exakt auf die
 // Export-Aufloesung vorgerenderte, SCHARFE Version - und stellt ihn danach wieder her.
@@ -2501,6 +2556,8 @@ async function exportPDF() {
       pdf.addImage(slice.toDataURL('image/jpeg', 0.9), 'JPEG', 0, 0, PAGE_W_MM, sliceHeightMM, undefined, 'FAST');
     }
 
+    // Unsichtbare, markier-/kopierbare Textebene ueber das Bild legen (durchsuchbares PDF)
+    addTextLayer(pdf, el, cuts, skala, pxPerMM);
     // Klickbare Links als PDF-Annotationen hinzufuegen (an die Schnittpunkte angepasst)
     addClickableLinks(pdf, el, cuts, skala, pxPerMM);
 
