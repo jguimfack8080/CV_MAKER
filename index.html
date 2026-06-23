@@ -369,15 +369,8 @@ html, body { height: 100%; font-family: 'Inter', system-ui, sans-serif; backgrou
 .tpl-twocol .cv-section-title { font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: var(--cv-ink); margin-bottom: 8px; padding-bottom: 3px; border-bottom: 1.5px solid #3f4a5a; }
 .tpl-twocol .cv-entry { margin-bottom: 11px; }
 .tpl-twocol .cv-entry-header { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
-.tpl-twocol .cv-entry-title { font-weight: 600; font-size: 12.5px; }
-.tpl-twocol .cv-entry-date { font-size: 11px; color: var(--cv-ink); white-space: nowrap; margin-left: 8px; }
-/* Linke (schmale) Spalte: Datum rechts oben gefloatet, der Titel fliesst darum
-   herum - die erste Zeile steht neben dem Datum, lange deutsche Komposita rutschen
-   in VOLLER Breite in die naechste Zeile. So kein Wortumbruch mitten im Wort und
-   kein Ueberlappen. Die breite rechte Spalte behaelt Titel/Datum nebeneinander. */
-.tpl-twocol .cv-col-left .cv-entry-header { display: block; overflow: hidden; }
-.tpl-twocol .cv-col-left .cv-entry-date { float: right; margin-left: 10px; }
-.tpl-twocol .cv-col-left .cv-entry-title { display: block; overflow-wrap: break-word; }
+.tpl-twocol .cv-entry-title { font-weight: 600; font-size: 12.5px; flex: 1; min-width: 0; overflow-wrap: break-word; }
+.tpl-twocol .cv-entry-date { font-size: 11px; color: var(--cv-ink); white-space: nowrap; flex-shrink: 0; }
 .tpl-twocol .cv-entry-sub { font-size: 11.5px; color: var(--cv-ink); font-weight: 500; margin-bottom: 3px; }
 .tpl-twocol .cv-bullets { padding-left: 12px; margin-top: 3px; }
 .tpl-twocol .cv-bullets li { margin-bottom: 2px; font-size: 11.5px; }
@@ -1667,7 +1660,7 @@ function buildTwocol() {
   const langs = cvData.languages.map(l=>`<div class="lang-item">${esc(l.name)} <span class="lang-level">(${esc(l.level)})</span></div>`).join('');
   const eduHtml = cvData.education.map(e=>`
     <div class="cv-entry">
-      <div class="cv-entry-header"><span class="cv-entry-date">${esc(e.from)} - ${esc(e.to)}</span><span class="cv-entry-title">${esc(e.degree)}</span></div>
+      <div class="cv-entry-header"><span class="cv-entry-title">${esc(e.degree)}</span><span class="cv-entry-date">${esc(e.from)} - ${esc(e.to)}</span></div>
       <div class="cv-entry-sub">${esc(e.institution)}${e.location?', '+esc(e.location):''}</div>
       ${e.notes?`<div style="font-size:9px;color:var(--cv-ink)">${esc(e.notes)}</div>`:''}
     </div>`).join('');
@@ -1708,7 +1701,6 @@ function buildTwocol() {
     </div>
     <div class="cv-body">
       <div class="cv-col-left">
-        <div class="col-section"><div class="col-section-title">${t('cv_education')}</div>${eduHtml}</div>
         <div class="col-section"><div class="col-section-title">${t('cv_skills_short')}</div>${leftSkills}</div>
         <div class="col-section"><div class="col-section-title">${t('cv_languages')}</div>${langs}</div>
         ${persInfo?`<div class="col-section"><div class="col-section-title">${t('cv_personal')}</div>${persInfo}</div>`:''}
@@ -1716,6 +1708,7 @@ function buildTwocol() {
       </div>
       <div class="cv-col-right">
         <div class="cv-section"><div class="cv-section-title">${t('cv_experience')}</div>${expHtml}</div>
+        <div class="cv-section"><div class="cv-section-title">${t('cv_education')}</div>${eduHtml}</div>
         <div class="cv-section"><div class="cv-section-title">${t('cv_projects')}</div>${projHtml}</div>
       </div>
     </div>
