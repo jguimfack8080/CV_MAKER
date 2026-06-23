@@ -1410,14 +1410,14 @@ function buildSidebar() {
         ${p.address?`<div class="contact-item"><span class="contact-label">${t('cv_lbl_address')}</span>${esc(p.address)}</div>`:''}
         ${(p.linkedin||p.github||p.website)?`<div class="contact-item" style="display:flex;gap:13px;align-items:center;margin-top:7px">${p.linkedin?iconLink(p.linkedin,SVG_LINKEDIN,'LinkedIn'):''}${p.github?iconLink(p.github,SVG_GITHUB,'GitHub'):''}${p.website?portfolioLink(p.website):''}</div>`:''}
       </div>
+      <div class="left-section"><div class="left-section-title">${t('cv_skills_short')}</div>${leftSkills}</div>
+      <div class="left-section"><div class="left-section-title">${t('cv_languages')}</div>${leftLangs}</div>
       <div class="left-section">
         <div class="left-section-title">${t('cv_personal')}</div>
         ${p.birthdate?`<div class="contact-item"><span class="contact-label">${t('cv_lbl_birthdate')}</span>${esc(p.birthdate)}${p.birthplace?' '+t('cv_in')+' '+esc(p.birthplace):''}</div>`:''}
         ${p.nationality?`<div class="contact-item"><span class="contact-label">${t('cv_lbl_nationality')}</span>${esc(p.nationality)}</div>`:''}
         ${p.marital?`<div class="contact-item"><span class="contact-label">${t('cv_lbl_marital')}</span>${esc(p.marital)}</div>`:''}
       </div>
-      <div class="left-section"><div class="left-section-title">${t('cv_skills_short')}</div>${leftSkills}</div>
-      <div class="left-section"><div class="left-section-title">${t('cv_languages')}</div>${leftLangs}</div>
       ${intHtml?`<div class="left-section"><div class="left-section-title">${t('cv_interests')}</div><div style="font-size:9.5px;color:#cbd5e1">${intHtml}</div></div>`:''}
     </div>
     <div class="cv-right">
